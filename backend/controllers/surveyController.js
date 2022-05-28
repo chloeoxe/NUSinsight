@@ -1,10 +1,13 @@
 const asyncHandler = require('express-async-handler')
+const Survey = require('../models/surveyModel')
 
 // @desc Get surveys
 // @route GET /api/surveys 
 // @access Private
 const getSurveys = asyncHandler(async (req, res) => {
-    res.status(200).json({message: "get surveys"})
+    const surveys = await Survey.find()
+
+    res.status(200).json(surveys)
 })
 
 // @desc  Set survey
@@ -16,21 +19,44 @@ const setSurvey = asyncHandler(async (req, res) => {
         throw new Error('Please add a text field')
     }
 
-    res.status(200).json({message: "set survey"})
+    const survey = await Survey.create({
+        text: req.body.text
+    })
+
+    res.status(200).json(survey)
 })
 
 // @desc Update survey
 // @route PUT /api/surveys/:id
 // @access Private
 const updateSurvey = asyncHandler(async (req, res) => {
-    res.status(200).json({message: `Update survey ${req.params.id}`})
+    const survey = await Survey.findById(req.params.id)
+    
+    if (!survey) {
+        res.status(400)
+        throw new Error('Survey not found')
+    }
+    const updatedSurvey = await Survey.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+    })
+
+    res.status(200).json(updatedSurvey)
 })
 
 // @desc Delete survey
 // @route DELETE /api/surveys/:id
 // @access Private
 const deleteSurvey = asyncHandler(async (req, res) => {
-    res.status(200).json({message: `Delete survey ${req.params.id}`})
+    const survey = await Survey.findById(req.params.id)
+    
+    if (!survey) {
+        res.status(400)
+        throw new Error('Survey not found')
+    }
+
+    await survey.remove()
+
+    res.status(200).json({ id: req.params.id })
 })
 
 module.exports = {
