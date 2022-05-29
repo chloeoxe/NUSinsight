@@ -6,9 +6,10 @@ const {
     updateSurvey, 
     deleteSurvey
 } = require('../controllers/surveyController')
+const {protect} = require('../middleware/authMiddleware')
 
-router.route('/').get(getSurveys).post(setSurvey)
-router.route('/:id').put(updateSurvey).delete(deleteSurvey)
+router.route('/').get(protect, getSurveys).post(protect, setSurvey)
+router.route('/:id').put(protect, updateSurvey).delete(protect, deleteSurvey)
 
 
 module.exports = router
