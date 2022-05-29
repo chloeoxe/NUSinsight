@@ -1,0 +1,1 @@
+This folder contains other non-code resources for NUSinsight, such as documentation, poster etc.
