@@ -1,2 +1,2 @@
-# nusinsight2
-This is the second repository for the Orbital 2022 project, NUSinsight. This repository contains any extra code, draft code, and other resources.
+# NUSinsight
+This repository is for the software project, NUSinsight, which is a platform that combines surveying and social media. It is catered to the NUS population.
