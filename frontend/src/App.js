@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SurveyCreationStart from "./pages/SurveyCreationStart";
+import Account from "./pages/Account";
+import SurveyFeed from "./pages/SurveyFeed";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
               path="/createSurveyStart"
               element={<SurveyCreationStart />}
             />
+            <Route path="/account" element={<Account />} />
+            <Route path="/feed" element={<SurveyFeed />} />
           </Routes>
         </div>
       </Router>

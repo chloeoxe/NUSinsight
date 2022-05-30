@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const Survey = require("../models/surveyModel");
-const User = require("../models/userModel");
 
 // @desc Get surveys
 // @route GET /api/surveys
@@ -15,17 +14,31 @@ const getSurveys = asyncHandler(async (req, res) => {
 // @route POST /api/surveys
 // @access Private
 const setSurvey = asyncHandler(async (req, res) => {
-  if (!req.body.text) {
+  const { title, desc } = req.body;
+
+  if (!title || !desc) {
     res.status(400);
-    throw new Error("Please add a text field");
+    throw new Error("Please add all fields");
   }
 
+  // Create new survey
   const survey = await Survey.create({
-    text: req.body.text,
     user: req.user.id,
+    title,
+    desc,
   });
 
-  res.status(200).json(survey);
+  if (survey) {
+    res.status(201).json({
+      _id: survey.id,
+      user: survey.user,
+      title: survey.title,
+      desc: survey.desc,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid survey data");
+  }
 });
 
 // @desc Update survey

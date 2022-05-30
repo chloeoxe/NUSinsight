@@ -1,4 +1,11 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser, FaFileAlt } from "react-icons/fa";
+import {
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUser,
+  FaGlobeAmericas,
+  FaFileAlt,
+  FaHome,
+} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,6 +35,21 @@ function Header() {
             <li>
               <Link to="/createSurveyStart">
                 <FaFileAlt /> Create Survey
+              </Link>
+            </li>
+            <li>
+              <Link to="/feed">
+                <FaGlobeAmericas /> Feed
+              </Link>
+            </li>
+            <li>
+              <Link to="/account">
+                <FaUser /> Account
+              </Link>
+            </li>
+            <li>
+              <Link to="/">
+                <FaHome /> Home
               </Link>
             </li>
             <li>

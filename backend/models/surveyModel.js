@@ -1,20 +1,24 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const surveySchema = mongoose.Schema(
-{
+  {
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
-    text: {
-        type: String, 
-        required: [true, 'Please add a text value']
-    }
-}, 
-{
+    title: {
+      type: String,
+      required: [true, "Please add a title"],
+    },
+    desc: {
+      type: String,
+      required: [true, "Please add a description"],
+    },
+  },
+  {
     timestamps: true,
-}
-)
+  }
+);
 
-module.exports = mongoose.model('Survey', surveySchema)
+module.exports = mongoose.model("Survey", surveySchema);

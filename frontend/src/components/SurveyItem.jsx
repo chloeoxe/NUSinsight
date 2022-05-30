@@ -7,7 +7,8 @@ function SurveyItem({ survey }) {
   return (
     <div className="survey">
       <div>{new Date(survey.createdAt).toLocaleString("en-US")}</div>
-      <h2>{survey.text}</h2>
+      <h2>{survey.title}</h2>
+      <h4>{survey.desc}</h4>
       <button
         className="close"
         onClick={() => dispatch(deleteSurvey(survey._id))}
