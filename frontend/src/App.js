@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import SurveyCreationStart from "./pages/SurveyCreationStart";
 
 function App() {
   return (
@@ -16,6 +17,10 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route
+              path="/createSurveyStart"
+              element={<SurveyCreationStart />}
+            />
           </Routes>
         </div>
       </Router>

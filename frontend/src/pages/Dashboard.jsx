@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import SurveyForm from "../components/SurveyForm";
+//import SurveyForm from "../components/SurveyForm";
 import SurveyItem from "../components/SurveyItem";
 import Spinner from "../components/Spinner";
 import { getSurveys, reset } from "../features/surveys/surveySlice";
@@ -40,7 +40,6 @@ function Dashboard() {
         <h1>Welcome {user && user.name}</h1>
         <p>Survey Dashboard</p>
       </section>
-      <SurveyForm />
 
       <section className="content">
         {surveys.length > 0 ? (

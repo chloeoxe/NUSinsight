@@ -1,4 +1,4 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt, FaUser, FaFileAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,11 +24,18 @@ function Header() {
       </div>
       <ul>
         {user ? (
-          <li>
-            <button className="btn" onClick={onLogout}>
-              <FaSignOutAlt /> Logout
-            </button>
-          </li>
+          <>
+            <li>
+              <Link to="/createSurveyStart">
+                <FaFileAlt /> Create Survey
+              </Link>
+            </li>
+            <li>
+              <button className="btn" onClick={onLogout}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </li>
+          </>
         ) : (
           <>
             <li>
