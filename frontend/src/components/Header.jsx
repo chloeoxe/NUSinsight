@@ -1,6 +1,6 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-//import logo from "../images/logo.png";
+import logo from "../images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 
@@ -18,7 +18,9 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/">NUSinsight</Link>
+        <Link to="/">
+          <img src={logo} width="200" height="49.8" alt="App Logo" />
+        </Link>
       </div>
       <ul>
         {user ? (
