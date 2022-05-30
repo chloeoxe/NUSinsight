@@ -24,6 +24,19 @@ const login = async (userData) => {
   return response.data;
 };
 
+// Get user details
+const getMe = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + "me", config);
+
+  return response.data;
+};
+
 // Logout user
 const logout = () => {
   localStorage.removeItem("user");
@@ -32,6 +45,7 @@ const logout = () => {
 const authService = {
   register,
   login,
+  getMe,
   logout,
 };
 
