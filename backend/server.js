@@ -8,7 +8,14 @@ const port = process.env.PORT || 5000;
 
 connectDB();
 
+<<<<<<< HEAD
 const app = express();
+=======
+const app = express()
+const cors = require("cors")
+
+app.use(cors())
+>>>>>>> 97b1078d3931222968416e58d662ca582ba32d28
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

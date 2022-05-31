@@ -8,7 +8,11 @@
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+<<<<<<< HEAD
     "build": "npm install --prefix frontend && npm run build --prefix frontend && npm start"
+=======
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+>>>>>>> 97b1078d3931222968416e58d662ca582ba32d28
   },
   "keywords": [],
   "author": "",
