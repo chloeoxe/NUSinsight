@@ -92,7 +92,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // @desc Get user data
 // @route GET /api/users/me
-// @access Private
+// @access Public
 const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(req.user);
 });
