@@ -23,6 +23,7 @@ function Dashboard() {
     if (!user) {
       navigate("/login");
     } else {
+      console.log(user);
       dispatch(getSurveys());
       return () => {
         dispatch(reset());

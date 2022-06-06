@@ -49,7 +49,7 @@ const getMe = () => {
     },
   };
   
-  const response = await axios.get(API_URL + "account/" + userData._id);
+  const response = await axios.get(API_URL + `account/${userData._id}`);
 
   return response.data;
   */

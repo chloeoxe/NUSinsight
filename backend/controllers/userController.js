@@ -124,13 +124,26 @@ const updateMe = asyncHandler(async (req, res) => {
     new: true,
   });
 
-  res.status(200).json(updatedMe);
+  if (updatedMe) {
+    res.status(201).json({
+      _id: updatedMe.id,
+      name: updatedMe.name,
+      position: updatedMe.position,
+      major: updatedMe.major,
+      email: updatedMe.email,
+      username: updatedMe.username,
+      token: generateToken(updatedMe._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
 });
 
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "365d",
   });
 };
 
