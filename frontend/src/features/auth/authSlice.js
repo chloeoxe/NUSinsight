@@ -46,8 +46,7 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
 // Get user details
 export const getMe = createAsyncThunk("auth/getMe", async (_, thunkAPI) => {
   try {
-    const token = thunkAPI.getState().auth.user.token;
-    return await authService.getMe(token);
+    return await authService.getMe();
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -115,7 +114,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        state.user = null;
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;

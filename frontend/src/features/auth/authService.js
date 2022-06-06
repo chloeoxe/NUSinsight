@@ -25,16 +25,19 @@ const login = async (userData) => {
 };
 
 // Get user details
-const getMe = async (token) => {
+const getMe = () => {
+  /*
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-
-  const response = await axios.get(API_URL + "me", config);
+  
+  const response = await axios.get(API_URL + "me");
 
   return response.data;
+  */
+  return JSON.parse(localStorage.getItem("user"));
 };
 
 // Logout user
