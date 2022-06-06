@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SurveyCreationStart from "./pages/SurveyCreationStart";
 import Account from "./pages/Account";
+import EditAccount from "./pages/EditAccount";
 import SurveyFeed from "./pages/SurveyFeed";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               element={<SurveyCreationStart />}
             />
             <Route path="/account" element={<Account />} />
+            <Route path="/account/edit" element={<EditAccount />} />
             <Route path="/feed" element={<SurveyFeed />} />
           </Routes>
         </div>
