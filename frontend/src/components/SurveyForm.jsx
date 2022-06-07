@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createSurvey } from "../features/surveys/surveySlice";
-import { VStack, Container, Box } from "@chakra-ui/react";
-import AddQuestion from "./survey/AddQuestion";
+import { VStack, Container, Box, Text, Button } from "@chakra-ui/react";
+import QuestionBox from "./QuestionBox";
 
 function SurveyForm() {
   const initialFormData = {
@@ -35,7 +35,24 @@ function SurveyForm() {
     clearForm();
   };
 
-  const [numOfQuestions, setNumOfQuestions] = useState(0);
+  const [questions, setQuestions] = useState([]);
+
+  //question object = {key: ..., card: div component}
+  const addQuestion = () => {
+    setQuestions([
+      ...questions,
+      {
+        key: questions.length + 1,
+        card: (
+          <QuestionBox
+            id={questions.length + 1}
+            setQuestions={setQuestions}
+            questions={questions}
+          />
+        ),
+      },
+    ]);
+  };
 
   return (
     <>
@@ -75,21 +92,34 @@ function SurveyForm() {
             </div>
           </form>
         </Box>
-        {numOfQuestions === 0 ? (
-          <AddQuestion setNumOfQuestions={setNumOfQuestions} />
-        ) : (
-          <>
-            <div></div>
-          </>
-        )}
-        <Container className="heading" maxW="800px" p={10}>
-          <div className="form-group">
-            <button className="btn btn-block" type="submit">
-              Publish Survey
-            </button>
-          </div>
-        </Container>
+        {questions.map(({ key, card }) => (
+          <div key={key}>{card}</div>
+        ))}
       </VStack>
+      <Container p={10} className="form-group">
+        {questions.length === 0 ? (
+          <Text>This survey has no questions yet</Text>
+        ) : (
+          ""
+        )}
+        <Button
+          colorScheme="default"
+          bg="white"
+          variant="link"
+          border="0px"
+          _hover={{ cursor: "pointer" }}
+          onClick={addQuestion}
+        >
+          Add a question
+        </Button>
+      </Container>
+      <Container className="heading" maxW="800px" p={5}>
+        <div className="form-group">
+          <button className="btn btn-block" type="submit">
+            Publish Survey
+          </button>
+        </div>
+      </Container>
     </>
   );
 }
