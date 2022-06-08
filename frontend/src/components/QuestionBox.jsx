@@ -1,7 +1,22 @@
-import React from "react";
-import { Box, Text, Button, Container } from "@chakra-ui/react";
+import { useState } from "react";
+import {
+  Box,
+  Text,
+  Button,
+  Container,
+  Select,
+  SimpleGrid,
+} from "@chakra-ui/react";
+import MultipleChoice from "./survey/MultipleChoice";
+import OpenEnded from "./survey/OpenEnded";
 
 function QuestionBox(props) {
+  const [questionType, setQuestionType] = useState("mcq");
+
+  const handleChange = (e) => {
+    setQuestionType(e.target.value);
+  };
+
   return (
     <Box
       className="name"
@@ -22,7 +37,26 @@ function QuestionBox(props) {
           X
         </Button>
       </Container>
-      <Text>Question {props.num}</Text>
+      <SimpleGrid columns={2} spacing={0} pr={12} pl={8}>
+        <Text align="left" lineHeight="250%" fontWeight="bold">
+          Question {props.num}
+        </Text>
+        <Box align="right">
+          <Select
+            value={questionType}
+            onChange={handleChange}
+            size="md"
+            maxW="250px"
+          >
+            <option value="mcq">MCQ</option>
+            <option value="oe">Open-ended</option>
+          </Select>
+        </Box>
+      </SimpleGrid>
+      <Container>
+        {questionType === "mcq" ? <MultipleChoice /> : ""}
+        {questionType === "oe" ? <OpenEnded /> : ""}
+      </Container>
     </Box>
   );
 }
