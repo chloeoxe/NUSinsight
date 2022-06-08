@@ -3,8 +3,10 @@ import { useDispatch } from "react-redux";
 import { createSurvey } from "../features/surveys/surveySlice";
 import { VStack, Container, Box, Text, Button } from "@chakra-ui/react";
 import QuestionBox from "./QuestionBox";
+import { v4 as uuidv4 } from "uuid";
 
 function SurveyForm() {
+  //connection to API endpoint
   const initialFormData = {
     title: "",
     desc: "",
@@ -35,23 +37,22 @@ function SurveyForm() {
     clearForm();
   };
 
+  //define questions state
   const [questions, setQuestions] = useState([]);
 
-  //question object = {key: ..., card: div component}
+  //question object = {key: ...}
   const addQuestion = () => {
     setQuestions([
       ...questions,
       {
-        key: questions.length + 1,
-        card: (
-          <QuestionBox
-            id={questions.length + 1}
-            setQuestions={setQuestions}
-            questions={questions}
-          />
-        ),
+        key: uuidv4(),
       },
     ]);
+  };
+
+  const delQuestion = (key) => {
+    const newQuestions = questions.filter((q) => q.key !== key);
+    setQuestions(newQuestions);
   };
 
   return (
@@ -92,8 +93,17 @@ function SurveyForm() {
             </div>
           </form>
         </Box>
-        {questions.map(({ key, card }) => (
-          <div key={key}>{card}</div>
+        {questions.map(({ key }) => (
+          <QuestionBox
+            key={key}
+            id={key}
+            num={
+              questions.findIndex((q) => {
+                return q.key === key;
+              }) + 1
+            }
+            delQuestion={delQuestion}
+          />
         ))}
       </VStack>
       <Container p={10} className="form-group">
