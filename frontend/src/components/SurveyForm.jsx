@@ -57,11 +57,11 @@ function SurveyForm() {
 
   return (
     <>
+      <Container className="heading" maxW="800px">
+        <h1>Create a Survey</h1>
+        <p>Fill in the details below</p>
+      </Container>
       <VStack>
-        <Container className="heading" maxW="800px">
-          <h1>Create a Survey</h1>
-          <p>Fill in the details below</p>
-        </Container>
         <Box
           className="name"
           shadow="md"

@@ -53,7 +53,7 @@ function QuestionBox(props) {
           </Select>
         </Box>
       </SimpleGrid>
-      <Container>
+      <Container maxW="780px">
         {questionType === "mcq" ? <MultipleChoice /> : ""}
         {questionType === "oe" ? <OpenEnded /> : ""}
       </Container>
