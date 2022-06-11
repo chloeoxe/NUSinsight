@@ -14,11 +14,16 @@ const getSurveys = asyncHandler(async (req, res) => {
 // @route POST /api/surveys
 // @access Private
 const setSurvey = asyncHandler(async (req, res) => {
-  const { title, desc } = req.body;
+  const { title, desc, questions } = req.body;
 
   if (!title || !desc) {
     res.status(400);
-    throw new Error("Please add all fields");
+    throw new Error("Please add a title and description");
+  }
+
+  if (!questions) {
+    res.status(400);
+    throw new Error("Please add at least one question");
   }
 
   // Create new survey
@@ -26,6 +31,7 @@ const setSurvey = asyncHandler(async (req, res) => {
     user: req.user.id,
     title,
     desc,
+    questions,
   });
 
   if (survey) {
@@ -34,10 +40,11 @@ const setSurvey = asyncHandler(async (req, res) => {
       user: survey.user,
       title: survey.title,
       desc: survey.desc,
+      questions: survey.questions,
     });
   } else {
     res.status(400);
-    throw new Error("Invalid survey data");
+    throw new Error("Invaslid survey data");
   }
 });
 

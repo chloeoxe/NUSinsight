@@ -6,10 +6,14 @@ import QuestionBox from "./QuestionBox";
 import { v4 as uuidv4 } from "uuid";
 
 function SurveyForm() {
+  //define questions state
+  const [questions, setQuestions] = useState([]);
+
   //connection to API endpoint
   const initialFormData = {
     title: "",
     desc: "",
+    questions: questions,
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -18,8 +22,12 @@ function SurveyForm() {
 
   const dispatch = useDispatch();
 
-  const clearForm = () => setFormData({ ...initialFormData });
+  const clearForm = () => {
+    setQuestions([]);
+    setFormData({ ...initialFormData });
+  };
 
+  //handles title and desc values
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -30,15 +38,12 @@ function SurveyForm() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const surveyData = { title, desc };
+    const surveyData = { title, desc, questions };
 
     dispatch(createSurvey(surveyData));
 
     clearForm();
   };
-
-  //define questions state
-  const [questions, setQuestions] = useState([]);
 
   //question object = {key: ...}
   const addQuestion = () => {
@@ -61,16 +66,16 @@ function SurveyForm() {
         <h1>Create a Survey</h1>
         <p>Fill in the details below</p>
       </Container>
-      <VStack>
-        <Box
-          className="name"
-          shadow="md"
-          width="800px"
-          p={5}
-          border="1px"
-          borderColor="gray.200"
-        >
-          <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
+        <VStack>
+          <Box
+            className="name"
+            shadow="md"
+            width="800px"
+            p={5}
+            border="1px"
+            borderColor="gray.200"
+          >
             <div className="form-group">
               <input
                 type="text"
@@ -91,21 +96,21 @@ function SurveyForm() {
                 onChange={onChange}
               />
             </div>
-          </form>
-        </Box>
-        {questions.map(({ key }) => (
-          <QuestionBox
-            key={key}
-            id={key}
-            num={
-              questions.findIndex((q) => {
-                return q.key === key;
-              }) + 1
-            }
-            delQuestion={delQuestion}
-          />
-        ))}
-      </VStack>
+          </Box>
+          {questions.map(({ key }) => (
+            <QuestionBox
+              key={key}
+              id={key}
+              num={
+                questions.findIndex((q) => {
+                  return q.key === key;
+                }) + 1
+              }
+              delQuestion={delQuestion}
+            />
+          ))}
+        </VStack>
+      </form>
       <Container p={10} className="form-group">
         {questions.length === 0 ? (
           <Text>This survey has no questions yet</Text>

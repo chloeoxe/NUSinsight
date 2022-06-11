@@ -15,6 +15,10 @@ const surveySchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a description"],
     },
+    questions: {
+      type: Array,
+      required: [true, "Please add at least one question"],
+    },
   },
   {
     timestamps: true,

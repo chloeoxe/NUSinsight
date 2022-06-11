@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -9,12 +9,27 @@ import {
 } from "@chakra-ui/react";
 import MultipleChoice from "./survey/MultipleChoice";
 import OpenEnded from "./survey/OpenEnded";
+import { v4 as uuidv4 } from "uuid";
 
+//handles different types of questions here
 function QuestionBox(props) {
   const [questionType, setQuestionType] = useState("mcq");
 
-  const handleChange = (e) => {
+  const initialOptions = [{ key: uuidv4(), value: "", id: 1 }];
+
+  //state for questionInput
+  const [questionInput, setQuestionInput] = useState("");
+
+  //state for MCQ options
+  const [options, setOptions] = useState(initialOptions);
+
+  const clearOptions = () => {
+    setOptions([...initialOptions]);
+  };
+
+  const handleTypeChange = (e) => {
     setQuestionType(e.target.value);
+    clearOptions();
   };
 
   return (
@@ -44,7 +59,7 @@ function QuestionBox(props) {
         <Box align="right">
           <Select
             value={questionType}
-            onChange={handleChange}
+            onChange={handleTypeChange}
             size="md"
             maxW="250px"
           >
@@ -54,8 +69,24 @@ function QuestionBox(props) {
         </Box>
       </SimpleGrid>
       <Container maxW="780px">
-        {questionType === "mcq" ? <MultipleChoice /> : ""}
+        {questionType === "mcq" ? (
+          <MultipleChoice
+            options={options}
+            setOptions={setOptions}
+            setQuestionInput={setQuestionInput}
+          />
+        ) : (
+          ""
+        )}
         {questionType === "oe" ? <OpenEnded /> : ""}
+      </Container>
+      <Container>
+        <Button onClick={() => console.log(questionInput)}>
+          See current state of question input
+        </Button>
+        <Button onClick={() => console.log(options)}>
+          See current state of options
+        </Button>
       </Container>
     </Box>
   );
