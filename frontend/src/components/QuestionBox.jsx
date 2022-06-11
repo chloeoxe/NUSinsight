@@ -23,13 +23,22 @@ function QuestionBox(props) {
   //state for MCQ options
   const [options, setOptions] = useState(initialOptions);
 
+  useEffect(() => {
+    props.updateQuestion(questionType, questionInput, options);
+  }, [questionType, questionInput, options]);
+
   const clearOptions = () => {
     setOptions([...initialOptions]);
+  };
+
+  const clearQuestionInput = () => {
+    setQuestionInput("");
   };
 
   const handleTypeChange = (e) => {
     setQuestionType(e.target.value);
     clearOptions();
+    clearQuestionInput();
   };
 
   return (
@@ -79,14 +88,6 @@ function QuestionBox(props) {
           ""
         )}
         {questionType === "oe" ? <OpenEnded /> : ""}
-      </Container>
-      <Container>
-        <Button onClick={() => console.log(questionInput)}>
-          See current state of question input
-        </Button>
-        <Button onClick={() => console.log(options)}>
-          See current state of options
-        </Button>
       </Container>
     </Box>
   );
