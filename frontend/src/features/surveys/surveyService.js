@@ -28,6 +28,19 @@ const getSurveys = async (token) => {
   return response.data;
 };
 
+// Get feed surveys
+const getFeedSurveys = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + "feed", config);
+
+  return response.data;
+};
+
 // Delete user survey
 const deleteSurvey = async (surveyId, token) => {
   const config = {
@@ -44,6 +57,7 @@ const deleteSurvey = async (surveyId, token) => {
 const surveyService = {
   createSurvey,
   getSurveys,
+  getFeedSurveys,
   deleteSurvey,
 };
 

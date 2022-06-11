@@ -15,6 +15,10 @@ const surveySchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a description"],
     },
+    isPublished: {
+      type: Boolean,
+      required: [true, "Please indicate whether the survey is published"],
+    },
   },
   {
     timestamps: true,

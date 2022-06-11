@@ -6,11 +6,12 @@ function SurveyForm() {
   const initialFormData = {
     title: "",
     desc: "",
+    isPublished: false,
   };
 
   const [formData, setFormData] = useState(initialFormData);
 
-  const { title, desc } = formData;
+  const { title, desc, isPublished } = formData;
 
   const dispatch = useDispatch();
 
@@ -26,11 +27,29 @@ function SurveyForm() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const surveyData = { title, desc };
+    const surveyData = { title, desc, isPublished };
 
     dispatch(createSurvey(surveyData));
 
     clearForm();
+  };
+
+  const onSave = () => {
+    let updatedPublished = {};
+    updatedPublished = { isPublished: false };
+    setFormData((prevState) => ({
+      ...prevState,
+      ...updatedPublished,
+    }));
+  };
+
+  const onPublish = () => {
+    let updatedPublished = {};
+    updatedPublished = { isPublished: true };
+    setFormData((prevState) => ({
+      ...prevState,
+      ...updatedPublished,
+    }));
   };
 
   return (
@@ -63,8 +82,13 @@ function SurveyForm() {
             />
           </div>
           <div className="form-group">
-            <button className="btn btn-block" type="submit">
-              Add Survey
+            <button className="btn btn-block" type="submit" onClick={onSave}>
+              Save Survey
+            </button>
+          </div>
+          <div className="form-group">
+            <button className="btn btn-block" type="submit" onClick={onPublish}>
+              Publish Survey
             </button>
           </div>
         </form>
