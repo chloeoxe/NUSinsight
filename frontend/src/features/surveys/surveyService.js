@@ -41,6 +41,13 @@ const getFeedSurveys = async (token) => {
   return response.data;
 };
 
+// Get another user's surveys
+const getOtherUserSurveys = async (username) => {
+  const response = await axios.get(API_URL + `other/${username}`);
+
+  return response.data;
+};
+
 // Delete user survey
 const deleteSurvey = async (surveyId, token) => {
   const config = {
@@ -58,6 +65,7 @@ const surveyService = {
   createSurvey,
   getSurveys,
   getFeedSurveys,
+  getOtherUserSurveys,
   deleteSurvey,
 };
 

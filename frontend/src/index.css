@@ -87,16 +87,25 @@ h3 {
 }
 
 .surveys {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: block;
   gap: 10px;
 }
 
 .survey {
   background-color: #f4f4f4;
+  border-radius: 8px;
   margin: 10px 0;
   padding: 20px 0 10px;
   position: relative;
+}
+
+.survey .publishTag {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  cursor: pointer;
+  border: none;
+  background: none;
 }
 
 .survey .close {

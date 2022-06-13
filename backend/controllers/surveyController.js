@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const Survey = require("../models/surveyModel");
-const User = require("../models/userModel");
 
 // @desc Get surveys
 // @route GET /api/surveys
@@ -33,17 +32,15 @@ const setSurvey = asyncHandler(async (req, res) => {
   }
 
   // Create new survey
-  const surveyCreator = await User.findById(req.user.id);
   const survey = await Survey.create({
     user: req.user.id,
-    username: surveyCreator.username,
+    username: req.user.username,
     title,
     desc,
     isPublished,
   });
 
   if (survey) {
-    console.log(survey);
     res.status(201).json({
       _id: survey.id,
       user: survey.user,
@@ -132,10 +129,23 @@ const getFeedSurveys = asyncHandler(async (req, res) => {
   res.status(200).json(surveys);
 });
 
+// @desc Get another user's surveys
+// @route GET /api/surveys/other/:username
+// @access Public
+const getOtherUserSurveys = asyncHandler(async (req, res) => {
+  const surveys = await Survey.find({
+    username: req.params.username,
+    isPublished: true,
+  });
+
+  res.status(200).json(surveys);
+});
+
 module.exports = {
   getSurveys,
   setSurvey,
   updateSurvey,
   deleteSurvey,
   getFeedSurveys,
+  getOtherUserSurveys,
 };

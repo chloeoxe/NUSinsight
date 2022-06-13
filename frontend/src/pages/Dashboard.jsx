@@ -22,12 +22,12 @@ function Dashboard() {
     if (!user) {
       navigate("/login");
     } else {
-      console.log(user);
       dispatch(getSurveys());
-      return () => {
-        dispatch(reset());
-      };
     }
+
+    return () => {
+      dispatch(reset());
+    };
   }, [user, navigate, isError, message, dispatch]);
 
   if (isLoading) {

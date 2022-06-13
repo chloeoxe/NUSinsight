@@ -56,9 +56,21 @@ const getMe = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
+// Get another user's details
+const getOtherUser = async (username) => {
+  const response = await axios.get(API_URL + `account/other/${username}`);
+
+  if (response.data) {
+    localStorage.setItem("otherUser", JSON.stringify(response.data));
+  }
+
+  return response.data;
+};
+
 // Logout user
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("otherUser");
 };
 
 const authService = {
@@ -66,6 +78,7 @@ const authService = {
   login,
   updateUser,
   getMe,
+  getOtherUser,
   logout,
 };
 

@@ -7,6 +7,10 @@ const surveySchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    username: {
+      type: String,
+      required: [true, "Please add the survey creator's username"],
+    },
     title: {
       type: String,
       required: [true, "Please add a title"],

@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { deleteSurvey } from "../features/surveys/surveySlice";
+import { FaCheckCircle, FaCog } from "react-icons/fa";
 
 function SurveyItem({ survey }) {
   const dispatch = useDispatch();
@@ -8,8 +9,17 @@ function SurveyItem({ survey }) {
     <div className="survey">
       <div>{new Date(survey.createdAt).toLocaleString("en-US")}</div>
       <h2>{survey.title}</h2>
-      <h4>{survey.desc}</h4>
-      <h5>{survey.isPublished}</h5>
+      <div>
+        {String(survey.isPublished) === "true" ? (
+          <div className="publishTag">
+            <FaCheckCircle />
+          </div>
+        ) : (
+          <div className="publishTag">
+            <FaCog />
+          </div>
+        )}
+      </div>
       <button
         className="close"
         onClick={() => dispatch(deleteSurvey(survey._id))}

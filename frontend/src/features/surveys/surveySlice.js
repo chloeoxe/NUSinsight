@@ -66,6 +66,24 @@ export const getFeedSurveys = createAsyncThunk(
   }
 );
 
+// Get another user's surveys
+export const getOtherUserSurveys = createAsyncThunk(
+  "surveys/getOtherUserSurveys",
+  async (username, thunkAPI) => {
+    try {
+      return await surveyService.getOtherUserSurveys(username);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Delete user survey
 export const deleteSurvey = createAsyncThunk(
   "surveys/delete",
@@ -128,6 +146,19 @@ export const surveySlice = createSlice({
         state.surveys = action.payload;
       })
       .addCase(getFeedSurveys.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getOtherUserSurveys.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOtherUserSurveys.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(getOtherUserSurveys.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -140,6 +140,21 @@ const updateMe = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get another user's data
+// @route GET /api/users/account/other/:username
+// @access Public
+const getOther = asyncHandler(async (req, res) => {
+  const otherUser = await User.findOne({ username: req.params.username });
+  res.status(200).json({
+    _id: otherUser.id,
+    name: otherUser.name,
+    position: otherUser.position,
+    major: otherUser.major,
+    email: otherUser.email,
+    username: otherUser.username,
+  });
+});
+
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -152,4 +167,5 @@ module.exports = {
   loginUser,
   getMe,
   updateMe,
+  getOther,
 };

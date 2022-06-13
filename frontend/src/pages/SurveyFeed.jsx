@@ -22,12 +22,12 @@ function SurveyFeed() {
     if (!user) {
       navigate("/login");
     } else {
-      console.log(user);
       dispatch(getFeedSurveys());
-      return () => {
-        dispatch(reset());
-      };
     }
+
+    return () => {
+      dispatch(reset());
+    };
   }, [user, navigate, isError, message, dispatch]);
 
   if (isLoading) {
