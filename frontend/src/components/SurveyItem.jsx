@@ -11,13 +11,18 @@ function SurveyItem({ survey }) {
       <h2>{survey.title}</h2>
       <h4>{survey.desc}</h4>
       {questionsArray.map((q) => {
-        return (
-          <>
-            <h4>Question type: {q.type}</h4>
-            <h4>Question: {q.question}</h4>
-            <h4>Options: {q.options.map((o) => o.value + " ")}</h4>
-          </>
-        );
+        if (q.type === "mcq") {
+          return (
+            <>
+              <h4>{q.question}</h4>
+              {q.response.options.map((o) => (
+                <h4>{o.value}</h4>
+              ))}
+            </>
+          );
+        } else {
+          return "";
+        }
       })}
       <button
         className="close"

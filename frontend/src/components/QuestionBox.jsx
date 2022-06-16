@@ -9,36 +9,47 @@ import {
 } from "@chakra-ui/react";
 import MultipleChoice from "./survey/MultipleChoice";
 import OpenEnded from "./survey/OpenEnded";
-import { v4 as uuidv4 } from "uuid";
 
 //handles different types of questions here
 function QuestionBox(props) {
   const [questionType, setQuestionType] = useState("mcq");
 
-  const initialOptions = [{ key: uuidv4(), value: "", id: 1 }];
-
   //state for questionInput
   const [questionInput, setQuestionInput] = useState("");
 
-  //state for MCQ options
-  const [options, setOptions] = useState(initialOptions);
+  //state for questionResponse
+  const [questionResponse, setQuestionResponse] = useState({});
+
+  //update question if there are any changes in response object
+  const { updateQuestion } = props;
 
   useEffect(() => {
-    props.updateQuestion(questionType, questionInput, options);
-  }, [questionType, questionInput, options]);
-
-  const clearOptions = () => {
-    setOptions([...initialOptions]);
-  };
+    updateQuestion(questionType, questionInput, questionResponse);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionType, questionInput, questionResponse]);
 
   const clearQuestionInput = () => {
     setQuestionInput("");
   };
 
+  const clearQuestionResponse = () => {
+    setQuestionResponse({});
+  };
+
+  const handleQuestionInput = (e) => {
+    setQuestionInput(e.target.value);
+  };
+
   const handleTypeChange = (e) => {
     setQuestionType(e.target.value);
-    clearOptions();
     clearQuestionInput();
+    clearQuestionResponse();
+  };
+
+  const updateQuestionResponse = (response) => {
+    setQuestionResponse({
+      ...response,
+    });
   };
 
   return (
@@ -80,9 +91,9 @@ function QuestionBox(props) {
       <Container maxW="780px">
         {questionType === "mcq" ? (
           <MultipleChoice
-            options={options}
-            setOptions={setOptions}
+            handleQuestionInput={handleQuestionInput}
             setQuestionInput={setQuestionInput}
+            updateQuestionResponse={updateQuestionResponse}
           />
         ) : (
           ""

@@ -1,33 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   FormControl,
   FormLabel,
   Input,
   Stack,
-  RadioGroup,
   Radio,
   VStack,
   Button,
   HStack,
 } from "@chakra-ui/react";
-import { v4 as uuidv4 } from "uuid";
 
 function MultipleChoice(props) {
-  const { options, setOptions, setQuestionInput } = props;
+  const { handleQuestionInput, updateQuestionResponse } = props;
+
+  const initialOptions = [{ value: "", id: 1 }];
+
+  //state for MCQ options
+  const [options, setOptions] = useState(initialOptions);
+
+  //update question response for changes in options
+  useEffect(() => {
+    updateQuestionResponse({
+      options: options,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options]);
 
   //each option has a unique key, value(string), and id(number)
   const handleAddOption = () => {
-    setOptions([
-      ...options,
-      { key: uuidv4(), value: "", id: options.length + 1 },
-    ]);
+    setOptions([...options, { value: "", id: options.length + 1 }]);
   };
 
   const handleOptionChange = (e) => {
     const temp_state = [...options];
     const temp_option_index = options.findIndex((o) => {
-      return o.id == e.target.getAttribute("id");
+      return o.id === Number(e.target.getAttribute("id"));
     });
     const temp_option = {
       ...options[temp_option_index],
@@ -37,16 +45,12 @@ function MultipleChoice(props) {
     setOptions(temp_state);
   };
 
-  const handleQuestionChange = (e) => {
-    setQuestionInput(e.target.value);
-  };
-
   const handleRemoveOption = () => {
     let newOptions = [...options];
     let removedOption = newOptions.pop();
     setOptions(newOptions);
-    if (selectedOption == removedOption.id) {
-      if (selectedOption == 1) {
+    if (selectedOption === removedOption.id) {
+      if (selectedOption === 1) {
         //do nothing
       } else {
         setSelectedOption(newOptions.length);
@@ -59,7 +63,7 @@ function MultipleChoice(props) {
   const handleSelectOption = (e) => {
     const newSelectedOption =
       options.findIndex((o) => {
-        return o.id == e.target.getAttribute("id");
+        return o.id === Number(e.target.getAttribute("id"));
       }) + 1;
     setSelectedOption(newSelectedOption);
   };
@@ -73,17 +77,16 @@ function MultipleChoice(props) {
             id="question"
             placeholder="Enter your question here"
             defaultValue=""
-            onChange={handleQuestionChange}
+            onChange={handleQuestionInput}
           ></Input>
         </Box>
         <Box align="left">
           <FormLabel>Options</FormLabel>
           <VStack alignItems="left">
-            {options.map(({ key, value, id }) => {
+            {options.map(({ value, id }) => {
               return (
-                <HStack>
+                <HStack key={id}>
                   <Radio
-                    key={key}
                     id={id}
                     isChecked={id === selectedOption}
                     onChange={handleSelectOption}

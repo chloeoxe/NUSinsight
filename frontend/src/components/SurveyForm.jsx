@@ -47,34 +47,35 @@ function SurveyForm() {
     clearForm();
   };
 
-  //question object = {key: ...}
+  //question object = {id, type, question, questionResponse}
   const addQuestion = () => {
     setQuestions([
       ...questions,
       {
-        key: uuidv4(),
+        id: uuidv4(),
+        type: "",
+        question: "",
+        response: {},
       },
     ]);
   };
 
-  const delQuestion = (key) => {
-    const newQuestions = questions.filter((q) => q.key !== key);
+  const delQuestion = (id) => {
+    const newQuestions = questions.filter((q) => q.id !== id);
     setQuestions(newQuestions);
   };
 
-  const updateQuestion = (key) => {
-    return (type, question, options) => {
-      if (type == "mcq") {
-        const refQuestionIndex = questions.findIndex((q) => q.key == key);
-        const newQuestions = [...questions];
-        newQuestions[refQuestionIndex] = {
-          ...questions[refQuestionIndex],
-          type: type,
-          question: question,
-          options: options,
-        };
-        setQuestions(newQuestions);
-      }
+  const updateQuestion = (id) => {
+    return (type, question, response) => {
+      const refQuestionIndex = questions.findIndex((q) => q.id === id);
+      const newQuestions = [...questions];
+      newQuestions[refQuestionIndex] = {
+        ...questions[refQuestionIndex],
+        type: type,
+        question: question,
+        response: response,
+      };
+      setQuestions(newQuestions);
     };
   };
 
@@ -115,17 +116,17 @@ function SurveyForm() {
               />
             </div>
           </Box>
-          {questions.map(({ key }) => (
+          {questions.map(({ id }) => (
             <QuestionBox
-              key={key}
-              id={key}
+              key={id}
+              id={id}
               num={
                 questions.findIndex((q) => {
-                  return q.key === key;
+                  return q.id === id;
                 }) + 1
               }
               delQuestion={delQuestion}
-              updateQuestion={updateQuestion(key)}
+              updateQuestion={updateQuestion(id)}
             />
           ))}
         </VStack>
