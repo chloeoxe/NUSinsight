@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-//import SurveyForm from "../components/SurveyForm";
 import SurveyItem from "../components/SurveyItem";
 import Spinner from "../components/Spinner";
 import { getSurveys, reset } from "../features/surveys/surveySlice";
@@ -24,10 +23,11 @@ function Dashboard() {
       navigate("/login");
     } else {
       dispatch(getSurveys());
-      return () => {
-        dispatch(reset());
-      };
     }
+
+    return () => {
+      dispatch(reset());
+    };
   }, [user, navigate, isError, message, dispatch]);
 
   if (isLoading) {

@@ -18,6 +18,10 @@ function Account() {
     }
   }, [user, navigate]);
 
+  const onEdit = () => {
+    navigate("/account/edit");
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -26,7 +30,8 @@ function Account() {
     <>
       <section className="heading">
         <h1>
-          <FaUser /> Your Account
+          <FaUser />
+          {username}
         </h1>
         <p>View and Edit details</p>
       </section>
@@ -51,7 +56,9 @@ function Account() {
         <label>Username</label>
         <h3>@{username}</h3>
       </div>
-      <button className="btn btn-block">Edit account details</button>
+      <button className="btn btn-block" onClick={onEdit}>
+        Edit Account Details
+      </button>
     </>
   );
 }

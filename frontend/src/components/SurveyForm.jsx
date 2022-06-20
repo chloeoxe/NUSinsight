@@ -14,11 +14,12 @@ function SurveyForm() {
     title: "",
     desc: "",
     questions: [],
+    isPublished: false,
   };
 
   const [formData, setFormData] = useState(initialFormData);
 
-  const { title, desc } = formData;
+  const { title, desc, isPublished } = formData;
 
   const dispatch = useDispatch();
 
@@ -38,9 +39,7 @@ function SurveyForm() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log("submitting");
-
-    const surveyData = { title, desc, questions };
+    const surveyData = { title, desc, questions, isPublished };
 
     dispatch(createSurvey(surveyData));
 
@@ -77,6 +76,24 @@ function SurveyForm() {
       };
       setQuestions(newQuestions);
     };
+  };
+    
+  const onSave = () => {
+    let updatedPublished = {};
+    updatedPublished = { isPublished: false };
+    setFormData((prevState) => ({
+      ...prevState,
+      ...updatedPublished,
+    }));
+  };
+
+  const onPublish = () => {
+    let updatedPublished = {};
+    updatedPublished = { isPublished: true };
+    setFormData((prevState) => ({
+      ...prevState,
+      ...updatedPublished,
+    }));
   };
 
   return (
@@ -149,7 +166,12 @@ function SurveyForm() {
         </Container>
         <Container className="heading" maxW="800px" p={5}>
           <div className="form-group">
-            <button className="btn btn-block" type="submit">
+            <button className="btn btn-block" type="submit" onClick={onSave}>
+              Save Survey
+            </button>
+          </div>
+          <div className="form-group">
+            <button className="btn btn-block" type="submit" onClick={onPublish}>
               Publish Survey
             </button>
           </div>

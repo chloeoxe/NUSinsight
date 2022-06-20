@@ -47,6 +47,43 @@ export const getSurveys = createAsyncThunk(
   }
 );
 
+// Get feed surveys
+export const getFeedSurveys = createAsyncThunk(
+  "surveys/getFeed",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.getFeedSurveys(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get another user's surveys
+export const getOtherUserSurveys = createAsyncThunk(
+  "surveys/getOtherUserSurveys",
+  async (username, thunkAPI) => {
+    try {
+      return await surveyService.getOtherUserSurveys(username);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Delete user survey
 export const deleteSurvey = createAsyncThunk(
   "surveys/delete",
@@ -96,6 +133,32 @@ export const surveySlice = createSlice({
         state.surveys = action.payload;
       })
       .addCase(getSurveys.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getFeedSurveys.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getFeedSurveys.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(getFeedSurveys.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getOtherUserSurveys.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOtherUserSurveys.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(getOtherUserSurveys.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

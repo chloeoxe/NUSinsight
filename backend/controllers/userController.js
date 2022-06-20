@@ -91,16 +91,74 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 // @desc Get user data
-// @route GET /api/users/me
-// @access Public
+// @route GET /api/users/account/:id
+// @access Private
 const getMe = asyncHandler(async (req, res) => {
+  // Make sure the logged-in user matches the user in the URL
+  if (req.params.id !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorised");
+  }
+
   res.status(200).json(req.user);
+});
+
+// @desc Update user data
+// @route PUT /api/users/account/update/:id
+// @access Private
+const updateMe = asyncHandler(async (req, res) => {
+  /*
+  // Check for user
+  if (!req.user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  // Make sure the logged-in user matches the user in the URL
+  if (req.params.id !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorised");
+  }
+  */
+  const updatedMe = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+
+  if (updatedMe) {
+    res.status(201).json({
+      _id: updatedMe.id,
+      name: updatedMe.name,
+      position: updatedMe.position,
+      major: updatedMe.major,
+      email: updatedMe.email,
+      username: updatedMe.username,
+      token: generateToken(updatedMe._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
+});
+
+// @desc Get another user's data
+// @route GET /api/users/account/other/:username
+// @access Public
+const getOther = asyncHandler(async (req, res) => {
+  const otherUser = await User.findOne({ username: req.params.username });
+  res.status(200).json({
+    _id: otherUser.id,
+    name: otherUser.name,
+    position: otherUser.position,
+    major: otherUser.major,
+    email: otherUser.email,
+    username: otherUser.username,
+  });
 });
 
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "365d",
   });
 };
 
@@ -108,4 +166,6 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  updateMe,
+  getOther,
 };

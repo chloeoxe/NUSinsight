@@ -7,6 +7,10 @@ const surveySchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    username: {
+      type: String,
+      required: [true, "Please add the survey creator's username"],
+    },
     title: {
       type: String,
       required: [true, "Please add a title"],
@@ -18,6 +22,10 @@ const surveySchema = mongoose.Schema(
     questions: {
       type: Array,
       required: [true, "Please add at least one question"],
+    },
+    isPublished: {
+      type: Boolean,
+      required: [true, "Please indicate whether the survey is published"],
     },
   },
   {
