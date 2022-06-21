@@ -19,7 +19,7 @@ function OthersAccount() {
 
   const { user, otherUser, isLoading } = useSelector((state) => state.auth);
 
-  const { name, position, major, email, username } = otherUser;
+  const { name, position, faculty, email, username } = otherUser;
 
   const { surveys } = useSelector((state) => state.surveys);
 
@@ -62,8 +62,8 @@ function OthersAccount() {
         <h3>{position}</h3>
       </div>
       <div className="details">
-        <label>Major</label>
-        <h3>{major}</h3>
+        <label>Faculty</label>
+        <h3>{faculty}</h3>
       </div>
       <div className="details">
         <label>Email</label>

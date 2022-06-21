@@ -10,7 +10,7 @@ function Account() {
   const navigate = useNavigate();
 
   const { user, isLoading } = useSelector((state) => state.auth);
-  const { name, position, major, email, username } = user;
+  const { name, position, faculty, email, username } = user;
 
   useEffect(() => {
     if (!user) {
@@ -45,8 +45,8 @@ function Account() {
         <h3>{position}</h3>
       </div>
       <div className="details">
-        <label>Major</label>
-        <h3>{major}</h3>
+        <label>Faculty</label>
+        <h3>{faculty}</h3>
       </div>
       <div className="details">
         <label>Email</label>

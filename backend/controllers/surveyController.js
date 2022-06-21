@@ -16,9 +16,9 @@ const getSurveys = asyncHandler(async (req, res) => {
 const setSurvey = asyncHandler(async (req, res) => {
   const { title, desc, questions, isPublished } = req.body;
 
-  if (!title || !desc) {
+  if (!title) {
     res.status(400);
-    throw new Error("Please add a title and description");
+    throw new Error("Please add a title");
   }
 
   if (!questions) {
@@ -58,7 +58,7 @@ const setSurvey = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invaslid survey data");
+    throw new Error("Invalid survey data");
   }
 });
 

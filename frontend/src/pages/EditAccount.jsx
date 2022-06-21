@@ -11,12 +11,12 @@ function EditAccount() {
   const [formData, setFormData] = useState({
     name: "",
     position: "",
-    major: "",
+    faculty: "",
     email: "",
     username: "",
   });
 
-  const { name, position, major, email, username } = formData;
+  const { name, position, faculty, email, username } = formData;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ function EditAccount() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const userData = { name, position, major, email, username };
+    const userData = { name, position, faculty, email, username };
 
     dispatch(updateUser(userData));
     navigate("/account");
@@ -93,11 +93,11 @@ function EditAccount() {
           </div>
           <div className="form-group">
             <input
-              type="major"
+              type="faculty"
               className="form-control"
-              id="major"
-              name="major"
-              value={major}
+              id="faculty"
+              name="faculty"
+              value={faculty}
               placeholder="Course of Study"
               onChange={onChange}
             />
