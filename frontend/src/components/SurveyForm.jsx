@@ -77,7 +77,7 @@ function SurveyForm() {
       setQuestions(newQuestions);
     };
   };
-    
+
   const onSave = () => {
     let updatedPublished = {};
     updatedPublished = { isPublished: false };
@@ -111,6 +111,7 @@ function SurveyForm() {
             p={5}
             border="1px"
             borderColor="gray.200"
+            bg="white"
           >
             <div className="form-group">
               <input

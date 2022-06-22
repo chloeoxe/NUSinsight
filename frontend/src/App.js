@@ -17,7 +17,7 @@ function App() {
     <ChakraProvider resetCSS={false}>
       <>
         <Router>
-          <div className="container">
+          <div className="main-container">
             <Header />
             <Routes>
               <Route path="/" element={<Dashboard />} />

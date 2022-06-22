@@ -87,11 +87,12 @@ function Register() {
     <Box
       w={["full", "md"]}
       p={[8, 10]}
-      mt={[20, "10vh"]}
+      mt={[20, "8vh"]}
       mx="auto"
       border={["none", "1px"]}
       borderColor={["", "gray.300"]}
       borderRadius={10}
+      bg="white"
     >
       <VStack
         spacing={1}
@@ -160,7 +161,7 @@ function Register() {
               id="faculty"
               name="faculty"
               value={faculty}
-              placeholder="--Select your faculty--"
+              placeholder="-- Select your faculty --"
               rounded="false"
               onChange={onChange}
             >
@@ -265,12 +266,12 @@ function Register() {
         </div>
       </form>
 
-      <section className="registerFooter">
-        <p>Already have an account?</p>
+      <Box align="center">
+        <Text>Already have an account?</Text>
         <strong>
           <Link to="/login">Login</Link>
         </strong>
-      </section>
+      </Box>
     </Box>
   );
 }

@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import { Text } from "@chakra-ui/react";
 
 function Header() {
   const navigate = useNavigate();
@@ -26,7 +27,10 @@ function Header() {
     <header className="header">
       <div className="logo">
         <Link to="/">
-          <img src={logo} width="200" height="49.8" alt="App Logo" />
+          <Text className="logo" fontSize={40}>
+            NUSinsight
+          </Text>
+          {/*<img src={logo} width="200" height="49.8" alt="App Logo" />*/}
         </Link>
       </div>
       <ul>

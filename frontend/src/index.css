@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -7,8 +7,9 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   height: 100vh;
+  background-color: #F5F5F5;
 }
 
 a {
@@ -42,41 +43,70 @@ h3 {
   text-align: center;
 }
 
+.main-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid #e6e6e6;
-  margin-bottom: 60px;
+  padding: 30px 10%;
+  background: #0A4089;
+  height: 80px;
+}
+
+.header li, .header a, .header button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #F5F5F5;
+  text-decoration: none;
+}
+
+.logo {
+  font-family: "League Spartan", sans-serif;
+  color: #FFF;
+  cursor: pointer;
 }
 
 .header ul {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  list-style: none;
 }
 
 .header ul li {
-  margin-left: 20px;
+  display: inline-block;
+  padding: 0px 20px;
 }
 
 .header ul li a {
-  display: flex;
-  align-items: center;
+  transition: all 0.3s ease 0s;
 }
 
 .header ul li a:hover {
-  color: #777;
+  color: #FFB208;
 }
 
-.header ul li a svg {
-  margin-right: 5px;
+.header button {
+  padding: 9px 25px;
+  background-color: rgba(255, 178, 8, 1);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.header button:hover {
+  background-color: rgba(255, 178, 8, 0.8);
 }
 
 .heading {
   font-size: 2rem;
   font-weight: 700;
+  margin-top: 70px;
   margin-bottom: 50px;
   padding: 0 20px;
 }
