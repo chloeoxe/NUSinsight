@@ -9,16 +9,31 @@ import SurveyCreationStart from "./pages/SurveyCreationStart";
 import Account from "./pages/Account";
 import EditAccount from "./pages/EditAccount";
 import SurveyFeed from "./pages/SurveyFeed";
-import { ChakraProvider } from "@chakra-ui/react";
+import Sidebar from "./components/Sidebar";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import OthersAccount from "./pages/OthersAccount";
+import { useSelector } from "react-redux";
+
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        bg: "#f5f5f5",
+      },
+    },
+  },
+});
 
 function App() {
+  const { user } = useSelector((state) => state.auth);
+
   return (
-    <ChakraProvider resetCSS={false}>
+    <ChakraProvider resetCSS={false} theme={theme}>
       <>
         <Router>
           <div className="main-container">
             <Header />
+            {user ? <Sidebar user={user} /> : ""}
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/login" element={<Login />} />

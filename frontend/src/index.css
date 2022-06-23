@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -54,9 +55,12 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 10%;
+  padding: 30px;
   background: #0A4089;
   height: 80px;
+  position: sticky;
+  width: 100%;
+  top: 0;
 }
 
 .header li, .header a, .header button {
@@ -101,6 +105,127 @@ h3 {
 
 .header button:hover {
   background-color: rgba(255, 178, 8, 0.8);
+}
+
+.sidebar {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  padding: 10px 14px;
+  background: #FFF;
+  transition: all 0.5s ease;
+}
+
+.sidebar #icon {
+  color: #707070;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.sidebar #title {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  color: #707070;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  opacity: 1;
+}
+
+.sidebar .text {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  color: #707070;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  opacity: 1;
+}
+
+.sidebar .avatar {
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.sidebar header .image-text {
+  display: flex;
+  align-items: center;
+  cursor: default;
+}
+
+.sidebar header .image-text .header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .header-text .username {
+  font-weight: 600;
+}
+
+.sidebar .header-text .faculty {
+  margin-top: -2px;
+}
+
+.sidebar header {
+  position: relative;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.sidebar header .toggle {
+  position: absolute;
+  top: 50%;
+  right: -25px;
+  transform: translateY(20px);
+  height: 25px;
+  width: 25px;
+  background: #0A4089;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #FFF;
+  font-size: 20px;
+}
+
+.sidebar-list {
+  margin-top: 60px;
+}
+
+.sidebar ul li a {
+  height: 50px;
+  margin-top: 20px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+  background: #0A4089;
+}
+
+.sidebar ul li a:hover #icon,
+.sidebar ul li a:hover #title {
+  color: #FFF;
+}
+
+.sidebar--close {
+  width: 88px;
+}
+
+.sidebar--close #title,
+.sidebar--close .text {
+  opacity: 0;
 }
 
 .heading {
