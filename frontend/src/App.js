@@ -9,10 +9,9 @@ import SurveyCreationStart from "./pages/SurveyCreationStart";
 import Account from "./pages/Account";
 import EditAccount from "./pages/EditAccount";
 import SurveyFeed from "./pages/SurveyFeed";
-import Sidebar from "./components/Sidebar";
+import MyForms from "./pages/MyForms";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import OthersAccount from "./pages/OthersAccount";
-import { useSelector } from "react-redux";
 
 const theme = extendTheme({
   styles: {
@@ -25,15 +24,12 @@ const theme = extendTheme({
 });
 
 function App() {
-  const { user } = useSelector((state) => state.auth);
-
   return (
     <ChakraProvider resetCSS={false} theme={theme}>
       <>
         <Router>
           <div className="main-container">
             <Header />
-            {user ? <Sidebar user={user} /> : ""}
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/login" element={<Login />} />
@@ -46,6 +42,7 @@ function App() {
               <Route path="/account/edit" element={<EditAccount />} />
               <Route path="/feed" element={<SurveyFeed />} />
               <Route path="/account/:username" element={<OthersAccount />} />
+              <Route path="/myforms" element={<MyForms />} />
             </Routes>
           </div>
         </Router>

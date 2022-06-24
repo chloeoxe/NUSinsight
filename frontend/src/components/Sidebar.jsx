@@ -1,24 +1,16 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaFileAlt, FaGlobeAmericas, FaHome, FaUser } from "react-icons/fa";
-import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
+import { FaGlobeAmericas, FaUser } from "react-icons/fa";
 import { Avatar, Divider } from "@chakra-ui/react";
 
 function Sidebar({ user }) {
-  const [sidebar, setSidebar] = useState(false);
-
-  const toggleSidebar = () => {
-    setSidebar((prevState) => !prevState);
-  };
-
   const { faculty, username } = user;
 
   return (
-    <div className={sidebar ? "sidebar" : "sidebar sidebar--close"}>
+    <div className="sidebar">
       <header>
         <div class="image-text">
           <span class="avatar">
-            <Avatar class="avatar" name={username} w="45px" h="45px" />
+            <Avatar class="avatar" name={username} w="40px" h="40px" />
           </span>
 
           <div class="text header-text">
@@ -29,23 +21,10 @@ function Sidebar({ user }) {
           </div>
         </div>
       </header>
-      <header onClick={toggleSidebar}>
-        {sidebar ? (
-          <ChevronLeftIcon className="toggle" />
-        ) : (
-          <ChevronRightIcon className="toggle" />
-        )}
-      </header>
 
       <Divider />
 
       <ul className="sidebar-list">
-        <li>
-          <Link to="/">
-            <FaHome id="icon" />
-            <div id="title">Home</div>
-          </Link>
-        </li>
         <li>
           <Link to="/account">
             <FaUser id="icon" />
@@ -56,12 +35,6 @@ function Sidebar({ user }) {
           <Link to="/feed">
             <FaGlobeAmericas id="icon" />
             <div id="title">Survey Feed</div>
-          </Link>
-        </li>
-        <li>
-          <Link to="/createSurveyStart">
-            <FaFileAlt id="icon" />
-            <div id="title">Create Survey</div>
           </Link>
         </li>
       </ul>

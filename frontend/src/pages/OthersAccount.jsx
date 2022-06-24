@@ -11,6 +11,7 @@ import {
   reset as resetSurveys,
 } from "../features/surveys/surveySlice";
 import OthersAccountSurveyItem from "../components/OthersAccountSurveyItem";
+import Sidebar from "../components/Sidebar";
 
 function OthersAccount() {
   const navigate = useNavigate();
@@ -46,49 +47,53 @@ function OthersAccount() {
 
   return (
     <>
-      <section className="heading">
-        <h1>
-          <FaUser />
-          {username}
-        </h1>
-      </section>
+      <Sidebar user={user} />
 
-      <div className="details">
-        <label>Name</label>
-        <h3>{name}</h3>
-      </div>
-      <div className="details">
-        <label>Position</label>
-        <h3>{position}</h3>
-      </div>
-      <div className="details">
-        <label>Faculty</label>
-        <h3>{faculty}</h3>
-      </div>
-      <div className="details">
-        <label>Email</label>
-        <h3>{email}</h3>
-      </div>
-      <div className="details">
-        <label>Username</label>
-        <h3>@{username}</h3>
-      </div>
+      <div className="my-feed">
+        <section className="heading">
+          <h1>
+            <FaUser />
+            {username}
+          </h1>
+        </section>
 
-      <section className="heading">
-        <h3>Published Surveys</h3>
-      </section>
+        <div className="details">
+          <label>Name</label>
+          <h3>{name}</h3>
+        </div>
+        <div className="details">
+          <label>Position</label>
+          <h3>{position}</h3>
+        </div>
+        <div className="details">
+          <label>Faculty</label>
+          <h3>{faculty}</h3>
+        </div>
+        <div className="details">
+          <label>Email</label>
+          <h3>{email}</h3>
+        </div>
+        <div className="details">
+          <label>Username</label>
+          <h3>@{username}</h3>
+        </div>
 
-      <section className="content">
-        {surveys.length > 0 ? (
-          <div className="surveys">
-            {surveys.map((survey) => (
-              <OthersAccountSurveyItem key={survey._id} survey={survey} />
-            ))}
-          </div>
-        ) : (
-          <h3>@{username} has not published any surveys</h3>
-        )}
-      </section>
+        <section className="heading">
+          <h3>Published Surveys</h3>
+        </section>
+
+        <section className="content">
+          {surveys.length > 0 ? (
+            <div className="surveys">
+              {surveys.map((survey) => (
+                <OthersAccountSurveyItem key={survey._id} survey={survey} />
+              ))}
+            </div>
+          ) : (
+            <h3>@{username} has not published any surveys</h3>
+          )}
+        </section>
+      </div>
     </>
   );
 }

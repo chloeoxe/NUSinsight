@@ -1,30 +1,26 @@
 import { useDispatch } from "react-redux";
 import { deleteSurvey } from "../features/surveys/surveySlice";
-import { FaCheckCircle, FaCog } from "react-icons/fa";
+import { FaCheckCircle, FaCog, FaStar, FaTrashAlt } from "react-icons/fa";
+import { Checkbox } from "@chakra-ui/react";
 
 function SurveyItem({ survey }) {
   const dispatch = useDispatch();
-  const questionsArray = survey.questions;
 
   return (
     <div className="survey">
-      <div>{new Date(survey.createdAt).toLocaleString("en-US")}</div>
-      <h2>{survey.title}</h2>
-      <h4>{survey.desc}</h4>
-      {questionsArray.map((q) => {
-        if (q.type === "mcq") {
-          return (
-            <>
-              <h4>{q.question}</h4>
-              {q.response.options.map((o) => (
-                <h4>{o.value}</h4>
-              ))}
-            </>
-          );
-        } else {
-          return "";
-        }
-      })}
+      <Checkbox className="checkbox" borderColor="#cacddc" />
+      <div className="favourite">
+        <FaStar />
+      </div>
+      <div className="survey-info">
+        <div className="title">
+          {survey.title === "" ? "Form" : survey.title}
+        </div>
+        <div className="subtitle">
+          Created on {new Date(survey.createdAt).toLocaleString("en-US")}
+        </div>
+      </div>
+
       <div>
         {String(survey.isPublished) === "true" ? (
           <div className="publishTag">
@@ -40,7 +36,7 @@ function SurveyItem({ survey }) {
         className="close"
         onClick={() => dispatch(deleteSurvey(survey._id))}
       >
-        X
+        <FaTrashAlt size="15px" />
       </button>
     </div>
   );

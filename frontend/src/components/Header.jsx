@@ -1,11 +1,4 @@
-import {
-  FaSignInAlt,
-  FaSignOutAlt,
-  FaUser,
-  FaGlobeAmericas,
-  FaFileAlt,
-  FaHome,
-} from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
@@ -34,6 +27,12 @@ function Header() {
       <ul>
         {user ? (
           <>
+            <li>
+              <Link to="/myforms">My Forms</Link>
+            </li>
+            <li>
+              <Link to="/feed">My Feed</Link>
+            </li>
             <li>
               <button className="btn" onClick={onLogout}>
                 <FaSignOutAlt /> Logout
