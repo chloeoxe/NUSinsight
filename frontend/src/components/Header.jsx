@@ -1,15 +1,8 @@
-import {
-  FaSignInAlt,
-  FaSignOutAlt,
-  FaUser,
-  FaGlobeAmericas,
-  FaFileAlt,
-  FaHome,
-} from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../images/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import { Text } from "@chakra-ui/react";
 
 function Header() {
   const navigate = useNavigate();
@@ -26,31 +19,19 @@ function Header() {
     <header className="header">
       <div className="logo">
         <Link to="/">
-          <img src={logo} width="200" height="49.8" alt="App Logo" />
+          <Text className="logo" fontSize={40}>
+            NUSinsight
+          </Text>
         </Link>
       </div>
       <ul>
         {user ? (
           <>
             <li>
-              <Link to="/createSurveyStart">
-                <FaFileAlt /> Create Survey
-              </Link>
+              <Link to="/myforms">My Forms</Link>
             </li>
             <li>
-              <Link to="/feed">
-                <FaGlobeAmericas /> Feed
-              </Link>
-            </li>
-            <li>
-              <Link to="/account">
-                <FaUser /> Account
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <FaHome /> Home
-              </Link>
+              <Link to="/feed">My Feed</Link>
             </li>
             <li>
               <button className="btn" onClick={onLogout}>

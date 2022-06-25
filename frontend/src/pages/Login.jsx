@@ -71,6 +71,7 @@ function Login() {
       border={["none", "1px"]}
       borderColor={["", "gray.300"]}
       borderRadius={10}
+      bg="white"
     >
       <VStack
         spacing={1}
@@ -88,26 +89,24 @@ function Login() {
       <form onSubmit={onSubmit}>
         <VStack spacing={4} align={["flex-start"]} w="full" mb={3}>
           <FormControl>
-            <FormLabel>E-mail Address</FormLabel>
+            <FormLabel fontWeight="bold">E-mail Address</FormLabel>
             <Input
               type="email"
               id="email"
               name="email"
               value={email}
               placeholder="Email"
-              variant="filled"
               onChange={onChange}
             />
           </FormControl>
           <FormControl>
-            <FormLabel>Password</FormLabel>
+            <FormLabel fontWeight="bold">Password</FormLabel>
             <Input
               type="password"
               id="password"
               name="password"
               value={password}
               placeholder="Password"
-              variant="filled"
               onChange={onChange}
             />
           </FormControl>
@@ -119,12 +118,12 @@ function Login() {
         </div>
       </form>
 
-      <section className="loginFooter">
-        <p>Don't have an account?</p>
+      <Box align="center">
+        <Text>Don't have an account?</Text>
         <strong>
           <Link to="/register">Register</Link>
         </strong>
-      </section>
+      </Box>
     </Box>
   );
 }

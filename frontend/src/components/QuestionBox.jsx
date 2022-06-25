@@ -60,6 +60,7 @@ function QuestionBox(props) {
       p={5}
       border="1px"
       borderColor="gray.200"
+      bg="white"
     >
       <Container maxW="780px" align="right">
         <Button

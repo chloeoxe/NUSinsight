@@ -7,9 +7,9 @@ const User = require("../models/userModel");
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, position, major, email, username, password } = req.body;
+  const { name, position, faculty, email, username, password } = req.body;
 
-  if (!name || !position || !major || !email || !username || !password) {
+  if (!name || !position || !faculty || !email || !username || !password) {
     res.status(400);
     throw new Error("Please add all fields");
   }
@@ -43,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     position,
-    major,
+    faculty,
     email,
     username,
     password: hashedPassword,
@@ -54,7 +54,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       position: user.position,
-      major: user.major,
+      faculty: user.faculty,
       email: user.email,
       username: user.username,
       token: generateToken(user._id),
@@ -79,7 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       position: user.position,
-      major: user.major,
+      faculty: user.faculty,
       email: user.email,
       username: user.username,
       token: generateToken(user._id),
@@ -129,7 +129,7 @@ const updateMe = asyncHandler(async (req, res) => {
       _id: updatedMe.id,
       name: updatedMe.name,
       position: updatedMe.position,
-      major: updatedMe.major,
+      faculty: updatedMe.faculty,
       email: updatedMe.email,
       username: updatedMe.username,
       token: generateToken(updatedMe._id),
@@ -149,7 +149,7 @@ const getOther = asyncHandler(async (req, res) => {
     _id: otherUser.id,
     name: otherUser.name,
     position: otherUser.position,
-    major: otherUser.major,
+    faculty: otherUser.faculty,
     email: otherUser.email,
     username: otherUser.username,
   });

@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap');
 
 * {
   margin: 0;
@@ -7,8 +8,9 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   height: 100vh;
+  background-color: #F5F5F5;
 }
 
 a {
@@ -42,41 +44,260 @@ h3 {
   text-align: center;
 }
 
+.main-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+.my-feed {
+  margin-left: 300px;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid #e6e6e6;
-  margin-bottom: 60px;
+  padding: 30px;
+  background: #0A4089;
+  height: 80px;
+  position: sticky;
+  width: 100%;
+  top: 0;
+}
+
+.header li, .header a, .header button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #F5F5F5;
+  text-decoration: none;
+}
+
+.logo {
+  font-family: "League Spartan", sans-serif;
+  color: #FFF;
+  cursor: pointer;
 }
 
 .header ul {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  list-style: none;
 }
 
 .header ul li {
-  margin-left: 20px;
+  display: inline-block;
+  padding: 0px 20px;
 }
 
 .header ul li a {
-  display: flex;
-  align-items: center;
+  transition: all 0.3s ease 0s;
 }
 
 .header ul li a:hover {
-  color: #777;
+  color: #FFB208;
 }
 
-.header ul li a svg {
-  margin-right: 5px;
+.header button {
+  padding: 9px 25px;
+  background-color: rgba(255, 178, 8, 1);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.header button:hover {
+  background-color: rgba(255, 178, 8, 0.8);
+}
+
+.sidebar {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  padding: 10px 14px;
+  background: #FFF;
+  transition: all 0.5s ease;
+}
+
+.sidebar #icon {
+  color: #707070;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.sidebar #title {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  color: #707070;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  opacity: 1;
+}
+
+.sidebar .text {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  color: #707070;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  opacity: 1;
+}
+
+.sidebar .avatar {
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.sidebar header .image-text {
+  display: flex;
+  align-items: center;
+  cursor: default;
+  margin-bottom: 20px;
+}
+
+.sidebar header .image-text .header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .header-text .username {
+  font-weight: 600;
+  text-align: left;
+}
+
+.sidebar .header-text .faculty {
+  margin-top: -2px;
+  text-align: left;
+}
+
+.sidebar header {
+  position: relative;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.sidebar-list {
+  margin-top: 60px;
+}
+
+.sidebar ul li a {
+  height: 50px;
+  margin-top: 20px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+  background: #0A4089;
+}
+
+.sidebar ul li a:hover #icon,
+.sidebar ul li a:hover #title {
+  color: #FFF;
+}
+
+.form-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  background: #072f64;
+  height: 70px;
+  position: sticky;
+  width: 100%;
+}
+
+.form-sidebar {
+  position: fixed;
+  height: 100%;
+  width: 300px;
+  padding: 10px 14px;
+  background: #e8ebf8;
+}
+
+.form-sidebar .text {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  color: #6c749d;
+  text-align: left;
+  transform: translateY(1px);
+}
+
+.form-sidebar ul li {
+  height: 50px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.form-sidebar ul li:hover {
+  background: #bbc4ea;
+}
+
+.form-sidebar .header-text {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.form-sidebar .forms-list {
+  margin-top: 10px;
+}
+
+.form-sidebar #icon {
+  color: #626a93;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.form-sidebar .subtext {
+  font-weight: 500;
+}
+
+.form-sidebar .item-text {
+  color: #52597b;
+}
+
+.form-sidebar hr {
+  background-color: #d6d8e4;
+  height: 1.5px;
+  border: none;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+.view-forms {
+  margin-left: 300px;
 }
 
 .heading {
   font-size: 2rem;
   font-weight: 700;
+  margin-top: 70px;
   margin-bottom: 50px;
   padding: 0 20px;
 }
@@ -87,33 +308,82 @@ h3 {
 
 .surveys {
   display: block;
-  gap: 10px;
+  margin-top: 30px;
 }
 
 .survey {
-  background-color: #f4f4f4;
   border-radius: 8px;
-  margin: 10px 0;
-  padding: 20px 0 10px;
-  position: relative;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 10px;
+  padding: 20px 30px;
+  text-decoration: none;
+  list-style: none;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+}
+
+.survey:hover {
+  background-color: #e8ebf8;
+}
+
+.survey .checkbox {
+  text-align: left;
+  padding-right: 20px;
+}
+
+.survey .favourite {
+  width: 20px;
+  padding-right: 30px;
+  color: #cacddc
+}
+
+.survey .favourite:hover {
+  color: #626a93;
+  transition: all 0.2s ease;
+}
+
+.survey .survey-info {
+  font-family: "Montserrat", sans-serif;
+  width: 1160px;
+}
+
+.survey .title,
+.survey .subtitle {
+  line-height: 1.5;
+  text-align: left;
+  padding-left: 5%;
+}
+
+.survey .title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.survey .subtitle {
+  font-size: 14px;
 }
 
 .survey .publishTag {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  cursor: pointer;
+  cursor: default;
   border: none;
   background: none;
 }
 
 .survey .close {
-  position: absolute;
   top: 10px;
   right: 15px;
   cursor: pointer;
   border: none;
   background: none;
+  padding-left: 30px;
+  color: #cacddc;
+  transition: all 0.2s ease;
+}
+
+.survey .close:hover {
+  color: #626a93;
 }
 
 .details {
@@ -170,6 +440,24 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.no-surveys {
+  margin: 10%;
+}
+
+.no-surveys .text {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #52597b;
+}
+
+.no-surveys .subtext {
+  margin-top: 5px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #626a93;
 }
 
 .btn svg {
