@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { deleteSurvey } from "../features/surveys/surveySlice";
-import { FaCheckCircle, FaCog } from "react-icons/fa";
+import { FaChartLine, FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function SurveyItem({ survey }) {
   const dispatch = useDispatch();
@@ -11,13 +12,17 @@ function SurveyItem({ survey }) {
       <h2>{survey.title}</h2>
       <div>
         {String(survey.isPublished) === "true" ? (
-          <div className="publishTag">
-            <FaCheckCircle />
-          </div>
+          <Link to={`/surveyFindings/${survey._id}`}>
+            <div title="View Survey Findings" className="publishTag">
+              <FaChartLine />
+            </div>
+          </Link>
         ) : (
-          <div className="publishTag">
-            <FaCog />
-          </div>
+          <Link to={`/editSurvey/${survey._id}`}>
+            <div title="Edit Survey" className="publishTag">
+              <FaEdit />
+            </div>
+          </Link>
         )}
       </div>
       <button

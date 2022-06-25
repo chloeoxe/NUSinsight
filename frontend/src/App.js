@@ -10,6 +10,7 @@ import Account from "./pages/Account";
 import EditAccount from "./pages/EditAccount";
 import SurveyFeed from "./pages/SurveyFeed";
 import OthersAccount from "./pages/OthersAccount";
+//import SurveyCompletion from "./pages/SurveyCompletion";
 
 function App() {
   return (
