@@ -5,6 +5,7 @@ const initialState = {
   surveys: [],
   isError: false,
   isSuccess: false,
+  postSuccess: false,
   isLoading: false,
   message: "",
 };
@@ -116,6 +117,7 @@ export const surveySlice = createSlice({
       })
       .addCase(createSurvey.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.postSuccess = true;
         state.isSuccess = true;
         state.surveys.push(action.payload);
       })

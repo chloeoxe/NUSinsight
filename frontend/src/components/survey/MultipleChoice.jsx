@@ -78,6 +78,7 @@ function MultipleChoice(props) {
             placeholder="Enter your question here"
             defaultValue=""
             onChange={handleQuestionInput}
+            fontFamily="var(--chakra-fonts-body)"
           ></Input>
         </Box>
         <Box align="left">
@@ -97,6 +98,7 @@ function MultipleChoice(props) {
                     id={id}
                     defaultValue={value}
                     onChange={handleOptionChange}
+                    fontFamily="var(--chakra-fonts-body)"
                   />
                 </HStack>
               );
@@ -105,13 +107,17 @@ function MultipleChoice(props) {
               <Button width="10px" variant="outline" onClick={handleAddOption}>
                 +
               </Button>
-              <Button
-                width="10px"
-                variant="outline"
-                onClick={handleRemoveOption}
-              >
-                -
-              </Button>
+              {options.length > 1 ? (
+                <Button
+                  width="10px"
+                  variant="outline"
+                  onClick={handleRemoveOption}
+                >
+                  -
+                </Button>
+              ) : (
+                ""
+              )}
             </HStack>
           </VStack>
         </Box>

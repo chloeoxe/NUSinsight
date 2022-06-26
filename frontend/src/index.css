@@ -65,6 +65,7 @@ h3 {
   position: sticky;
   width: 100%;
   top: 0;
+  z-index: 1;
 }
 
 .header li, .header a, .header button {
@@ -219,6 +220,7 @@ h3 {
   height: 70px;
   position: sticky;
   width: 100%;
+  z-index: 1;
 }
 
 .form-sidebar {
@@ -242,12 +244,17 @@ h3 {
   height: 50px;
   list-style: none;
   display: flex;
+  margin-bottom: 5px;
   align-items: center;
   flex-direction: row;
   text-decoration: none;
   border-radius: 6px;
   transition: all 0.3s ease;
   cursor: pointer;
+}
+
+.form-sidebar ul .selected {
+  background: #bbc4ea;
 }
 
 .form-sidebar ul li:hover {
@@ -288,6 +295,33 @@ h3 {
   border: none;
   margin-top: 25px;
   margin-bottom: 20px;
+}
+
+.survey-navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right, #FFA500, #FF6347);
+  transform: translateY(-130px);
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.survey-navbar .section-header {
+  font-size: 17px;
+  font-family: 'Montserrat', sans-serif;
+  color: #F5F5F5;
+  padding: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.survey-navbar .selected {
+  color: white;
+  background-color: #ffc14d;
 }
 
 .view-forms {
@@ -336,7 +370,7 @@ h3 {
 .survey .favourite {
   width: 20px;
   padding-right: 30px;
-  color: #cacddc
+  color: #cacddc;
 }
 
 .survey .favourite:hover {
@@ -346,7 +380,7 @@ h3 {
 
 .survey .survey-info {
   font-family: "Montserrat", sans-serif;
-  width: 1160px;
+  width: 100%;
 }
 
 .survey .title,
@@ -384,6 +418,10 @@ h3 {
 
 .survey .close:hover {
   color: #626a93;
+}
+
+.surveyStart {
+  margin-top: 130px;
 }
 
 .details {
