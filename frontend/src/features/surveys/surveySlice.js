@@ -5,13 +5,35 @@ const initialState = {
   surveys: [],
   isError: false,
   isSuccess: false,
+  postSuccess: false,
+  postDraftSuccess: false,
   isLoading: false,
+  isDraftLoading: false,
   message: "",
 };
 
 // Create new survey
 export const createSurvey = createAsyncThunk(
   "surveys/create",
+  async (surveyData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.createSurvey(surveyData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Create new DRAFT survey
+export const createDraftSurvey = createAsyncThunk(
+  "surveys/createDraft",
   async (surveyData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -116,11 +138,29 @@ export const surveySlice = createSlice({
       })
       .addCase(createSurvey.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.postSuccess = true;
         state.isSuccess = true;
         state.surveys.push(action.payload);
       })
       .addCase(createSurvey.rejected, (state, action) => {
         state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createDraftSurvey.pending, (state) => {
+        state.isLoading = true;
+        state.isDraftLoading = true;
+      })
+      .addCase(createDraftSurvey.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isDraftLoading = false;
+        state.postDraftSuccess = true;
+        state.isSuccess = true;
+        state.surveys.push(action.payload);
+      })
+      .addCase(createDraftSurvey.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isDraftLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
