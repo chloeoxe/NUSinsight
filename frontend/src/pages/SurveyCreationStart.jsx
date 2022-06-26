@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import SurveyForm from "../components/survey_creation/SurveyForm";
 import SurveyNavbar from "../components/survey_creation/SurveyNavbar";
 import { toast } from "react-toastify";
-import { createSurvey, reset } from "../features/surveys/surveySlice";
+import {
+  createSurvey,
+  createDraftSurvey,
+  reset,
+} from "../features/surveys/surveySlice";
 import { v4 as uuidv4 } from "uuid";
 
 function SurveyCreationStart() {
@@ -19,7 +23,7 @@ function SurveyCreationStart() {
     }
   }, [user, navigate, dispatch]);
 
-  const { isError, message, postSuccess } = useSelector(
+  const { isError, message, postSuccess, postDraftSuccess } = useSelector(
     (state) => state.surveys
   );
 
@@ -28,14 +32,14 @@ function SurveyCreationStart() {
       toast.error(message);
     }
 
-    if (postSuccess) {
+    if (postSuccess || postDraftSuccess) {
       navigate("/myforms");
     }
 
     return () => {
       dispatch(reset());
     };
-  }, [isError, message, postSuccess, navigate, dispatch]);
+  }, [isError, message, postSuccess, postDraftSuccess, navigate, dispatch]);
 
   const initialFormData = {
     title: "",
@@ -91,7 +95,7 @@ function SurveyCreationStart() {
       toast.error("Please add a title to your form");
     }
 
-    dispatch(createSurvey(surveyData));
+    dispatch(createDraftSurvey(surveyData));
 
     clearForm();
   };

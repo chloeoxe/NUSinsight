@@ -1,7 +1,8 @@
 import { Button } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function SurveyNavbar(props) {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ function SurveyNavbar(props) {
   const onClick = () => {
     navigate("/myforms");
   };
+
+  const { isDraftLoading } = useSelector((state) => state.surveys);
 
   return (
     <div className="survey-navbar">
@@ -32,23 +35,42 @@ function SurveyNavbar(props) {
       </Button>
       <div className="section-header selected">BUILD</div>
       <form onSubmit={onSubmitDraft}>
-        <Button
-          type="submit"
-          position="absolute"
-          right="2%"
-          fontWeight="500"
-          color="#cefad0"
-          bg="none"
-          fontFamily="Montserrat"
-          border="0px"
-          cursor="pointer"
-          borderRadius="50px"
-          onClick={onSave}
-          _hover={{ bg: "none" }}
-          top="5px"
-        >
-          SAVE CHANGES
-        </Button>
+        {isDraftLoading ? (
+          <Button
+            isLoading
+            position="absolute"
+            right="2%"
+            fontWeight="500"
+            color="#cefad0"
+            bg="none"
+            fontFamily="Montserrat"
+            border="0px"
+            cursor="pointer"
+            borderRadius="50px"
+            _hover={{ bg: "none" }}
+            top="5px"
+          >
+            SAVE CHANGES
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            position="absolute"
+            right="2%"
+            fontWeight="500"
+            color="#cefad0"
+            bg="none"
+            fontFamily="Montserrat"
+            border="0px"
+            cursor="pointer"
+            borderRadius="50px"
+            onClick={onSave}
+            _hover={{ bg: "none" }}
+            top="5px"
+          >
+            SAVE CHANGES
+          </Button>
+        )}
       </form>
       {/* <div className="section-header">PREVIEW</div> */}
     </div>
