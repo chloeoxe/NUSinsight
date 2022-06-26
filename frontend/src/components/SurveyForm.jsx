@@ -55,6 +55,7 @@ function SurveyForm() {
         type: "",
         question: "",
         response: {},
+        answers: [],
       },
     ]);
   };
@@ -65,7 +66,7 @@ function SurveyForm() {
   };
 
   const updateQuestion = (id) => {
-    return (type, question, response) => {
+    return (type, question, response, answers) => {
       const refQuestionIndex = questions.findIndex((q) => q.id === id);
       const newQuestions = [...questions];
       newQuestions[refQuestionIndex] = {
@@ -73,6 +74,7 @@ function SurveyForm() {
         type: type,
         question: question,
         response: response,
+        answers: answers,
       };
       setQuestions(newQuestions);
     };
