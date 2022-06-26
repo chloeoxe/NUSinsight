@@ -14,11 +14,16 @@ const getSurveys = asyncHandler(async (req, res) => {
 // @route POST /api/surveys
 // @access Private
 const setSurvey = asyncHandler(async (req, res) => {
-  const { title, desc, isPublished } = req.body;
+  const { title, desc, questions, isPublished } = req.body;
 
-  if (!title || !desc) {
+  if (!title) {
     res.status(400);
-    throw new Error("Please add all fields");
+    throw new Error("Please add a title");
+  }
+
+  if (!questions) {
+    res.status(400);
+    throw new Error("Please add at least one question");
   }
 
   // Check if a survey with the same title is already created by user
@@ -37,6 +42,7 @@ const setSurvey = asyncHandler(async (req, res) => {
     username: req.user.username,
     title,
     desc,
+    questions,
     isPublished,
   });
 
@@ -47,6 +53,7 @@ const setSurvey = asyncHandler(async (req, res) => {
       username: survey.username,
       title: survey.title,
       desc: survey.desc,
+      questions: survey.questions,
       isPublished: survey.isPublished,
     });
   } else {

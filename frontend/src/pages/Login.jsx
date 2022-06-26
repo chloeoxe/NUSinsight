@@ -6,6 +6,15 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { login, reset } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
+import {
+  Box,
+  Heading,
+  Text,
+  VStack,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -54,53 +63,68 @@ function Login() {
   }
 
   return (
-    <>
-      <section className="heading">
-        <h1>
+    <Box
+      w={["full", "md"]}
+      p={[8, 10]}
+      mt={[20, "10vh"]}
+      mx="auto"
+      border={["none", "1px"]}
+      borderColor={["", "gray.300"]}
+      borderRadius={10}
+      bg="white"
+    >
+      <VStack
+        spacing={1}
+        align={["flex-start", "center"]}
+        w="full"
+        mb={3}
+        p={3}
+      >
+        <Heading>
           <FaSignInAlt /> Login
-        </h1>
-        <p>Sign in to your account</p>
-      </section>
+        </Heading>
+        <Text>Sign in to your account.</Text>
+      </VStack>
 
-      <section>
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <input
+      <form onSubmit={onSubmit}>
+        <VStack spacing={4} align={["flex-start"]} w="full" mb={3}>
+          <FormControl>
+            <FormLabel fontWeight="bold">E-mail Address</FormLabel>
+            <Input
               type="email"
-              className="form-control"
               id="email"
               name="email"
               value={email}
               placeholder="Email"
               onChange={onChange}
             />
-          </div>
-          <div className="form-group">
-            <input
+          </FormControl>
+          <FormControl>
+            <FormLabel fontWeight="bold">Password</FormLabel>
+            <Input
               type="password"
-              className="form-control"
               id="password"
               name="password"
               value={password}
               placeholder="Password"
               onChange={onChange}
             />
-          </div>
-          <div className="form-group">
-            <button type="submit" className="btn btn-block">
-              Login
-            </button>
-          </div>
-        </form>
-      </section>
+          </FormControl>
+        </VStack>
+        <div className="form-group">
+          <button type="submit" className="btn btn-block">
+            Login
+          </button>
+        </div>
+      </form>
 
-      <section className="loginFooter">
-        <p>Don't have an account?</p>
+      <Box align="center">
+        <Text>Don't have an account?</Text>
         <strong>
           <Link to="/register">Register</Link>
         </strong>
-      </section>
-    </>
+      </Box>
+    </Box>
   );
 }
 

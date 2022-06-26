@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import SurveyItem from "../components/SurveyItem";
 import Spinner from "../components/Spinner";
 import { getSurveys, reset } from "../features/surveys/surveySlice";
 
@@ -10,9 +9,7 @@ function Dashboard() {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { surveys, isLoading, isError, message } = useSelector(
-    (state) => state.surveys
-  );
+  const { isLoading, isError, message } = useSelector((state) => state.surveys);
 
   useEffect(() => {
     if (isError) {
@@ -40,18 +37,6 @@ function Dashboard() {
       <section className="heading">
         <h1>Welcome {user && user.name}</h1>
         <p>Survey Dashboard</p>
-      </section>
-
-      <section className="content">
-        {surveys.length > 0 ? (
-          <div className="surveys">
-            {surveys.map((survey) => (
-              <SurveyItem key={survey._id} survey={survey} />
-            ))}
-          </div>
-        ) : (
-          <h3>You have not created any surveys</h3>
-        )}
       </section>
     </>
   );
