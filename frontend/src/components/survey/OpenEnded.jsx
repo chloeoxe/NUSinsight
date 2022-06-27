@@ -10,9 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 function OpenEnded(props) {
-  const { handleQuestionInput } = props;
-
-  const updateQuestionResponse = props.updateQuestionResponse;
+  const { handleQuestionInput, updateQuestionResponse } = props;
 
   const [answerType, setAnswerType] = useState("short");
 
