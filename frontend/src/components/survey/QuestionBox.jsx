@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Text,
-  Button,
   Container,
   Select,
   SimpleGrid,
+  CloseButton,
 } from "@chakra-ui/react";
-import MultipleChoice from "./survey/MultipleChoice";
-import OpenEnded from "./survey/OpenEnded";
+import MultipleChoice from "./MultipleChoice";
+import OpenEnded from "./OpenEnded";
 
 //handles different types of questions here
 function QuestionBox(props) {
@@ -69,17 +69,21 @@ function QuestionBox(props) {
       border="1px"
       borderColor="gray.200"
       bg="white"
+      cursor="pointer"
+      _hover={{ borderLeft: "5px solid #FFA500" }}
+      _focusWithin={{ borderLeft: "5px solid #FFA500" }}
+      tabIndex={0}
     >
       <Container maxW="780px" align="right">
-        <Button
+        <CloseButton
           className="close"
           onClick={() => props.delQuestion(props.id)}
           variant="outline"
           colorScheme="white"
           border="0px"
-        >
-          X
-        </Button>
+          bg="none"
+          cursor="pointer"
+        />
       </Container>
       <SimpleGrid columns={2} spacing={0} pr={12} pl={8}>
         <Text align="left" lineHeight="250%" fontWeight="bold">
@@ -101,13 +105,19 @@ function QuestionBox(props) {
         {questionType === "mcq" ? (
           <MultipleChoice
             handleQuestionInput={handleQuestionInput}
-            setQuestionInput={setQuestionInput}
             updateQuestionResponse={updateQuestionResponse}
           />
         ) : (
           ""
         )}
-        {questionType === "oe" ? <OpenEnded /> : ""}
+        {questionType === "oe" ? (
+          <OpenEnded
+            handleQuestionInput={handleQuestionInput}
+            updateQuestionResponse={updateQuestionResponse}
+          />
+        ) : (
+          ""
+        )}
       </Container>
     </Box>
   );
