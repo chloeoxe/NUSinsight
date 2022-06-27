@@ -1,13 +1,20 @@
 import React from "react";
 import { FaFolder, FaFolderPlus, FaStar, FaTrashAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import {
+  getSurveys,
+  getDraftSurveys,
+} from "../../features/surveys/surveySlice";
 
 function FormSidebar() {
+  const dispatch = useDispatch();
+
   return (
     <div className="form-sidebar">
       <div className="forms-list">
         <div className="text header-text">MY FORMS</div>
         <ul>
-          <li>
+          <li onClick={() => dispatch(getSurveys())}>
             <FaFolder id="icon" />
             <div className="text item-text">All Forms</div>
           </li>
@@ -23,7 +30,7 @@ function FormSidebar() {
       <div className="drafts-list">
         <div className="text header-text">MY DRAFTS</div>
         <ul>
-          <li>
+          <li onClick={() => dispatch(getDraftSurveys())}>
             <FaFolder id="icon" />
             <div className="text item-text">All Drafts</div>
           </li>

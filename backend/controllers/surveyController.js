@@ -193,6 +193,15 @@ const getSurveyToComplete = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get user's draft surveys
+// @route GET /api/surveys/draftSurveys
+// @access Private
+const getDraftSurveys = asyncHandler(async (req, res) => {
+  const surveys = await Survey.find({ user: req.user.id, isPublished: false });
+
+  res.status(200).json(surveys);
+});
+
 module.exports = {
   getSurveys,
   setSurvey,
@@ -202,4 +211,5 @@ module.exports = {
   getFeedSurveys,
   getOtherUserSurveys,
   getSurveyToComplete,
+  getDraftSurveys,
 };
