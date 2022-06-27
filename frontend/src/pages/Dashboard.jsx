@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
 import { getSurveys, reset } from "../features/surveys/surveySlice";
 import SurveyItem from "../components/SurveyItem";
-import survey from "../images/survey.png";
-import { Button } from "@chakra-ui/react";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -41,8 +39,6 @@ function Dashboard() {
   if (isLoading) {
     return <Spinner />;
   }
-
-  const onClick = () => navigate("/createSurveyStart");
 
   return (
     <>
@@ -83,22 +79,7 @@ function Dashboard() {
             </ul>
           </div>
         ) : (
-          <div className="no-surveys">
-            <img src={survey} alt="Survey Logo" width="180px" height="180px" />
-            <div className="text">YOU DON'T HAVE ANY FORMS YET!</div>
-            <div className="subtext">Your forms will appear here.</div>
-            <Button
-              mt="25px"
-              colorScheme="orange"
-              variant="outline"
-              cursor="pointer"
-              px="40px"
-              py="22px"
-              onClick={onClick}
-            >
-              CREATE FORM
-            </Button>
-          </div>
+          ""
         )}
       </div>
     </>
