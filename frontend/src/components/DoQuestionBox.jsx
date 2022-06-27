@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { Box, Text, Container, SimpleGrid } from "@chakra-ui/react";
 import DoMultipleChoice from "./survey/DoMultipleChoice";
-import OpenEnded from "./survey/OpenEnded";
+import DoOpenEnded from "./survey/DoOpenEnded";
 
 function DoQuestionBox(props) {
   const { qnObject } = props;
@@ -33,7 +32,14 @@ function DoQuestionBox(props) {
         ) : (
           ""
         )}
-        {qnObject.type === "oe" ? <OpenEnded /> : ""}
+        {qnObject.type === "oe" ? (
+          <DoOpenEnded
+            qnObject={qnObject}
+            updateQuestionAnswers={updateQuestionAnswers}
+          />
+        ) : (
+          ""
+        )}
       </Container>
     </Box>
   );
