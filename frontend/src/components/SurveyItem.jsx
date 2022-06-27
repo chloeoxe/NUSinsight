@@ -1,5 +1,7 @@
 import { useDispatch } from "react-redux";
 import { deleteSurvey } from "../features/surveys/surveySlice";
+import { FaChartLine, FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { FaCheckCircle, FaCog, FaStar, FaTrashAlt } from "react-icons/fa";
 import { Checkbox } from "@chakra-ui/react";
 
@@ -8,7 +10,7 @@ function SurveyItem({ survey }) {
 
   return (
     <div className="survey">
-      <Checkbox className="checkbox" borderColor="#cacddc" />
+      <Checkbox className="checkbox" borderColor="#707070" />
       <div className="favourite">
         <FaStar />
       </div>
@@ -23,13 +25,17 @@ function SurveyItem({ survey }) {
 
       <div>
         {String(survey.isPublished) === "true" ? (
-          <div className="publishTag">
-            <FaCheckCircle />
-          </div>
+          <Link to={`/surveyFindings/${survey._id}`}>
+            <div title="View Survey Findings" className="publishTag">
+              <FaChartLine />
+            </div>
+          </Link>
         ) : (
-          <div className="publishTag">
-            <FaCog />
-          </div>
+          <Link to={`/editSurvey/${survey._id}`}>
+            <div title="Edit Survey" className="publishTag">
+              <FaEdit />
+            </div>
+          </Link>
         )}
       </div>
       <button

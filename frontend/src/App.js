@@ -12,6 +12,8 @@ import SurveyFeed from "./pages/SurveyFeed";
 import MyForms from "./pages/MyForms";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import OthersAccount from "./pages/OthersAccount";
+import SurveyCompletion from "./pages/SurveyCompletion";
+import SurveyFindings from "./pages/SurveyFindings";
 
 const theme = extendTheme({
   styles: {
@@ -43,6 +45,11 @@ function App() {
               <Route path="/feed" element={<SurveyFeed />} />
               <Route path="/account/:username" element={<OthersAccount />} />
               <Route path="/myforms" element={<MyForms />} />
+              <Route
+                path="/completeSurvey/:id"
+                element={<SurveyCompletion />}
+              />
+              <Route path="/surveyFindings/:id" element={<SurveyFindings />} />
             </Routes>
           </div>
         </Router>

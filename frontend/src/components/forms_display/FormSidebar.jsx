@@ -1,4 +1,3 @@
-import React from "react";
 import { FaFolder, FaFolderPlus, FaStar, FaTrashAlt } from "react-icons/fa";
 
 function FormSidebar({ changeFolder, currentFolder }) {

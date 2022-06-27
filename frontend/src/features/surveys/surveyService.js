@@ -48,6 +48,33 @@ const getOtherUserSurveys = async (username) => {
   return response.data;
 };
 
+// Get survey to complete
+const getSurveyToComplete = async (surveyId) => {
+  const response = await axios.get(API_URL + `complete/${surveyId}`);
+
+  return response.data;
+};
+
+// Get user's draft/unpublished surveys
+const getDraftSurveys = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + "draftSurveys", config);
+
+  return response.data;
+};
+
+// Submit survey response
+const submitSurvey = async (surveyData) => {
+  const response = await axios.put(API_URL + "submit", surveyData);
+
+  return response.data;
+};
+
 // Delete user survey
 const deleteSurvey = async (surveyId, token) => {
   const config = {
@@ -66,6 +93,9 @@ const surveyService = {
   getSurveys,
   getFeedSurveys,
   getOtherUserSurveys,
+  getSurveyToComplete,
+  getDraftSurveys,
+  submitSurvey,
   deleteSurvey,
 };
 

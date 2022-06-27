@@ -106,6 +106,61 @@ export const getOtherUserSurveys = createAsyncThunk(
   }
 );
 
+// Get survey to complete
+export const getSurveyToComplete = createAsyncThunk(
+  "surveys/getSurveyToComplete",
+  async (surveyId, thunkAPI) => {
+    try {
+      return await surveyService.getSurveyToComplete(surveyId);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get user's draft surveys
+export const getDraftSurveys = createAsyncThunk(
+  "surveys/getDraftSurveys",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.getDraftSurveys(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Submit survey response
+export const submitSurvey = createAsyncThunk(
+  "surveys/submit",
+  async (surveyData, thunkAPI) => {
+    try {
+      return await surveyService.submitSurvey(surveyData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Delete user survey
 export const deleteSurvey = createAsyncThunk(
   "surveys/delete",
@@ -199,6 +254,45 @@ export const surveySlice = createSlice({
         state.surveys = action.payload;
       })
       .addCase(getOtherUserSurveys.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getSurveyToComplete.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSurveyToComplete.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(getSurveyToComplete.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getDraftSurveys.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getDraftSurveys.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(getDraftSurveys.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(submitSurvey.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(submitSurvey.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(submitSurvey.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

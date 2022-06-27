@@ -96,6 +96,35 @@ const updateSurvey = asyncHandler(async (req, res) => {
   res.status(200).json(updatedSurvey);
 });
 
+// @desc  Submit survey response
+// @route PUT /api/surveys/submit
+// @access Public
+const submitSurvey = asyncHandler(async (req, res) => {
+  const { _id, title, desc, questions, isPublished } = req.body;
+
+  const survey = await Survey.findById(_id);
+
+  if (!survey) {
+    res.status(400);
+    throw new Error("Survey not found");
+  }
+
+  const updatedSurvey = await Survey.findByIdAndUpdate(
+    _id,
+    { questions: questions },
+    {
+      new: true,
+    }
+  );
+
+  if (updatedSurvey) {
+    res.status(200).json(updatedSurvey);
+  } else {
+    res.status(400);
+    throw new Error("Failed to submit survey");
+  }
+});
+
 // @desc Delete survey
 // @route DELETE /api/surveys/:id
 // @access Private
@@ -148,11 +177,39 @@ const getOtherUserSurveys = asyncHandler(async (req, res) => {
   res.status(200).json(surveys);
 });
 
+// @desc Get survey to complete
+// @route GET /api/surveys/complete/:id
+// @access Public
+const getSurveyToComplete = asyncHandler(async (req, res) => {
+  const survey = await Survey.find({
+    _id: req.params.id,
+  });
+
+  if (survey) {
+    res.status(200).json(survey);
+  } else {
+    res.status(400);
+    throw new Error("Survey to complete not found");
+  }
+});
+
+// @desc Get user's draft surveys
+// @route GET /api/surveys/draftSurveys
+// @access Private
+const getDraftSurveys = asyncHandler(async (req, res) => {
+  const surveys = await Survey.find({ user: req.user.id, isPublished: false });
+
+  res.status(200).json(surveys);
+});
+
 module.exports = {
   getSurveys,
   setSurvey,
   updateSurvey,
+  submitSurvey,
   deleteSurvey,
   getFeedSurveys,
   getOtherUserSurveys,
+  getSurveyToComplete,
+  getDraftSurveys,
 };

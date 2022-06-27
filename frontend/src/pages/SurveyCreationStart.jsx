@@ -127,6 +127,7 @@ function SurveyCreationStart() {
         type: "",
         question: "",
         response: {},
+        answers: [],
       },
     ]);
   };
@@ -137,7 +138,7 @@ function SurveyCreationStart() {
   };
 
   const updateQuestion = (id) => {
-    return (type, question, response) => {
+    return (type, question, response, answers) => {
       const refQuestionIndex = questions.findIndex((q) => q.id === id);
       const newQuestions = [...questions];
       newQuestions[refQuestionIndex] = {
@@ -145,6 +146,7 @@ function SurveyCreationStart() {
         type: type,
         question: question,
         response: response,
+        answers: answers,
       };
       setQuestions(newQuestions);
     };

@@ -1,5 +1,4 @@
 import { Button } from "@chakra-ui/react";
-import React, { useEffect } from "react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
