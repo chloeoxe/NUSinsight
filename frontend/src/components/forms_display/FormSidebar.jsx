@@ -1,27 +1,25 @@
-import React from "react";
 import { FaFolder, FaFolderPlus, FaStar, FaTrashAlt } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import {
-  getSurveys,
-  getDraftSurveys,
-} from "../../features/surveys/surveySlice";
 
-function FormSidebar() {
-  const dispatch = useDispatch();
+function FormSidebar({ changeFolder, currentFolder }) {
+  const currentFolderClass = (folderName) =>
+    currentFolder === folderName ? "selected" : "";
 
   return (
     <div className="form-sidebar">
       <div className="forms-list">
         <div className="text header-text">MY FORMS</div>
         <ul>
-          <li onClick={() => dispatch(getSurveys())}>
+          <li
+            onClick={() => changeFolder("MyForms")}
+            className={currentFolderClass("MyForms")}
+          >
             <FaFolder id="icon" />
             <div className="text item-text">All Forms</div>
           </li>
-          <li>
+          {/* <li>
             <FaFolderPlus id="icon" />
             <div className="text subtext">Create a new folder</div>
-          </li>
+          </li> */}
         </ul>
       </div>
 
@@ -30,14 +28,17 @@ function FormSidebar() {
       <div className="drafts-list">
         <div className="text header-text">MY DRAFTS</div>
         <ul>
-          <li onClick={() => dispatch(getDraftSurveys())}>
+          <li
+            onClick={() => changeFolder("MyDrafts")}
+            className={currentFolderClass("MyDrafts")}
+          >
             <FaFolder id="icon" />
             <div className="text item-text">All Drafts</div>
           </li>
-          <li>
+          {/* <li>
             <FaFolderPlus id="icon" />
             <div className="text subtext">Create a new folder</div>
-          </li>
+          </li> */}
         </ul>
       </div>
 

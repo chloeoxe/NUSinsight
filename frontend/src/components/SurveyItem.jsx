@@ -10,7 +10,7 @@ function SurveyItem({ survey }) {
 
   return (
     <div className="survey">
-      <Checkbox className="checkbox" borderColor="#cacddc" />
+      <Checkbox className="checkbox" borderColor="#707070" />
       <div className="favourite">
         <FaStar />
       </div>
