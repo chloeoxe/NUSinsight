@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { submitSurvey } from "../features/surveys/surveySlice";
 import { VStack, Container, Box, Text } from "@chakra-ui/react";
-import DoQuestionBox from "./DoQuestionBox";
+import DoQuestionBox from "./survey_completion/DoQuestionBox";
 
 function CompleteSurveyForm(props) {
   const dispatch = useDispatch();

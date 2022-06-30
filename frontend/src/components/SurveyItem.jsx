@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { deleteSurvey } from "../features/surveys/surveySlice";
 import { FaChartLine, FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { FaCheckCircle, FaCog, FaStar, FaTrashAlt } from "react-icons/fa";
+import { FaStar, FaTrashAlt } from "react-icons/fa";
 import { Checkbox } from "@chakra-ui/react";
 
 function SurveyItem({ survey }) {

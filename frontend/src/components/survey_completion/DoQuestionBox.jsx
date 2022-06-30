@@ -1,6 +1,6 @@
 import { Box, Text, Container, SimpleGrid } from "@chakra-ui/react";
-import DoMultipleChoice from "./survey/DoMultipleChoice";
-import DoOpenEnded from "./survey/DoOpenEnded";
+import DoMultipleChoice from "./DoMultipleChoice";
+import DoOpenEnded from "./DoOpenEnded";
 
 function DoQuestionBox(props) {
   const { qnObject } = props;
