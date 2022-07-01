@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDraftSurveys, reset } from "../../features/surveys/surveySlice";
 import Spinner from "../Spinner";
 import SurveyItem from "../SurveyItem";
-import survey from "../../images/survey.png";
+import draft from "../../images/draft.png";
 import { Button } from "@chakra-ui/react";
 
 function DraftsList() {
@@ -52,9 +52,9 @@ function DraftsList() {
         </div>
       ) : (
         <div className="no-surveys">
-          <img src={survey} alt="Survey Logo" width="180px" height="180px" />
-          <div className="text">YOU DON'T HAVE ANY DRAFT FORMS YET!</div>
-          <div className="subtext">Your forms will appear here.</div>
+          <img src={draft} alt="Survey Logo" width="180px" height="180px" />
+          <div className="text">YOU DON'T HAVE ANY DRAFTS YET!</div>
+          <div className="subtext">Your draft forms will appear here.</div>
           <Button
             mt="25px"
             colorScheme="orange"
