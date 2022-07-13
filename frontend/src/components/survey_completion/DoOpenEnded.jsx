@@ -1,36 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, FormControl, Input, Stack, Textarea } from "@chakra-ui/react";
 
 function DoOpenEnded(props) {
-  const { qnObject, updateQuestionAnswers } = props;
+  const { qnObject, updateAnswers } = props;
 
-  const { type, question, response, answers } = qnObject;
+  const { question, response } = qnObject;
 
   const answerType = response.answerType;
 
-  const [submittedAnswers, setSubmittedAnswers] = useState(answers);
-
   const [userInput, setUserInput] = useState("");
 
-  const onChange = (e) => {
+  const handleAnswerChange = (e) => {
     setUserInput(e.target.value);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    const openEndedAnswer = userInput;
-
-    const newSubmittedAnswers = submittedAnswers.push(openEndedAnswer);
-    setSubmittedAnswers(newSubmittedAnswers);
-
-    updateQuestionAnswers(type, question, response, submittedAnswers);
-
+  useEffect(() => {
+    updateAnswers([userInput]);
     console.log("open-ended submitted");
-  };
+  }, [userInput, updateAnswers]);
 
   return (
-    <FormControl onSubmit={onSubmit}>
+    <FormControl>
       <Stack p={5}>
         <Box>{question}</Box>
       </Stack>
@@ -42,13 +32,13 @@ function DoOpenEnded(props) {
             maxWidth="100%"
             minWidth="50%"
             fontFamily="var(--chakra-fonts-body)"
-            onChange={onChange}
+            onChange={handleAnswerChange}
           />
         ) : (
           <Input
             placeholder="Answer Here"
             fontFamily="var(--chakra-fonts-body)"
-            onChange={onChange}
+            onChange={handleAnswerChange}
           />
         )}
       </Box>

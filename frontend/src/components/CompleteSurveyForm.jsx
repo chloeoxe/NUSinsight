@@ -1,42 +1,51 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { submitSurvey } from "../features/surveys/surveySlice";
 import { VStack, Container, Box, Text } from "@chakra-ui/react";
 import DoQuestionBox from "./survey_completion/DoQuestionBox";
 
 function CompleteSurveyForm(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const survey = props.survey;
   const surveyId = props.surveyId;
 
-  const { title, desc, questions: initialQuestions, isPublished } = survey;
+  const { user } = useSelector((state) => state.auth);
 
-  //define questions state
-  const [questions, setQuestions] = useState(initialQuestions);
+  const { title, desc, questions, isPublished } = survey;
 
-  const updateQuestionAnswers = (id) => {
-    return (type, question, response, answers) => {
-      const refQuestionIndex = questions.findIndex((q) => q.id === id);
-      const newQuestions = [...questions];
-      newQuestions[refQuestionIndex] = {
-        ...questions[refQuestionIndex],
-        type: type,
-        question: question,
-        response: response,
-        answers: answers,
-      };
-      setQuestions(newQuestions);
+  const initialAnswers = {};
+
+  const [answers, setAnswers] = useState(initialAnswers);
+
+  const updateAnswers = (num) => {
+    return (qnAnswer) => {
+      const newAnswers = { ...answers };
+      let qnNum = num;
+      newAnswers[qnNum] = qnAnswer;
+      setAnswers(newAnswers);
     };
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const surveyData = { surveyId, title, desc, questions, isPublished };
+    const surveyData = {
+      userId: user._id,
+      surveyId,
+      title,
+      desc,
+      questions,
+      answers,
+      isPublished,
+    };
 
     dispatch(submitSurvey(surveyData));
 
     console.log("response submitted");
+
+    navigate(`/responseSubmitted/${surveyId}`);
   };
 
   return (
@@ -52,8 +61,8 @@ function CompleteSurveyForm(props) {
             borderColor="gray.200"
             bg="white"
           >
-            <Text fontSize="5xl">{survey.title}</Text>
-            <Text fontSize="2xl">{survey.desc}</Text>
+            <Text fontSize="5xl">{title}</Text>
+            <Text fontSize="2xl">{desc}</Text>
           </Box>
           <div>
             {questions.length > 0 ? (
@@ -68,7 +77,7 @@ function CompleteSurveyForm(props) {
                       }) + 1
                     }
                     qnObject={qn}
-                    updateQuestionAnswers={updateQuestionAnswers(qn.id)}
+                    updateAnswers={updateAnswers}
                   />
                 ))}
               </div>
