@@ -198,6 +198,7 @@ const getOtherUserSurveys = asyncHandler(async (req, res) => {
 const getSurveyToComplete = asyncHandler(async (req, res) => {
   const survey = await Survey.find({
     _id: req.params.id,
+    isPublished: true,
   });
 
   if (survey) {

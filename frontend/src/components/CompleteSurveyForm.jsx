@@ -43,7 +43,7 @@ function CompleteSurveyForm(props) {
 
     dispatch(submitSurvey(surveyData));
 
-    console.log("response submitted");
+    //console.log("response submitted");
 
     navigate(`/responseSubmitted/${surveyId}`);
   };

@@ -398,10 +398,11 @@ h3 {
   cursor: pointer;
   align-items: center;
   display: flex;
+  background-color: #e8ebf8;
 }
 
 .survey:hover {
-  background-color: #e8ebf8;
+  background-color: #c9cee4;
 }
 
 .survey .checkbox {

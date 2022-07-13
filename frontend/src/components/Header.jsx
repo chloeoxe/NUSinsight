@@ -1,18 +1,18 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
+import { logout, reset as resetUser } from "../features/auth/authSlice";
+import { reset as resetSurveys } from "../features/surveys/surveySlice";
 import { Text } from "@chakra-ui/react";
 
 function Header() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
   const onLogout = () => {
     dispatch(logout());
-    dispatch(reset());
-    navigate("/");
+    dispatch(resetUser());
+    dispatch(resetSurveys());
   };
 
   return (
@@ -34,9 +34,11 @@ function Header() {
               <Link to="/feed">My Feed</Link>
             </li>
             <li>
-              <button className="btn" onClick={onLogout}>
-                <FaSignOutAlt /> Logout
-              </button>
+              <Link to="/login" onClick={onLogout}>
+                <button className="btn">
+                  <FaSignOutAlt /> Logout
+                </button>
+              </Link>
             </li>
           </>
         ) : (

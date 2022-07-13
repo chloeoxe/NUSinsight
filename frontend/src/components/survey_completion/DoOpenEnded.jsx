@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Box, FormControl, Input, Stack, Textarea } from "@chakra-ui/react";
 
 function DoOpenEnded(props) {
@@ -12,12 +12,9 @@ function DoOpenEnded(props) {
 
   const handleAnswerChange = (e) => {
     setUserInput(e.target.value);
-  };
 
-  useEffect(() => {
-    updateAnswers([userInput]);
-    console.log("open-ended submitted");
-  }, [userInput, updateAnswers]);
+    updateAnswers([e.target.value]);
+  };
 
   return (
     <FormControl>

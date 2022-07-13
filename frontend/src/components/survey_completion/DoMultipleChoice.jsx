@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   FormControl,
@@ -16,7 +16,7 @@ function DoMultipleChoice(props) {
 
   const options = response.options;
 
-  const [selectedOption, setSelectedOption] = useState(1);
+  const [selectedOption, setSelectedOption] = useState(0);
 
   const handleAnswerChange = (e) => {
     const newSelectedOption =
@@ -24,12 +24,9 @@ function DoMultipleChoice(props) {
         return o.id === Number(e.target.getAttribute("id"));
       }) + 1;
     setSelectedOption(newSelectedOption);
-  };
 
-  useEffect(() => {
-    updateAnswers([selectedOption]);
-    console.log("mcq submitted");
-  }, [selectedOption, updateAnswers]);
+    updateAnswers([newSelectedOption]);
+  };
 
   return (
     <FormControl>

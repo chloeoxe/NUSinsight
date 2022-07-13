@@ -1,11 +1,9 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import { useDispatch } from "react-redux";
+import { useLocation, Link } from "react-router-dom";
+import { Container, Button, Box, Text } from "@chakra-ui/react";
 import { getSurveyToComplete } from "../features/surveys/surveySlice";
 
 function SurveySubmission() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -13,22 +11,41 @@ function SurveySubmission() {
   const pathArray = pathname.split("/");
   let surveyId = pathArray[pathArray.length - 1];
 
-  const { user } = useSelector((state) => state.auth);
-
-  const { surveys, isLoading } = useSelector((state) => state.surveys);
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-    dispatch(getSurveyToComplete(surveyId));
-  }, [user, surveyId, navigate, dispatch]);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  return <p>Survey Response Submitted</p>;
+  return (
+    <>
+      <Box
+        shadow="md"
+        width="800px"
+        p={5}
+        border="1px"
+        borderColor="gray.200"
+        bg="white"
+        marginTop="50px"
+        marginLeft="230px"
+        marginRight="230px"
+      >
+        <Text fontSize="2xl">Your Response Has Been Submitted</Text>
+      </Box>
+      <Container className="heading" maxW="800px" p={5}>
+        <div className="form-group">
+          <Link
+            to={`/completeSurvey/${surveyId}`}
+            onClick={() => dispatch(getSurveyToComplete(surveyId))}
+          >
+            <Button
+              colorScheme="orange"
+              borderRadius="10px"
+              border="0px"
+              cursor="pointer"
+              marginBottom="100px"
+            >
+              Submit Another Response
+            </Button>
+          </Link>
+        </div>
+      </Container>
+    </>
+  );
 }
 
 export default SurveySubmission;
