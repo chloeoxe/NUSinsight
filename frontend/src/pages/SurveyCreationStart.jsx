@@ -45,12 +45,13 @@ function SurveyCreationStart() {
     title: "",
     desc: "",
     questions: [],
+    answers: { user: { answer: { qn: [] } } },
     isPublished: false,
   };
 
   const [formData, setFormData] = useState(initialFormData);
 
-  const { title, desc, isPublished } = formData;
+  const { title, desc, answers, isPublished } = formData;
 
   //define questions state
   const [questions, setQuestions] = useState([]);
@@ -79,7 +80,7 @@ function SurveyCreationStart() {
       return;
     }
 
-    const surveyData = { title, desc, questions, isPublished };
+    const surveyData = { title, desc, questions, answers, isPublished };
 
     dispatch(createSurvey(surveyData));
 
@@ -89,7 +90,7 @@ function SurveyCreationStart() {
   const onSubmitDraft = (e) => {
     e.preventDefault();
 
-    const surveyData = { title, desc, questions, isPublished };
+    const surveyData = { title, desc, questions, answers, isPublished };
 
     if (!title) {
       toast.error("Please add a title to your form");
@@ -127,7 +128,6 @@ function SurveyCreationStart() {
         type: "",
         question: "",
         response: {},
-        answers: [],
       },
     ]);
   };
@@ -138,7 +138,7 @@ function SurveyCreationStart() {
   };
 
   const updateQuestion = (id) => {
-    return (type, question, response, answers) => {
+    return (type, question, response) => {
       const refQuestionIndex = questions.findIndex((q) => q.id === id);
       const newQuestions = [...questions];
       newQuestions[refQuestionIndex] = {
@@ -146,7 +146,6 @@ function SurveyCreationStart() {
         type: type,
         question: question,
         response: response,
-        answers: answers,
       };
       setQuestions(newQuestions);
     };

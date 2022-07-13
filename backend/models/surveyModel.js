@@ -22,6 +22,9 @@ const surveySchema = mongoose.Schema(
       type: Array,
       required: [true, "Please add at least one question"],
     },
+    answers: {
+      type: Object,
+    },
     isPublished: {
       type: Boolean,
       required: [true, "Please indicate whether the survey is published"],

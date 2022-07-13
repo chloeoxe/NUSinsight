@@ -5,8 +5,8 @@ import DoOpenEnded from "./DoOpenEnded";
 function DoQuestionBox(props) {
   const { qnObject } = props;
 
-  //update question if there are any changes in answers array
-  const updateQuestionAnswers = props.updateQuestionAnswers;
+  //update survey answers if there are any changes
+  const updateAnswers = props.updateAnswers;
 
   return (
     <Box
@@ -27,7 +27,7 @@ function DoQuestionBox(props) {
         {qnObject.type === "mcq" ? (
           <DoMultipleChoice
             qnObject={qnObject}
-            updateQuestionAnswers={updateQuestionAnswers}
+            updateAnswers={updateAnswers(props.num)}
           />
         ) : (
           ""
@@ -35,7 +35,7 @@ function DoQuestionBox(props) {
         {qnObject.type === "oe" ? (
           <DoOpenEnded
             qnObject={qnObject}
-            updateQuestionAnswers={updateQuestionAnswers}
+            updateAnswers={updateAnswers(props.num)}
           />
         ) : (
           ""

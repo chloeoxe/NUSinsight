@@ -14,7 +14,7 @@ const getSurveys = asyncHandler(async (req, res) => {
 // @route POST /api/surveys
 // @access Private
 const setSurvey = asyncHandler(async (req, res) => {
-  const { title, desc, questions, isPublished } = req.body;
+  const { title, desc, questions, answers, isPublished } = req.body;
 
   if (!title) {
     res.status(400);
@@ -43,6 +43,7 @@ const setSurvey = asyncHandler(async (req, res) => {
     title,
     desc,
     questions,
+    answers,
     isPublished,
   });
 
@@ -54,6 +55,7 @@ const setSurvey = asyncHandler(async (req, res) => {
       title: survey.title,
       desc: survey.desc,
       questions: survey.questions,
+      answers: survey.answers,
       isPublished: survey.isPublished,
     });
   } else {
@@ -100,18 +102,31 @@ const updateSurvey = asyncHandler(async (req, res) => {
 // @route PUT /api/surveys/submit
 // @access Public
 const submitSurvey = asyncHandler(async (req, res) => {
-  const { _id, title, desc, questions, isPublished } = req.body;
+  const { userId, surveyId, title, desc, questions, answers, isPublished } =
+    req.body;
 
-  const survey = await Survey.findById(_id);
+  const survey = await Survey.findById(surveyId);
 
   if (!survey) {
     res.status(400);
     throw new Error("Survey not found");
   }
 
+  const newSurvey = { ...survey }._doc;
+
+  if (survey.answers.hasOwnProperty(userId)) {
+    let userAnswers = newSurvey.answers[userId];
+    const numUserAnswers = Object.keys(userAnswers).length;
+    userAnswers[numUserAnswers + 1] = answers;
+  } else {
+    newSurvey.answers[userId] = {};
+    let userAnswers = newSurvey.answers[userId];
+    userAnswers[1] = answers;
+  }
+
   const updatedSurvey = await Survey.findByIdAndUpdate(
-    _id,
-    { questions: questions },
+    surveyId,
+    { answers: newSurvey.answers },
     {
       new: true,
     }
