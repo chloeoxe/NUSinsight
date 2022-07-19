@@ -1,15 +1,27 @@
 import { useDispatch } from "react-redux";
 import { deleteSurvey } from "../../features/surveys/surveySlice";
 import { FaChartLine, FaEdit } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, createSearchParams } from "react-router-dom";
 import { FaStar, FaTrashAlt } from "react-icons/fa";
 import { Checkbox } from "@chakra-ui/react";
 
 function SurveyItem({ survey }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const params = { id: survey._id };
+
+  const editDraftSurvey = () =>
+    navigate({
+      pathname: "/createSurveyStart",
+      search: `?${createSearchParams(params)}`,
+    });
+
+  const handleClick =
+    String(survey.isPublished) === "false" ? editDraftSurvey : null;
 
   return (
-    <div className="survey">
+    <div className="survey" onClick={handleClick}>
       <Checkbox className="checkbox" borderColor="#707070" />
       <div className="favourite">
         <FaStar />
