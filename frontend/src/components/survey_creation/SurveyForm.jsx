@@ -55,7 +55,7 @@ function SurveyForm(props) {
               />
             </div>
           </Box>
-          {questions.map(({ id }) => (
+          {questions.map(({ id, type, question, response }) => (
             <QuestionBox
               key={id}
               id={id}
@@ -64,6 +64,9 @@ function SurveyForm(props) {
                   return q.id === id;
                 }) + 1
               }
+              type={type}
+              question={question}
+              response={response}
               delQuestion={delQuestion}
               updateQuestion={updateQuestion(id)}
             />

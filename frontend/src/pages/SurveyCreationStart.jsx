@@ -121,7 +121,7 @@ function SurveyCreationStart() {
       return;
     }
 
-    const questions = { ...surveyQuestions };
+    const questions = [...surveyQuestions];
 
     const surveyData = { title, desc, questions, isPublished };
 
@@ -133,7 +133,7 @@ function SurveyCreationStart() {
   const onSubmitDraft = (e) => {
     e.preventDefault();
 
-    const questions = { ...surveyQuestions };
+    const questions = [...surveyQuestions];
 
     const surveyData = { title, desc, questions, isPublished };
 
