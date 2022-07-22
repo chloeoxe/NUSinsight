@@ -68,7 +68,9 @@ function SurveyCreationStart() {
 
   useEffect(() => {
     if (getDraftSuccess) {
+      const { questions } = surveys[0];
       setFormData(surveys[0]);
+      setSurveyQuestions(questions);
     } else {
       setFormData(initialFormData);
     }
@@ -82,7 +84,7 @@ function SurveyCreationStart() {
     isPublished: false,
   };
 
-  //console.log("Filtered Survey:", surveys);
+  //console.log("Filtered Survey:", surveys[0]);
 
   const [formData, setFormData] = useState(
     surveys === [] ? initialFormData : surveys[0]
@@ -93,11 +95,11 @@ function SurveyCreationStart() {
   const { title, desc, isPublished } = formData;
 
   //define questions state
-  const [questions, setQuestions] = useState([]);
+  const [surveyQuestions, setSurveyQuestions] = useState([]);
 
   const clearForm = () => {
     setFormData({ ...initialFormData });
-    setQuestions([]);
+    setSurveyQuestions([]);
   };
 
   //handles title and desc values
@@ -114,10 +116,12 @@ function SurveyCreationStart() {
     if (!title || !desc) {
       toast.error("Form must have a title and description to publish");
       return;
-    } else if (questions.length === 0) {
+    } else if (surveyQuestions.length === 0) {
       toast.error("Published forms must have at least one question");
       return;
     }
+
+    const questions = { ...surveyQuestions };
 
     const surveyData = { title, desc, questions, isPublished };
 
@@ -128,6 +132,8 @@ function SurveyCreationStart() {
 
   const onSubmitDraft = (e) => {
     e.preventDefault();
+
+    const questions = { ...surveyQuestions };
 
     const surveyData = { title, desc, questions, isPublished };
 
@@ -160,8 +166,8 @@ function SurveyCreationStart() {
 
   //question object = {id, type, question, questionResponse}
   const addQuestion = () => {
-    setQuestions([
-      ...questions,
+    setSurveyQuestions([
+      ...surveyQuestions,
       {
         id: uuidv4(),
         type: "",
@@ -173,22 +179,22 @@ function SurveyCreationStart() {
   };
 
   const delQuestion = (id) => {
-    const newQuestions = questions.filter((q) => q.id !== id);
-    setQuestions(newQuestions);
+    const newQuestions = surveyQuestions.filter((q) => q.id !== id);
+    setSurveyQuestions(newQuestions);
   };
 
   const updateQuestion = (id) => {
     return (type, question, response, answers) => {
-      const refQuestionIndex = questions.findIndex((q) => q.id === id);
-      const newQuestions = [...questions];
+      const refQuestionIndex = surveyQuestions.findIndex((q) => q.id === id);
+      const newQuestions = [...surveyQuestions];
       newQuestions[refQuestionIndex] = {
-        ...questions[refQuestionIndex],
+        ...surveyQuestions[refQuestionIndex],
         type: type,
         question: question,
         response: response,
         answers: answers,
       };
-      setQuestions(newQuestions);
+      setSurveyQuestions(newQuestions);
     };
   };
 
@@ -205,7 +211,7 @@ function SurveyCreationStart() {
         onPublish={onPublish}
         title={title}
         desc={desc}
-        questions={questions}
+        questions={surveyQuestions}
         addQuestion={addQuestion}
         delQuestion={delQuestion}
         updateQuestion={updateQuestion}
