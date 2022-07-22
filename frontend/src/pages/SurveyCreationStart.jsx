@@ -7,9 +7,11 @@ import { toast } from "react-toastify";
 import {
   createSurvey,
   createDraftSurvey,
+  getDraftSurveysById,
   reset,
 } from "../features/surveys/surveySlice";
 import { v4 as uuidv4 } from "uuid";
+import Spinner from "../components/Spinner";
 
 function SurveyCreationStart() {
   const navigate = useNavigate();
@@ -22,8 +24,15 @@ function SurveyCreationStart() {
 
   //access user and survey states
   const { user } = useSelector((state) => state.auth);
-  const { surveys, isError, message, postSuccess, postDraftSuccess } =
-    useSelector((state) => state.surveys);
+  const {
+    surveys,
+    getDraftSuccess,
+    isError,
+    isLoading,
+    message,
+    postSuccess,
+    postDraftSuccess,
+  } = useSelector((state) => state.surveys);
 
   useEffect(() => {
     if (!user) {
@@ -39,10 +48,8 @@ function SurveyCreationStart() {
     }
 
     if (surveyId) {
-      console.log(surveyId);
-      //executes only when surveyId is defined
-      //dispatch getDraftSurveyById
-      //setFormData(surveys[0])
+      console.log("get survey from new surveyID");
+      dispatch(getDraftSurveysById(surveyId));
     }
 
     return () => {
@@ -59,6 +66,14 @@ function SurveyCreationStart() {
     dispatch,
   ]);
 
+  useEffect(() => {
+    if (getDraftSuccess) {
+      setFormData(surveys[0]);
+    } else {
+      setFormData(initialFormData);
+    }
+  }, [getDraftSuccess]);
+
   //define state for form data
   const initialFormData = {
     title: "",
@@ -67,7 +82,13 @@ function SurveyCreationStart() {
     isPublished: false,
   };
 
-  const [formData, setFormData] = useState(initialFormData);
+  //console.log("Filtered Survey:", surveys);
+
+  const [formData, setFormData] = useState(
+    surveys === [] ? initialFormData : surveys[0]
+  );
+
+  //console.log("Form Data:", formData);
 
   const { title, desc, isPublished } = formData;
 
@@ -170,6 +191,10 @@ function SurveyCreationStart() {
       setQuestions(newQuestions);
     };
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="surveyStart">

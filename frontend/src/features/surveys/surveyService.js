@@ -68,6 +68,13 @@ const getDraftSurveys = async (token) => {
   return response.data;
 };
 
+// Get user's draft/unpublished surveys by ID
+const getDraftSurveysById = async (surveyId) => {
+  const response = await axios.get(API_URL + `draftSurveys/${surveyId}`);
+
+  return response.data;
+};
+
 // Submit survey response
 const submitSurvey = async (surveyData) => {
   const response = await axios.put(API_URL + "submit", surveyData);
@@ -95,6 +102,7 @@ const surveyService = {
   getOtherUserSurveys,
   getSurveyToComplete,
   getDraftSurveys,
+  getDraftSurveysById,
   submitSurvey,
   deleteSurvey,
 };
