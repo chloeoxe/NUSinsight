@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SurveyForm from "../components/survey_creation/SurveyForm";
 import SurveyNavbar from "../components/survey_creation/SurveyNavbar";
@@ -15,19 +15,21 @@ function SurveyCreationStart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  //get search parameters
+  const [searchParams] = useSearchParams();
+
+  const surveyId = searchParams.get("id");
+
+  //access user and survey states
   const { user } = useSelector((state) => state.auth);
+  const { surveys, isError, message, postSuccess, postDraftSuccess } =
+    useSelector((state) => state.surveys);
 
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
-  }, [user, navigate, dispatch]);
 
-  const { isError, message, postSuccess, postDraftSuccess } = useSelector(
-    (state) => state.surveys
-  );
-
-  useEffect(() => {
     if (isError) {
       toast.error(message);
     }
@@ -36,11 +38,28 @@ function SurveyCreationStart() {
       navigate("/myforms");
     }
 
+    if (surveyId) {
+      console.log(surveyId);
+      //executes only when surveyId is defined
+      //dispatch getDraftSurveyById
+      //setFormData(surveys[0])
+    }
+
     return () => {
       dispatch(reset());
     };
-  }, [isError, message, postSuccess, postDraftSuccess, navigate, dispatch]);
+  }, [
+    user,
+    isError,
+    message,
+    postSuccess,
+    postDraftSuccess,
+    surveyId,
+    navigate,
+    dispatch,
+  ]);
 
+  //define state for form data
   const initialFormData = {
     title: "",
     desc: "",
