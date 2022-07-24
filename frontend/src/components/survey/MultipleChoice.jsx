@@ -12,12 +12,19 @@ import {
 } from "@chakra-ui/react";
 
 function MultipleChoice(props) {
-  const { handleQuestionInput, updateQuestionResponse } = props;
+  const {
+    handleQuestionInput,
+    updateQuestionResponse,
+    questionInput,
+    draftOptions,
+  } = props;
 
   const initialOptions = [{ value: "", id: 1 }];
 
   //state for MCQ options
-  const [options, setOptions] = useState(initialOptions);
+  const [options, setOptions] = useState(
+    draftOptions ? draftOptions : initialOptions
+  );
 
   //update question response for changes in options
   useEffect(() => {
@@ -76,7 +83,7 @@ function MultipleChoice(props) {
           <Input
             id="question"
             placeholder="Enter your question here"
-            defaultValue=""
+            value={questionInput}
             onChange={handleQuestionInput}
             fontFamily="var(--chakra-fonts-body)"
           ></Input>

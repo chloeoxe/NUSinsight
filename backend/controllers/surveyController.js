@@ -218,9 +218,24 @@ const getDraftSurveys = asyncHandler(async (req, res) => {
   res.status(200).json(surveys);
 });
 
+// @desc Get user's draft surveys by ID
+// @route GET /api/surveys/draftSurveys/:id
+// @access Public
+const getDraftSurveysById = asyncHandler(async (req, res) => {
+  const survey = await Survey.find({ _id: req.params.id, isPublished: false });
+
+  if (survey) {
+    res.status(200).json(survey);
+  } else {
+    res.status(400);
+    throw new Error("Draft survey not found");
+  }
+});
+
 // @desc Get survey findings
 // @route GET /api/surveys/findings/:id
 // @access Private
+
 const getSurveyFindings = asyncHandler(async (req, res) => {
   const survey = await Survey.findOne({
     _id: req.params.id,
@@ -303,5 +318,6 @@ module.exports = {
   getOtherUserSurveys,
   getSurveyToComplete,
   getDraftSurveys,
+  getDraftSurveysById,
   getSurveyFindings,
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SurveyForm from "../components/survey_creation/SurveyForm";
 import SurveyNavbar from "../components/survey_creation/SurveyNavbar";
@@ -7,27 +7,40 @@ import { toast } from "react-toastify";
 import {
   createSurvey,
   createDraftSurvey,
+  getDraftSurveysById,
   reset,
+  updateDraftSurvey,
+  updateDraftToPublish,
 } from "../features/surveys/surveySlice";
 import { v4 as uuidv4 } from "uuid";
+import Spinner from "../components/Spinner";
 
 function SurveyCreationStart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  //get search parameters
+  const [searchParams] = useSearchParams();
+
+  const surveyId = searchParams.get("id");
+
+  //access user and survey states
   const { user } = useSelector((state) => state.auth);
+  const {
+    surveys,
+    getDraftSuccess,
+    isError,
+    isLoading,
+    message,
+    postSuccess,
+    postDraftSuccess,
+  } = useSelector((state) => state.surveys);
 
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
-  }, [user, navigate, dispatch]);
 
-  const { isError, message, postSuccess, postDraftSuccess } = useSelector(
-    (state) => state.surveys
-  );
-
-  useEffect(() => {
     if (isError) {
       toast.error(message);
     }
@@ -36,11 +49,35 @@ function SurveyCreationStart() {
       navigate("/myforms");
     }
 
+    if (surveyId) {
+      dispatch(getDraftSurveysById(surveyId));
+    }
+
     return () => {
       dispatch(reset());
     };
-  }, [isError, message, postSuccess, postDraftSuccess, navigate, dispatch]);
+  }, [
+    user,
+    isError,
+    message,
+    postSuccess,
+    postDraftSuccess,
+    surveyId,
+    navigate,
+    dispatch,
+  ]);
 
+  useEffect(() => {
+    if (getDraftSuccess) {
+      const { questions } = surveys[0];
+      setFormData(surveys[0]);
+      setSurveyQuestions(questions);
+    } else {
+      setFormData(initialFormData);
+    }
+  }, [getDraftSuccess]);
+
+  //define state for form data
   const initialFormData = {
     title: "",
     desc: "",
@@ -49,16 +86,20 @@ function SurveyCreationStart() {
     isPublished: false,
   };
 
+  //console.log("Filtered Survey:", surveys[0]);
+
   const [formData, setFormData] = useState(initialFormData);
+
+  //console.log("Form Data:", formData);
 
   const { title, desc, answers, isPublished } = formData;
 
   //define questions state
-  const [questions, setQuestions] = useState([]);
+  const [surveyQuestions, setSurveyQuestions] = useState([]);
 
   const clearForm = () => {
     setFormData({ ...initialFormData });
-    setQuestions([]);
+    setSurveyQuestions([]);
   };
 
   //handles title and desc values
@@ -75,20 +116,30 @@ function SurveyCreationStart() {
     if (!title || !desc) {
       toast.error("Form must have a title and description to publish");
       return;
-    } else if (questions.length === 0) {
+    } else if (surveyQuestions.length === 0) {
       toast.error("Published forms must have at least one question");
       return;
     }
 
-    const surveyData = { title, desc, questions, answers, isPublished };
+    const questions = [...surveyQuestions];
 
-    dispatch(createSurvey(surveyData));
+    const surveyData = { title, desc, questions, answers, isPublished: true };
 
-    clearForm();
+    if (surveyId) {
+      dispatch(
+        updateDraftToPublish({ surveyId: surveyId, surveyData: surveyData })
+      );
+    } else {
+      dispatch(createSurvey(surveyData));
+      clearForm();
+    }
   };
 
-  const onSubmitDraft = (e) => {
+  // Define onSubmitDraft
+  const setNew = (e) => {
     e.preventDefault();
+
+    const questions = [...surveyQuestions];
 
     const surveyData = { title, desc, questions, answers, isPublished };
 
@@ -96,10 +147,29 @@ function SurveyCreationStart() {
       toast.error("Please add a title to your form");
     }
 
+    console.log("New draft created");
+
     dispatch(createDraftSurvey(surveyData));
 
     clearForm();
   };
+
+  const updateExisting = (e) => {
+    e.preventDefault();
+
+    const questions = [...surveyQuestions];
+
+    const surveyData = { title, desc, questions, isPublished };
+
+    if (!title) {
+      toast.error("Please add a title to your form");
+    }
+
+    dispatch(updateDraftSurvey({ surveyId: surveyId, surveyData: surveyData }));
+  };
+
+  // if surveyId is defined, updateDraftSurvey instead of createDraftSurvey
+  const onSubmitDraft = surveyId ? updateExisting : setNew;
 
   const onSave = () => {
     let updatedPublished = {};
@@ -121,8 +191,8 @@ function SurveyCreationStart() {
 
   //question object = {id, type, question, questionResponse}
   const addQuestion = () => {
-    setQuestions([
-      ...questions,
+    setSurveyQuestions([
+      ...surveyQuestions,
       {
         id: uuidv4(),
         type: "",
@@ -133,23 +203,27 @@ function SurveyCreationStart() {
   };
 
   const delQuestion = (id) => {
-    const newQuestions = questions.filter((q) => q.id !== id);
-    setQuestions(newQuestions);
+    const newQuestions = surveyQuestions.filter((q) => q.id !== id);
+    setSurveyQuestions(newQuestions);
   };
 
   const updateQuestion = (id) => {
     return (type, question, response) => {
-      const refQuestionIndex = questions.findIndex((q) => q.id === id);
-      const newQuestions = [...questions];
+      const refQuestionIndex = surveyQuestions.findIndex((q) => q.id === id);
+      const newQuestions = [...surveyQuestions];
       newQuestions[refQuestionIndex] = {
-        ...questions[refQuestionIndex],
+        ...surveyQuestions[refQuestionIndex],
         type: type,
         question: question,
         response: response,
       };
-      setQuestions(newQuestions);
+      setSurveyQuestions(newQuestions);
     };
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="surveyStart">
@@ -160,7 +234,7 @@ function SurveyCreationStart() {
         onPublish={onPublish}
         title={title}
         desc={desc}
-        questions={questions}
+        questions={surveyQuestions}
         addQuestion={addQuestion}
         delQuestion={delQuestion}
         updateQuestion={updateQuestion}

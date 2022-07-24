@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getDraftSurveys, reset } from "../../features/surveys/surveySlice";
 import Spinner from "../Spinner";
-import SurveyItem from "../SurveyItem";
+import SurveyItem from "./SurveyItem";
 import draft from "../../images/draft.png";
 import { Button } from "@chakra-ui/react";
 

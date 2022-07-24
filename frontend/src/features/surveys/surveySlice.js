@@ -8,6 +8,7 @@ const initialState = {
   isSuccess: false,
   postSuccess: false,
   postDraftSuccess: false,
+  getDraftSuccess: false,
   postFindingsSuccess: false,
   isLoading: false,
   isDraftLoading: false,
@@ -40,6 +41,46 @@ export const createDraftSurvey = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await surveyService.createSurvey(surveyData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Update draft survey
+export const updateDraftSurvey = createAsyncThunk(
+  "surveys/updateDraft",
+  async (surveyParams, thunkAPI) => {
+    try {
+      const { surveyId, surveyData } = surveyParams;
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.updateSurvey(surveyId, surveyData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Update draft survey to publish
+export const updateDraftToPublish = createAsyncThunk(
+  "surveys/updateDraftToPublish",
+  async (surveyParams, thunkAPI) => {
+    try {
+      const { surveyId, surveyData } = surveyParams;
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.updateSurvey(surveyId, surveyData, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -133,6 +174,24 @@ export const getDraftSurveys = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await surveyService.getDraftSurveys(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get user's draft surveys by ID
+export const getDraftSurveysById = createAsyncThunk(
+  "surveys/getDraftSurveysById",
+  async (surveyId, thunkAPI) => {
+    try {
+      return await surveyService.getDraftSurveysById(surveyId);
     } catch (error) {
       const message =
         (error.response &&
@@ -240,6 +299,33 @@ export const surveySlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      .addCase(updateDraftSurvey.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateDraftSurvey.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(updateDraftSurvey.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateDraftToPublish.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateDraftToPublish.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.postDraftSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(updateDraftToPublish.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
       .addCase(getSurveys.pending, (state) => {
         state.isLoading = true;
       })
@@ -301,6 +387,20 @@ export const surveySlice = createSlice({
         state.surveys = action.payload;
       })
       .addCase(getDraftSurveys.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getDraftSurveysById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getDraftSurveysById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.getDraftSuccess = true;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(getDraftSurveysById.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

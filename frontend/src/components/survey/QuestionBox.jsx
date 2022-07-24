@@ -12,16 +12,18 @@ import OpenEnded from "./OpenEnded";
 
 //handles different types of questions here
 function QuestionBox(props) {
-  const [questionType, setQuestionType] = useState("mcq");
+  //update question if there are any changes in response object
+  const { updateQuestion, type, question, response } = props;
+
+  const [questionType, setQuestionType] = useState(type ? type : "mcq");
 
   //state for questionInput
-  const [questionInput, setQuestionInput] = useState("");
+  const [questionInput, setQuestionInput] = useState(question ? question : "");
 
   //state for questionResponse
-  const [questionResponse, setQuestionResponse] = useState({});
-
-  //update question if there are any changes in response object
-  const { updateQuestion } = props;
+  const [questionResponse, setQuestionResponse] = useState(
+    response ? response : {}
+  );
 
   useEffect(() => {
     updateQuestion(questionType, questionInput, questionResponse);
@@ -96,6 +98,8 @@ function QuestionBox(props) {
       <Container maxW="780px">
         {questionType === "mcq" ? (
           <MultipleChoice
+            questionInput={questionInput}
+            draftOptions={questionResponse["options"]}
             handleQuestionInput={handleQuestionInput}
             updateQuestionResponse={updateQuestionResponse}
           />
@@ -104,6 +108,8 @@ function QuestionBox(props) {
         )}
         {questionType === "oe" ? (
           <OpenEnded
+            questionInput={questionInput}
+            draftAnswerType={questionResponse["answerType"]}
             handleQuestionInput={handleQuestionInput}
             updateQuestionResponse={updateQuestionResponse}
           />

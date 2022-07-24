@@ -10,9 +10,16 @@ import {
 } from "@chakra-ui/react";
 
 function OpenEnded(props) {
-  const { handleQuestionInput, updateQuestionResponse } = props;
+  const {
+    handleQuestionInput,
+    updateQuestionResponse,
+    questionInput,
+    draftAnswerType,
+  } = props;
 
-  const [answerType, setAnswerType] = useState("short");
+  const [answerType, setAnswerType] = useState(
+    draftAnswerType ? draftAnswerType : "short"
+  );
 
   useEffect(() => {
     updateQuestionResponse({
@@ -37,7 +44,7 @@ function OpenEnded(props) {
           <Input
             id="question"
             placeholder="Enter your question here"
-            defaultValue=""
+            value={questionInput}
             onChange={handleQuestionInput}
             fontFamily="var(--chakra-fonts-body)"
           ></Input>
@@ -50,7 +57,7 @@ function OpenEnded(props) {
               placeholder="Long answer text"
               size="md"
               maxWidth="100%"
-              minWidth="50%"
+              minWidth="100%"
               fontFamily="var(--chakra-fonts-body)"
             />
           ) : (
@@ -68,7 +75,7 @@ function OpenEnded(props) {
           onChange={toggleLongAnswer}
         >
           Enable long answer?
-          <Switch paddingLeft="10px" />
+          <Switch paddingLeft="10px" isChecked={answerType === "long"} />
         </Box>
       </Stack>
     </FormControl>

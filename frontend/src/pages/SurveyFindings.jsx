@@ -26,8 +26,7 @@ function SurveyFindings() {
   );
 
   //Set state for survey
-  const initialSurvey =
-    surveys !== [] ? surveys[0] : { title: "", desc: "", questions: [] };
+  const initialSurvey = { title: "", desc: "", questions: [] };
 
   const [survey, setSurvey] = useState(initialSurvey);
 

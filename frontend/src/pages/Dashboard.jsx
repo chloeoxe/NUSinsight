@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
 import { getSurveys, reset } from "../features/surveys/surveySlice";
-import SurveyItem from "../components/SurveyItem";
+import SurveyItem from "../components/forms_display/SurveyItem";
 
 function Dashboard() {
   const navigate = useNavigate();
