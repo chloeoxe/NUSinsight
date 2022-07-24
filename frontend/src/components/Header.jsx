@@ -1,9 +1,12 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { useState } from "react";
+import { FaBars, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset as resetUser } from "../features/auth/authSlice";
 import { reset as resetSurveys } from "../features/surveys/surveySlice";
 import { Text } from "@chakra-ui/react";
+import Dropdown from "./Dropdown";
+import React from "react";
 
 function Header() {
   const dispatch = useDispatch();
@@ -14,6 +17,10 @@ function Header() {
     dispatch(resetUser());
     dispatch(resetSurveys());
   };
+
+  const [dropdown, setDropdown] = useState(false);
+
+  const toggleDropdown = () => setDropdown(!dropdown);
 
   return (
     <header className="header">
@@ -27,12 +34,20 @@ function Header() {
       <ul>
         {user ? (
           <>
-            <li>
+            <li id="link">
               <Link to="/myforms">My Forms</Link>
             </li>
-            <li>
+            <li id="link">
               <Link to="/feed">My Feed</Link>
             </li>
+            <FaBars
+              className="hamburger-menu"
+              size="20px"
+              align-items="centre"
+              color="white"
+              onMouseEnter={toggleDropdown}
+              onMouseLeave={toggleDropdown}
+            />
             <li>
               <Link to="/login" onClick={onLogout}>
                 <button className="btn">
@@ -40,6 +55,7 @@ function Header() {
                 </button>
               </Link>
             </li>
+            {dropdown && <Dropdown />}
           </>
         ) : (
           <>
