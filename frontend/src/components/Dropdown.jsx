@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Dropdown() {
+function Dropdown(props) {
+  const { toggleDropdown } = props;
+
   return (
     <div className="dropdown-menu">
       <ul>

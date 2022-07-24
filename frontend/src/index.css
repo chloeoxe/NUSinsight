@@ -78,7 +78,7 @@ h3 {
   text-decoration: none;
 }
 
-.header .hamburger-menu {
+.header #hamburger {
   display: none;
 }
 
@@ -87,7 +87,7 @@ h3 {
       display: none;
     }
 
-    .header .hamburger-menu {
+    .header #hamburger {
       display: inline-flex;
       cursor: pointer;
     }
@@ -97,7 +97,7 @@ h3 {
   position: absolute;
   list-style: none; 
   background: rgba(255, 178, 8, 1);
-  transform: translate(-20px, 21px);
+  transform: translateX(-20px);
   width: 250px;
   padding: 5px;
 }
@@ -130,6 +130,16 @@ h3 {
 
 .header ul li a:hover {
   color: #ffb208;
+}
+
+.header #hamburger {
+  padding: 0px; 
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  cursor: pointer;
 }
 
 .dropdown-menu ul li a:hover {

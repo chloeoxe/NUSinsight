@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { FaBars, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import {
+  FaBars,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaTimes,
+  FaUser,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset as resetUser } from "../features/auth/authSlice";
@@ -40,14 +46,13 @@ function Header() {
             <li id="link">
               <Link to="/feed">My Feed</Link>
             </li>
-            <FaBars
-              className="hamburger-menu"
-              size="20px"
-              align-items="centre"
-              color="white"
-              onMouseEnter={toggleDropdown}
-              onMouseLeave={toggleDropdown}
-            />
+            <li id="hamburger" onClick={toggleDropdown}>
+              {dropdown ? (
+                <FaTimes size="20px" />
+              ) : (
+                <FaBars size="20px" align-items="centre" color="white" />
+              )}
+            </li>
             <li>
               <Link to="/login" onClick={onLogout}>
                 <button className="btn">
@@ -55,7 +60,7 @@ function Header() {
                 </button>
               </Link>
             </li>
-            {dropdown && <Dropdown />}
+            {dropdown && <Dropdown toggleDropdown={toggleDropdown} />}
           </>
         ) : (
           <>
