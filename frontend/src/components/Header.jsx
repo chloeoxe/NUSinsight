@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaBars,
   FaSignInAlt,
@@ -13,6 +13,7 @@ import { reset as resetSurveys } from "../features/surveys/surveySlice";
 import { Text } from "@chakra-ui/react";
 import Dropdown from "./Dropdown";
 import React from "react";
+import { useWindowDimensions } from "../helpers";
 
 function Header() {
   const dispatch = useDispatch();
@@ -27,6 +28,14 @@ function Header() {
   const [dropdown, setDropdown] = useState(false);
 
   const toggleDropdown = () => setDropdown(!dropdown);
+
+  const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    if (width >= 768) {
+      setDropdown(false);
+    }
+  }, [width]);
 
   return (
     <header className="header">
@@ -60,7 +69,7 @@ function Header() {
                 </button>
               </Link>
             </li>
-            {dropdown && <Dropdown toggleDropdown={toggleDropdown} />}
+            {dropdown && <Dropdown />}
           </>
         ) : (
           <>
