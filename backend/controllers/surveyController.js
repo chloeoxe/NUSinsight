@@ -218,6 +218,81 @@ const getDraftSurveys = asyncHandler(async (req, res) => {
   res.status(200).json(surveys);
 });
 
+// @desc Get survey findings
+// @route GET /api/surveys/findings/:id
+// @access Private
+const getSurveyFindings = asyncHandler(async (req, res) => {
+  const survey = await Survey.findOne({
+    _id: req.params.id,
+    isPublished: true,
+  });
+
+  const { questions, answers } = survey;
+
+  const findings = {};
+
+  //To initialise 'findings' object with the survey qns
+  for (let i = 1; i <= questions.length; i++) {
+    let qn = questions[i - 1];
+    findings[i] = {};
+    if (qn.type === "mcq") {
+      let qnOptions = qn.response.options;
+      for (let o = 1; o <= qnOptions.length; o++) {
+        findings[i][o] = {
+          value: qnOptions[o - 1].value,
+          num: 0,
+          percentage: 0,
+        };
+      }
+    } else if (qn.type === "oe") {
+      findings[i]["ans"] = [];
+    }
+  }
+
+  //To find the total number of survey responses
+  let numResponses = 0;
+  const userAnsArray = Object.entries(answers);
+  for (const [userId, ansObj] of userAnsArray) {
+    if (userId === "user") {
+      continue;
+    }
+    numResponses += Object.keys(ansObj).length;
+  }
+
+  //To fill up the initialised 'findings' objects with answers data
+  for (const user in answers) {
+    if (user === "user") {
+      continue;
+    }
+    let userObj = answers[user];
+    for (const ans in userObj) {
+      let ansObj = userObj[ans];
+      let qnAnsArray = Object.entries(ansObj);
+      for (const [qnNum, qnAns] of qnAnsArray) {
+        let qn = questions[qnNum - 1];
+        if (qn.type === "mcq") {
+          for (const op of qnAns) {
+            let newOpNum = findings[qnNum][op].num + 1;
+            let newOpPercentage = (newOpNum / numResponses) * 100;
+            findings[qnNum][op].num = newOpNum;
+            findings[qnNum][op].percentage = newOpPercentage;
+          }
+        } else if (qn.type === "oe") {
+          let newOEAns = [...findings[qnNum].ans, qnAns[0]];
+          findings[qnNum].ans = newOEAns;
+        }
+      }
+    }
+  }
+
+  if (Object.entries(findings).length > 0) {
+    res.status(200).json(findings);
+  } else {
+    res.status(400);
+    throw new Error("Survey findings not complete");
+  }
+});
+
 module.exports = {
   getSurveys,
   setSurvey,
@@ -228,4 +303,5 @@ module.exports = {
   getOtherUserSurveys,
   getSurveyToComplete,
   getDraftSurveys,
+  getSurveyFindings,
 };
