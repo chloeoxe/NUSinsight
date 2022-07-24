@@ -68,6 +68,19 @@ const getDraftSurveys = async (token) => {
   return response.data;
 };
 
+// Get user's survey findings
+const getSurveyFindings = async (surveyId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + `findings/${surveyId}`, config);
+
+  return response.data;
+};
+
 // Submit survey response
 const submitSurvey = async (surveyData) => {
   const response = await axios.put(API_URL + "submit", surveyData);
@@ -95,6 +108,7 @@ const surveyService = {
   getOtherUserSurveys,
   getSurveyToComplete,
   getDraftSurveys,
+  getSurveyFindings,
   submitSurvey,
   deleteSurvey,
 };

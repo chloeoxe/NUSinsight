@@ -10,6 +10,7 @@ const {
   getOtherUserSurveys,
   getSurveyToComplete,
   getDraftSurveys,
+  getSurveyFindings,
 } = require("../controllers/surveyController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -20,5 +21,6 @@ router.route("/other/:username").get(getOtherUserSurveys);
 router.route("/submit").put(submitSurvey);
 router.route("/complete/:id").get(getSurveyToComplete);
 router.route("/draftSurveys").get(protect, getDraftSurveys);
+router.route("/findings/:id").get(protect, getSurveyFindings);
 
 module.exports = router;
