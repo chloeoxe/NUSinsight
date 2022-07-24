@@ -25,18 +25,10 @@ function QuestionBox(props) {
     response ? response : {}
   );
 
-  //state for questionAnswers
-  const [questionAnswers, setQuestionAnswers] = useState([]);
-
   useEffect(() => {
-    updateQuestion(
-      questionType,
-      questionInput,
-      questionResponse,
-      questionAnswers
-    );
+    updateQuestion(questionType, questionInput, questionResponse);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questionType, questionInput, questionResponse, questionAnswers]);
+  }, [questionType, questionInput, questionResponse]);
 
   const clearQuestionInput = () => {
     setQuestionInput("");

@@ -10,40 +10,26 @@ import {
 } from "@chakra-ui/react";
 
 function DoMultipleChoice(props) {
-  const { qnObject, updateQuestionAnswers } = props;
+  const { qnObject, updateAnswers } = props;
 
-  const { type, question, response, answers } = qnObject;
+  const { question, response } = qnObject;
 
   const options = response.options;
 
-  const [selectedOption, setSelectedOption] = useState(1);
+  const [selectedOption, setSelectedOption] = useState(0);
 
-  const [submittedAnswers, setSubmittedAnswers] = useState(answers);
-
-  const handleSelectOption = (e) => {
+  const handleAnswerChange = (e) => {
     const newSelectedOption =
       options.findIndex((o) => {
         return o.id === Number(e.target.getAttribute("id"));
       }) + 1;
     setSelectedOption(newSelectedOption);
-  };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    const selectedOptionValue = options.filter(
-      (o) => o.id === selectedOption
-    )[0].value;
-    const newSubmittedAnswers = submittedAnswers.push(selectedOptionValue);
-    setSubmittedAnswers(newSubmittedAnswers);
-
-    updateQuestionAnswers(type, question, response, submittedAnswers);
-
-    console.log("mcq submitted");
+    updateAnswers([newSelectedOption]);
   };
 
   return (
-    <FormControl onSubmit={onSubmit}>
+    <FormControl>
       <Stack p={5}>
         <Box>
           <Text>{question}</Text>
@@ -58,7 +44,7 @@ function DoMultipleChoice(props) {
                       <Radio
                         id={id}
                         isChecked={id === selectedOption}
-                        onChange={handleSelectOption}
+                        onChange={handleAnswerChange}
                       />
                       <Text>{value}</Text>
                     </HStack>

@@ -1,12 +1,12 @@
 import { Box, Text, Container, SimpleGrid } from "@chakra-ui/react";
-import DoMultipleChoice from "./DoMultipleChoice";
-import DoOpenEnded from "./DoOpenEnded";
+import MultipleChoiceFindings from "./MultipleChoiceFindings";
+import OpenEndedFindings from "./OpenEndedFindings";
 
-function DoQuestionBox(props) {
-  const { qnObject } = props;
+function QuestionBoxFindings(props) {
+  const { qnObject, getQnFindings } = props;
 
-  //update survey answers if there are any changes
-  const updateAnswers = props.updateAnswers;
+  //get findings for qn by triggering getQnFindings()
+  const qnFindings = getQnFindings(props.num);
 
   return (
     <Box
@@ -25,18 +25,12 @@ function DoQuestionBox(props) {
       </SimpleGrid>
       <Container maxW="780px">
         {qnObject.type === "mcq" ? (
-          <DoMultipleChoice
-            qnObject={qnObject}
-            updateAnswers={updateAnswers(props.num)}
-          />
+          <MultipleChoiceFindings qnObject={qnObject} findings={qnFindings} />
         ) : (
           ""
         )}
         {qnObject.type === "oe" ? (
-          <DoOpenEnded
-            qnObject={qnObject}
-            updateAnswers={updateAnswers(props.num)}
-          />
+          <OpenEndedFindings qnObject={qnObject} findings={qnFindings} />
         ) : (
           ""
         )}
@@ -45,4 +39,4 @@ function DoQuestionBox(props) {
   );
 }
 
-export default DoQuestionBox;
+export default QuestionBoxFindings;

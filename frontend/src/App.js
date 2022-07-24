@@ -14,6 +14,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import OthersAccount from "./pages/OthersAccount";
 import SurveyCompletion from "./pages/SurveyCompletion";
 import SurveyFindings from "./pages/SurveyFindings";
+import SurveySubmission from "./pages/SurveySubmission";
 
 const theme = extendTheme({
   styles: {
@@ -50,6 +51,10 @@ function App() {
                 element={<SurveyCompletion />}
               />
               <Route path="/surveyFindings/:id" element={<SurveyFindings />} />
+              <Route
+                path="/responseSubmitted/:id"
+                element={<SurveySubmission />}
+              />
             </Routes>
           </div>
         </Router>

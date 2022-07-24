@@ -1,19 +1,41 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  FaBars,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaTimes,
+  FaUser,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
+import { logout, reset as resetUser } from "../features/auth/authSlice";
+import { reset as resetSurveys } from "../features/surveys/surveySlice";
 import { Text } from "@chakra-ui/react";
+import Dropdown from "./Dropdown";
+import React from "react";
+import { useWindowDimensions } from "../helpers";
 
 function Header() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
   const onLogout = () => {
     dispatch(logout());
-    dispatch(reset());
-    navigate("/");
+    dispatch(resetUser());
+    dispatch(resetSurveys());
   };
+
+  const [dropdown, setDropdown] = useState(false);
+
+  const toggleDropdown = () => setDropdown(!dropdown);
+
+  const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    if (width >= 768) {
+      setDropdown(false);
+    }
+  }, [width]);
 
   return (
     <header className="header">
@@ -27,17 +49,27 @@ function Header() {
       <ul>
         {user ? (
           <>
-            <li>
+            <li id="link">
               <Link to="/myforms">My Forms</Link>
             </li>
-            <li>
+            <li id="link">
               <Link to="/feed">My Feed</Link>
             </li>
-            <li>
-              <button className="btn" onClick={onLogout}>
-                <FaSignOutAlt /> Logout
-              </button>
+            <li id="hamburger" onClick={toggleDropdown}>
+              {dropdown ? (
+                <FaTimes size="20px" />
+              ) : (
+                <FaBars size="20px" align-items="centre" color="white" />
+              )}
             </li>
+            <li>
+              <Link to="/login" onClick={onLogout}>
+                <button className="btn">
+                  <FaSignOutAlt /> Logout
+                </button>
+              </Link>
+            </li>
+            {dropdown && <Dropdown />}
           </>
         ) : (
           <>

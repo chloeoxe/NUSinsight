@@ -88,9 +88,25 @@ const getDraftSurveysById = async (surveyId) => {
   return response.data;
 };
 
+// Get user's survey findings
+const getSurveyFindings = async (surveyId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + `findings/${surveyId}`, config);
+
+  return response.data;
+};
+
 // Submit survey response
 const submitSurvey = async (surveyData) => {
-  const response = await axios.put(API_URL + "submit", surveyData);
+  const response = await axios.put(
+    API_URL + `submit/${surveyData.surveyId}`,
+    surveyData
+  );
 
   return response.data;
 };
@@ -116,6 +132,7 @@ const surveyService = {
   getSurveyToComplete,
   getDraftSurveys,
   getDraftSurveysById,
+  getSurveyFindings,
   submitSurvey,
   deleteSurvey,
   updateSurvey,
