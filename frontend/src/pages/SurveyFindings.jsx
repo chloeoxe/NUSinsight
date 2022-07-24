@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import QuestionBoxFindings from "../components/survey_findings/QuestionBoxFindings";
 import {
@@ -14,6 +14,8 @@ function SurveyFindings() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [searchParams] = useSearchParams();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -41,9 +43,8 @@ function SurveyFindings() {
     if (!user) {
       navigate("/login");
     }
-    let pathname = String(location.pathname);
-    const pathArray = pathname.split("/");
-    let surveyId = pathArray[pathArray.length - 1];
+
+    const surveyId = searchParams.get("id");
     dispatch(getSurveyToComplete(surveyId));
     dispatch(getSurveyFindings(surveyId));
 

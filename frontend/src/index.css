@@ -445,11 +445,10 @@ h3 {
   cursor: pointer;
   align-items: center;
   display: flex;
-  background-color: #e8ebf8;
 }
 
 .survey:hover {
-  background-color: #c9cee4;
+  background-color: #e8ebf8;
 }
 
 .survey .checkbox {
@@ -508,6 +507,14 @@ h3 {
 
 .survey .close:hover {
   color: #52597b;
+}
+
+.feed {
+  background: #e8ebf8;
+}
+
+.feed:hover {
+  background: #bbc4ea;
 }
 
 .surveyStart {

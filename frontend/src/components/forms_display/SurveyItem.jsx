@@ -17,47 +17,58 @@ function SurveyItem({ survey }) {
       search: `?${createSearchParams(params)}`,
     });
 
+  const viewSurveyFindings = () =>
+    navigate({
+      pathname: "/surveyFindings",
+      search: `${createSearchParams(params)}`,
+    });
+
   return (
     <>
       {String(survey.isPublished) === "true" ? (
-        <Link to={`/surveyFindings/${survey._id}`} title="View Survey Findings">
-          <div className="survey">
-            <Checkbox className="checkbox" borderColor="#707070" />
-            <div className="favourite">
-              <FaStar />
-            </div>
-            <div className="survey-info">
-              <div className="title">
-                {survey.title === "" ? "Form" : survey.title}
-              </div>
-              <div className="subtitle">
-                Created on {new Date(survey.createdAt).toLocaleString("en-US")}
-              </div>
-            </div>
-
-            <div className="publishTag">
-              <FaChartLine />
-            </div>
-
-            <button
-              className="close"
-              onClick={() => dispatch(deleteSurvey(survey._id))}
-            >
-              <FaTrashAlt size="15px" />
-            </button>
-          </div>
-        </Link>
-      ) : (
-        <div
-          className="survey"
-          onClick={editDraftSurvey}
-          title="Edit Draft Survey"
-        >
+        <div className="survey">
           <Checkbox className="checkbox" borderColor="#707070" />
           <div className="favourite">
             <FaStar />
           </div>
-          <div className="survey-info">
+          <div
+            className="survey-info"
+            onClick={viewSurveyFindings}
+            title="View Survey Findings"
+          >
+            <div className="title">
+              {survey.title === "" ? "Form" : survey.title}
+            </div>
+            <div className="subtitle">
+              Created on {new Date(survey.createdAt).toLocaleString("en-US")}
+            </div>
+          </div>
+
+          <div className="publishTag">
+            <FaChartLine />
+          </div>
+
+          <button
+            className="close"
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(deleteSurvey(survey._id));
+            }}
+          >
+            <FaTrashAlt size="15px" />
+          </button>
+        </div>
+      ) : (
+        <div className="survey">
+          <Checkbox className="checkbox" borderColor="#707070" />
+          <div className="favourite">
+            <FaStar />
+          </div>
+          <div
+            className="survey-info"
+            onClick={editDraftSurvey}
+            title="Edit Draft Survey"
+          >
             <div className="title">
               {survey.title === "" ? "Form" : survey.title}
             </div>
@@ -72,7 +83,10 @@ function SurveyItem({ survey }) {
 
           <button
             className="close"
-            onClick={() => dispatch(deleteSurvey(survey._id))}
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(deleteSurvey(survey._id));
+            }}
           >
             <FaTrashAlt size="15px" />
           </button>

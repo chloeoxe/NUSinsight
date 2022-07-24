@@ -10,7 +10,7 @@ function FeedSurveyItem({ survey }) {
       to={`/completeSurvey/${survey._id}`}
       onClick={() => dispatch(getSurveyToComplete(survey._id))}
     >
-      <div className="survey">
+      <div className="survey feed">
         <div className="survey-info">
           <div className="title">{survey.title}</div>
           <div className="subtitle">
