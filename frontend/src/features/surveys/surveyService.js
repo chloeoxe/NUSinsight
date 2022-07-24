@@ -15,6 +15,19 @@ const createSurvey = async (surveyData, token) => {
   return response.data;
 };
 
+// Update survey
+const updateSurvey = async (surveyId, surveyData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(API_URL + `${surveyId}`, surveyData, config);
+
+  return response.data;
+};
+
 // Get user surveys
 const getSurveys = async (token) => {
   const config = {
@@ -105,6 +118,7 @@ const surveyService = {
   getDraftSurveysById,
   submitSurvey,
   deleteSurvey,
+  updateSurvey,
 };
 
 export default surveyService;

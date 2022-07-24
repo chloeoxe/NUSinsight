@@ -9,6 +9,8 @@ import {
   createDraftSurvey,
   getDraftSurveysById,
   reset,
+  updateDraftSurvey,
+  updateDraftToPublish,
 } from "../features/surveys/surveySlice";
 import { v4 as uuidv4 } from "uuid";
 import Spinner from "../components/Spinner";
@@ -48,7 +50,6 @@ function SurveyCreationStart() {
     }
 
     if (surveyId) {
-      console.log("get survey from new surveyID");
       dispatch(getDraftSurveysById(surveyId));
     }
 
@@ -123,14 +124,20 @@ function SurveyCreationStart() {
 
     const questions = [...surveyQuestions];
 
-    const surveyData = { title, desc, questions, isPublished };
+    const surveyData = { title, desc, questions, isPublished: true };
 
-    dispatch(createSurvey(surveyData));
-
-    clearForm();
+    if (surveyId) {
+      dispatch(
+        updateDraftToPublish({ surveyId: surveyId, surveyData: surveyData })
+      );
+    } else {
+      dispatch(createSurvey(surveyData));
+      clearForm();
+    }
   };
 
-  const onSubmitDraft = (e) => {
+  // Define onSubmitDraft
+  const setNew = (e) => {
     e.preventDefault();
 
     const questions = [...surveyQuestions];
@@ -141,10 +148,29 @@ function SurveyCreationStart() {
       toast.error("Please add a title to your form");
     }
 
+    console.log("New draft created");
+
     dispatch(createDraftSurvey(surveyData));
 
     clearForm();
   };
+
+  const updateExisting = (e) => {
+    e.preventDefault();
+
+    const questions = [...surveyQuestions];
+
+    const surveyData = { title, desc, questions, isPublished };
+
+    if (!title) {
+      toast.error("Please add a title to your form");
+    }
+
+    dispatch(updateDraftSurvey({ surveyId: surveyId, surveyData: surveyData }));
+  };
+
+  // if surveyId is defined, updateDraftSurvey instead of createDraftSurvey
+  const onSubmitDraft = surveyId ? updateExisting : setNew;
 
   const onSave = () => {
     let updatedPublished = {};
