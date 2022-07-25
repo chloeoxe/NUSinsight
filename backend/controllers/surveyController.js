@@ -348,6 +348,9 @@ const getSurveyFindings = asyncHandler(async (req, res) => {
       let ansObj = userObj[ans];
       let qnAnsArray = Object.entries(ansObj);
       for (const [qnNum, qnAns] of qnAnsArray) {
+        if (qnNum === "submittedAt") {
+          continue;
+        }
         let qn = questions[qnNum - 1];
         if (qn.type === "mcq") {
           for (const op of qnAns) {
