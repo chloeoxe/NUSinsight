@@ -93,9 +93,27 @@ export const updateDraftToPublish = createAsyncThunk(
   }
 );
 
-// Get user surveys
+// Get all surveys
+export const getAllSurveys = createAsyncThunk(
+  "surveys/getAllSurveys",
+  async (_, thunkAPI) => {
+    try {
+      return await surveyService.getAllSurveys();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get the user's surveys
 export const getSurveys = createAsyncThunk(
-  "surveys/getAll",
+  "surveys/getUserSurveys",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -322,6 +340,19 @@ export const surveySlice = createSlice({
         state.surveys = action.payload;
       })
       .addCase(updateDraftToPublish.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getAllSurveys.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllSurveys.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(getAllSurveys.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -28,6 +28,13 @@ const updateSurvey = async (surveyId, surveyData, token) => {
   return response.data;
 };
 
+// Get all surveys
+const getAllSurveys = async () => {
+  const response = await axios.get(API_URL + "getAll");
+
+  return response.data;
+};
+
 // Get user surveys
 const getSurveys = async (token) => {
   const config = {
@@ -126,6 +133,7 @@ const deleteSurvey = async (surveyId, token) => {
 
 const surveyService = {
   createSurvey,
+  getAllSurveys,
   getSurveys,
   getFeedSurveys,
   getOtherUserSurveys,

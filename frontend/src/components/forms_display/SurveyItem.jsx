@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { deleteSurvey } from "../../features/surveys/surveySlice";
 import { FaChartLine, FaEdit } from "react-icons/fa";
-import { Link, useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { FaStar, FaTrashAlt } from "react-icons/fa";
 import { Checkbox } from "@chakra-ui/react";
 
