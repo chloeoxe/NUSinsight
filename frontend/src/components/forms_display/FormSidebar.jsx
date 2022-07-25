@@ -1,4 +1,4 @@
-import { FaFolder, FaStar, FaTrashAlt } from "react-icons/fa";
+import { FaFolder, FaStar } from "react-icons/fa";
 
 function FormSidebar({ changeFolder, currentFolder }) {
   const currentFolderClass = (folderName) =>
@@ -53,10 +53,10 @@ function FormSidebar({ changeFolder, currentFolder }) {
             <FaStar id="icon" color="#FFB208" />
             <div className="text item-text">Favourites</div>
           </li>
-          <li>
+          {/*<li>
             <FaTrashAlt id="icon" />
             <div className="text item-text">Trash</div>
-          </li>
+          </li>*/}
         </ul>
       </div>
     </div>

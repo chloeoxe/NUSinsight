@@ -50,6 +50,9 @@ function Header() {
         {user ? (
           <>
             <li id="link">
+              <Link to="/">Dashboard</Link>
+            </li>
+            <li id="link">
               <Link to="/myforms">My Forms</Link>
             </li>
             <li id="link">

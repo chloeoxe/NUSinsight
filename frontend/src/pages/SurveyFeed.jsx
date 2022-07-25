@@ -38,10 +38,10 @@ function SurveyFeed() {
 
   return (
     <>
-      <SearchBar surveys={surveys} />
       <Sidebar user={user} />
 
       <div className="my-feed">
+        <SearchBar surveys={surveys} className="search-bar" />
         <section className="heading">
           <h1>Survey Feed</h1>
           <p>Explore Surveys Published By Other Users</p>

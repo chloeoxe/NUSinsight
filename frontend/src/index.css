@@ -53,6 +53,11 @@ h3 {
 
 .my-feed {
   margin-left: 300px;
+  margin-right: 50px;
+}
+
+.search-bar {
+  margin-top: 50px;
 }
 
 .header {
@@ -429,6 +434,14 @@ h3 {
   color: #828282;
 }
 
+.dashboard-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 50px;
+  background: white;
+  text-align: left;
+}
+
 .surveys {
   display: block;
   margin-top: 30px;
@@ -445,11 +458,10 @@ h3 {
   cursor: pointer;
   align-items: center;
   display: flex;
-  background-color: #e8ebf8;
 }
 
 .survey:hover {
-  background-color: #c9cee4;
+  background-color: #e8ebf8;
 }
 
 .survey .checkbox {
@@ -508,6 +520,14 @@ h3 {
 
 .survey .close:hover {
   color: #52597b;
+}
+
+.feed {
+  background: #e8ebf8;
+}
+
+.feed:hover {
+  background: #bbc4ea;
 }
 
 .surveyStart {
@@ -571,7 +591,7 @@ h3 {
 }
 
 .no-surveys {
-  margin: 10%;
+  margin: 15%;
 }
 
 .no-surveys .text {
@@ -626,6 +646,31 @@ h3 {
   border-color: #000 transparent #555 transparent;
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
+}
+
+.sticky-row {
+  position: sticky;
+  top: 0;
+}
+
+.table-container {
+  max-height: 300px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.minimized {
+  display: none;
+}
+
+@media screen and (max-width: 1100px) {
+  .expanded{
+    display: none;
+  }
+
+  .minimized {
+    display: block;
+  }
 }
 
 @keyframes spin {

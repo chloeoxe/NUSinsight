@@ -12,6 +12,7 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Text,
 } from "@chakra-ui/react";
 
 function SearchBar(props) {
@@ -32,61 +33,63 @@ function SearchBar(props) {
   };
 
   return (
-    <Stack spacing={4}>
-      <InputGroup>
-        <Input
-          variant="outline"
-          placeholder="Search Survey"
-          value={userInput}
-          onChange={handleSearch}
-        />
-        <InputRightElement children={<FaSearch color="LightGray" />} />
-      </InputGroup>
-      <div className="user-search">
-        {userInput !== "" ? (
-          <Accordion allowToggle>
-            <div className="matched-surveys">
-              {matchedSurveys.length > 0 ? (
-                <div>
-                  {matchedSurveys.map((survey) => (
-                    <AccordionItem>
-                      <h2>
+    <div className="search-bar">
+      <Stack spacing={0}>
+        <InputGroup size="lg">
+          <Input
+            variant="filled"
+            placeholder="Search Survey"
+            value={userInput}
+            onChange={handleSearch}
+          />
+          <InputRightElement children={<FaSearch color="LightGray" />} />
+        </InputGroup>
+        <div className="user-search">
+          {userInput !== "" ? (
+            <Accordion allowToggle>
+              <div className="matched-surveys">
+                {matchedSurveys.length > 0 ? (
+                  <>
+                    {matchedSurveys.map((survey) => (
+                      <AccordionItem margin="0px">
                         <AccordionButton>
                           <Box flex="1" textAlign="left">
-                            {survey.title}
+                            <Text fontWeight="bold">{survey.title}</Text>
                           </Box>
                           <AccordionIcon />
                         </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>{survey.desc}</AccordionPanel>
-                      <AccordionPanel pb={4}>{survey.username}</AccordionPanel>
-                      <AccordionPanel pb={4}>
-                        <Link to={`/completeSurvey/${survey._id}`}>
-                          <strong>Complete Survey</strong>
-                        </Link>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  ))}
-                </div>
-              ) : (
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex="1" textAlign="left">
-                        No suitable surveys found
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                </AccordionItem>
-              )}
-            </div>
-          </Accordion>
-        ) : (
-          ""
-        )}
-      </div>
-    </Stack>
+                        <AccordionPanel pb={4}>{survey.desc}</AccordionPanel>
+                        <AccordionPanel pb={4}>
+                          {survey.username}
+                        </AccordionPanel>
+                        <AccordionPanel pb={4}>
+                          <Link to={`/completeSurvey/${survey._id}`}>
+                            <strong>Complete Survey</strong>
+                          </Link>
+                        </AccordionPanel>
+                      </AccordionItem>
+                    ))}
+                  </>
+                ) : (
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton>
+                        <Box flex="1" textAlign="left">
+                          No suitable surveys found
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                  </AccordionItem>
+                )}
+              </div>
+            </Accordion>
+          ) : (
+            ""
+          )}
+        </div>
+      </Stack>
+    </div>
   );
 }
 

@@ -50,7 +50,7 @@ function App() {
                 path="/completeSurvey/:id"
                 element={<SurveyCompletion />}
               />
-              <Route path="/surveyFindings/:id" element={<SurveyFindings />} />
+              <Route path="/surveyFindings" element={<SurveyFindings />} />
               <Route
                 path="/responseSubmitted/:id"
                 element={<SurveySubmission />}

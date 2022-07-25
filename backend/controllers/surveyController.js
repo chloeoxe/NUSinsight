@@ -1,6 +1,15 @@
 const asyncHandler = require("express-async-handler");
 const Survey = require("../models/surveyModel");
 
+// @desc Get all surveys
+// @route GET /api/surveys/getAll
+// @access Public
+const getAllSurveys = asyncHandler(async (req, res) => {
+  const surveys = await Survey.find({});
+
+  res.status(200).json(surveys);
+});
+
 // @desc Get surveys
 // @route GET /api/surveys
 // @access Private
@@ -150,16 +159,21 @@ const submitSurvey = asyncHandler(async (req, res) => {
     throw new Error("Survey not found");
   }
 
+  const newAnswers = {
+    ...answers,
+    submittedAt: new Date(Date.now()),
+  };
+
   const newSurvey = { ...survey }._doc;
 
   if (survey.answers.hasOwnProperty(userId)) {
     let userAnswers = newSurvey.answers[userId];
     const numUserAnswers = Object.keys(userAnswers).length;
-    userAnswers[numUserAnswers + 1] = answers;
+    userAnswers[numUserAnswers + 1] = newAnswers;
   } else {
     newSurvey.answers[userId] = {};
     let userAnswers = newSurvey.answers[userId];
-    userAnswers[1] = answers;
+    userAnswers[1] = newAnswers;
   }
 
   const updatedSurvey = await Survey.findByIdAndUpdate(
@@ -359,6 +373,7 @@ const getSurveyFindings = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+  getAllSurveys,
   getSurveys,
   setSurvey,
   updateSurvey,
