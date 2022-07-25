@@ -28,9 +28,11 @@ function Dashboard() {
     (state) => state.surveys
   );
 
-  const numPublishedSurveys = surveys.filter(
-    (s) => s.isPublished && String(s.user) === user._id
-  ).length;
+  const numPublishedSurveys =
+    surveys !== []
+      ? surveys.filter((s) => s.isPublished && String(s.user) === user._id)
+          .length
+      : 0;
 
   const numDraftSurveys = surveys.filter(
     (s) => s.isPublished === false && String(s.user) === user._id
