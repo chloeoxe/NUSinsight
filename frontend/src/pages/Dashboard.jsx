@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
@@ -24,14 +24,133 @@ function Dashboard() {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { surveys, isLoading, isError, message } = useSelector(
+  const { surveys, isSuccess, isLoading, isError, message } = useSelector(
     (state) => state.surveys
   );
 
-  const numPublishedSurveys =
+  const [numPublishedSurveys, setNumPublishedSurveys] = useState(0);
+  const [numDraftSurveys, setNumDraftSurveys] = useState(0);
+  const [numCompletedSurveys, setNumCompletedSurveys] = useState(0);
+  const [mostPopularSurveys, setMostPopularSurveys] = useState([]);
+  const [mostRecentResponses, setMostRecentResponses] = useState([]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setNumPublishedSurveys(
+        surveys.filter((s) => {
+          return s.isPublished && String(s.user) === user._id;
+        }).length
+      );
+
+      setNumDraftSurveys(
+        surveys.filter(
+          (s) => s.isPublished === false && String(s.user) === user._id
+        ).length
+      );
+
+      setNumCompletedSurveys(
+        surveys.filter((s) => {
+          const answers = s.answers; // object
+          const users = Object.keys(answers); // array of user IDs (strings)
+          return users.includes(user._id);
+        }).length
+      );
+
+      const surveysWithResponses = surveys.filter((s) => {
+        const answers = s.answers;
+        const numOfResponses = Object.keys(answers).length - 1;
+        return numOfResponses > 0 && String(s.user) === user._id;
+      });
+
+      setMostPopularSurveys(
+        surveysWithResponses
+          .map((s) => {
+            return {
+              title: s.title,
+              desc: s.desc,
+              numOfResponses: Object.keys(s.answers).length - 1,
+            };
+          })
+          .sort(function (a, b) {
+            return b.numOfResponses - a.numOfResponses;
+          })
+          .slice(0, 5)
+      );
+
+      const surveysWithRecentResponses = surveysWithResponses.map(
+        ({ title, questions, answers }) => {
+          const flattenedAnswers = Object.keys(answers)
+            .filter((userId) => userId !== "user")
+            .flatMap((userId) =>
+              Object.keys(answers[userId]).map(
+                (responseNum) => answers[userId][responseNum]
+              )
+            );
+          return { title, questions, answers: flattenedAnswers };
+        }
+      );
+
+      const allSurveyResponses = surveysWithRecentResponses.flatMap(
+        (survey) => {
+          const answers = survey.answers;
+          return answers.flatMap((ans) => {
+            const submittedDate = ans.submittedAt;
+            const answerResponses = Object.keys(ans)
+              .filter((qNum) => qNum !== "submittedAt")
+              .map((qNum) => {
+                return { qNum: qNum, a: ans[qNum] };
+              });
+            return answerResponses.map((res) => {
+              const title = survey.title;
+              const question = survey.questions[Number(res.qNum) - 1].question;
+              const type = survey.questions[Number(res.qNum) - 1].type;
+              let qRes = "";
+              if (type === "mcq") {
+                const temp = res.a.map(
+                  (optionNum) =>
+                    survey.questions[Number(res.qNum) - 1].response.options[
+                      optionNum - 1
+                    ].value
+                );
+                for (const x of temp) {
+                  qRes = qRes + x + ", ";
+                }
+                qRes = qRes.slice(0, qRes.length - 2);
+              } else if (type === "oe") {
+                qRes = res.a[0];
+              }
+              return {
+                title: title,
+                type: type,
+                question: question,
+                response: qRes,
+                submittedAt: submittedDate,
+              };
+            });
+          });
+        }
+      ); //returns array of {title, type, question, response, submittedAt} objects
+
+      setMostRecentResponses(
+        allSurveyResponses
+          .filter((res) => {
+            const submittedDate = new Date(res.submittedAt);
+            const endDate = new Date();
+            const startDate = new Date(endDate.getDate() - 5);
+            return submittedDate <= endDate && submittedDate >= startDate;
+          })
+          .sort(function (a, b) {
+            return new Date(a.submittedAt) <= new Date(b.submittedAt);
+          })
+      );
+    }
+  }, [isSuccess]);
+
+  /*const numPublishedSurveys =
     surveys !== []
-      ? surveys.filter((s) => s.isPublished && String(s.user) === user._id)
-          .length
+      ? surveys.filter((s) => {
+          return s.isPublished && String(s.user) === user._id;
+        }).length
       : 0;
 
   const numDraftSurveys = surveys.filter(
@@ -125,6 +244,7 @@ function Dashboard() {
     .sort(function (a, b) {
       return new Date(a.submittedAt) <= new Date(b.submittedAt);
     });
+    */
 
   useEffect(() => {
     if (isError) {
