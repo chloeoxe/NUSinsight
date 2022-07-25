@@ -124,6 +124,22 @@ function SurveyCreationStart() {
 
     const questions = [...surveyQuestions];
 
+    for (const qn of questions) {
+      if (qn.question === "") {
+        toast.error("Fill out all question inputs");
+        return;
+      }
+
+      if (qn.type === "mcq") {
+        for (const opt of qn.response.options) {
+          if (!opt.value) {
+            toast.error("Fill out all MCQ options");
+            return;
+          }
+        }
+      }
+    }
+
     const surveyData = {
       title,
       desc,
