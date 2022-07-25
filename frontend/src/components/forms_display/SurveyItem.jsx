@@ -90,7 +90,7 @@ function SurveyItem(props) {
           </div>
 
           <div className="publishTag">
-            <FaChartLine />
+            <FaEdit />
           </div>
 
           <button
