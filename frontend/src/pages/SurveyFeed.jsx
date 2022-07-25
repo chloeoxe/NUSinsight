@@ -5,6 +5,7 @@ import FeedSurveyItem from "../components/FeedSurveyItem";
 import Spinner from "../components/Spinner";
 import { getFeedSurveys, reset } from "../features/surveys/surveySlice";
 import Sidebar from "../components/Sidebar";
+import SearchBar from "../components/SearchBar";
 
 function SurveyFeed() {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ function SurveyFeed() {
 
   return (
     <>
+      <SearchBar surveys={surveys} />
       <Sidebar user={user} />
 
       <div className="my-feed">
