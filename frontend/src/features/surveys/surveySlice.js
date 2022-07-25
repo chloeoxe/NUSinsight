@@ -10,6 +10,7 @@ const initialState = {
   postDraftSuccess: false,
   getDraftSuccess: false,
   postFindingsSuccess: false,
+  postFavSuccess: false,
   isLoading: false,
   isDraftLoading: false,
   message: "",
@@ -93,6 +94,26 @@ export const updateDraftToPublish = createAsyncThunk(
   }
 );
 
+// Update draft survey
+export const updateFavSurvey = createAsyncThunk(
+  "surveys/updateFavSurvey",
+  async (surveyParams, thunkAPI) => {
+    try {
+      const { surveyId, fav } = surveyParams;
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.updateFavSurvey(surveyId, fav, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Get user surveys
 export const getSurveys = createAsyncThunk(
   "surveys/getAll",
@@ -119,6 +140,25 @@ export const getFeedSurveys = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await surveyService.getFeedSurveys(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get favourited surveys
+export const getFavSurveys = createAsyncThunk(
+  "surveys/getFavSurveys",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.getFavSurveys(token);
     } catch (error) {
       const message =
         (error.response &&
@@ -326,6 +366,20 @@ export const surveySlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      .addCase(updateFavSurvey.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateFavSurvey.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.postFavSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(updateFavSurvey.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
       .addCase(getSurveys.pending, (state) => {
         state.isLoading = true;
       })
@@ -348,6 +402,19 @@ export const surveySlice = createSlice({
         state.surveys = action.payload;
       })
       .addCase(getFeedSurveys.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getFavSurveys.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getFavSurveys.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.surveys = action.payload;
+      })
+      .addCase(getFavSurveys.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

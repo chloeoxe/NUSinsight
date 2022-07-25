@@ -29,6 +29,10 @@ const surveySchema = mongoose.Schema(
       type: Boolean,
       required: [true, "Please indicate whether the survey is published"],
     },
+    isFavourite: {
+      type: Boolean,
+      required: [true, "Please indicate whether the survey is favourited"],
+    },
   },
   {
     timestamps: true,

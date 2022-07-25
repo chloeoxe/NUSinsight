@@ -28,6 +28,23 @@ const updateSurvey = async (surveyId, surveyData, token) => {
   return response.data;
 };
 
+// Update whether survey is favourited
+const updateFavSurvey = async (surveyId, fav, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(
+    API_URL + `updatefav/${surveyId}`,
+    { fav },
+    config
+  );
+
+  return response.data;
+};
+
 // Get user surveys
 const getSurveys = async (token) => {
   const config = {
@@ -50,6 +67,19 @@ const getFeedSurveys = async (token) => {
   };
 
   const response = await axios.get(API_URL + "feed", config);
+
+  return response.data;
+};
+
+// Get favourited surveys
+const getFavSurveys = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + "favourites", config);
 
   return response.data;
 };
@@ -128,6 +158,7 @@ const surveyService = {
   createSurvey,
   getSurveys,
   getFeedSurveys,
+  getFavSurveys,
   getOtherUserSurveys,
   getSurveyToComplete,
   getDraftSurveys,
@@ -136,6 +167,7 @@ const surveyService = {
   submitSurvey,
   deleteSurvey,
   updateSurvey,
+  updateFavSurvey,
 };
 
 export default surveyService;
