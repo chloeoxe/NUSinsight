@@ -53,6 +53,11 @@ h3 {
 
 .my-feed {
   margin-left: 300px;
+  margin-right: 50px;
+}
+
+.search-bar {
+  margin-top: 50px;
 }
 
 .header {

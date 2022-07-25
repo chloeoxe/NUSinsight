@@ -84,6 +84,7 @@ function SurveyCreationStart() {
     questions: [],
     answers: { user: { answer: { qn: [] } } },
     isPublished: false,
+    isFavourite: false,
   };
 
   //console.log("Filtered Survey:", surveys[0]);
@@ -92,7 +93,7 @@ function SurveyCreationStart() {
 
   //console.log("Form Data:", formData);
 
-  const { title, desc, answers, isPublished } = formData;
+  const { title, desc, answers, isPublished, isFavourite } = formData;
 
   //define questions state
   const [surveyQuestions, setSurveyQuestions] = useState([]);
@@ -123,7 +124,14 @@ function SurveyCreationStart() {
 
     const questions = [...surveyQuestions];
 
-    const surveyData = { title, desc, questions, answers, isPublished: true };
+    const surveyData = {
+      title,
+      desc,
+      questions,
+      answers,
+      isPublished: true,
+      isFavourite,
+    };
 
     if (surveyId) {
       dispatch(
@@ -141,7 +149,14 @@ function SurveyCreationStart() {
 
     const questions = [...surveyQuestions];
 
-    const surveyData = { title, desc, questions, answers, isPublished };
+    const surveyData = {
+      title,
+      desc,
+      questions,
+      answers,
+      isPublished,
+      isFavourite,
+    };
 
     if (!title) {
       toast.error("Please add a title to your form");

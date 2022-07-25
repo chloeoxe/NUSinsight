@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getDraftSurveys, reset } from "../../features/surveys/surveySlice";
+import {
+  getDraftSurveys,
+  updateFavSurvey,
+  reset,
+} from "../../features/surveys/surveySlice";
 import Spinner from "../Spinner";
 import SurveyItem from "./SurveyItem";
 import draft from "../../images/draft.png";
@@ -12,9 +16,14 @@ function DraftsList() {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { surveys, isLoading, isError, message } = useSelector(
+  const { surveys, isLoading, postFavSuccess, isError, message } = useSelector(
     (state) => state.surveys
   );
+
+  const updateFavourite = (surveyId, fav) => {
+    const surveyParams = { surveyId, fav };
+    dispatch(updateFavSurvey(surveyParams));
+  };
 
   useEffect(() => {
     if (isError) {
@@ -32,6 +41,16 @@ function DraftsList() {
     };
   }, [user, navigate, isError, message, dispatch]);
 
+  useEffect(() => {
+    if (postFavSuccess) {
+      dispatch(getDraftSurveys());
+    }
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [postFavSuccess]);
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -45,7 +64,11 @@ function DraftsList() {
           <ul>
             {surveys.map((survey) => (
               <li>
-                <SurveyItem key={survey._id} survey={survey} />
+                <SurveyItem
+                  key={survey._id}
+                  survey={survey}
+                  updateFavourite={updateFavourite}
+                />
               </li>
             ))}
           </ul>

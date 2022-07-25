@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteSurvey } from "../../features/surveys/surveySlice";
 import { FaChartLine, FaEdit } from "react-icons/fa";
@@ -5,9 +6,11 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 import { FaStar, FaTrashAlt } from "react-icons/fa";
 import { Checkbox } from "@chakra-ui/react";
 
-function SurveyItem({ survey }) {
+function SurveyItem(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { survey, updateFavourite } = props;
 
   const params = { id: survey._id };
 
@@ -23,13 +26,23 @@ function SurveyItem({ survey }) {
       search: `${createSearchParams(params)}`,
     });
 
+  const [favourite, setFavourite] = useState(survey.isFavourite);
+
+  const handleFavourite = () => {
+    setFavourite(!favourite);
+    updateFavourite(survey._id, !favourite);
+  };
+
   return (
     <>
       {String(survey.isPublished) === "true" ? (
         <div className="survey">
-          <Checkbox className="checkbox" borderColor="#707070" />
+          {/*<Checkbox className="checkbox" borderColor="#707070" />*/}
           <div className="favourite">
-            <FaStar />
+            <FaStar
+              fill={String(favourite) === "true" ? "Orange" : "LightGray"}
+              onClick={handleFavourite}
+            />
           </div>
           <div
             className="survey-info"
@@ -43,32 +56,31 @@ function SurveyItem({ survey }) {
               Created on {new Date(survey.createdAt).toLocaleString("en-US")}
             </div>
           </div>
-
           <div className="publishTag">
             <FaChartLine />
           </div>
 
           <button
             className="close"
-            onClick={(e) => {
-              e.stopPropagation();
-              dispatch(deleteSurvey(survey._id));
-            }}
+            onClick={() => dispatch(deleteSurvey(survey._id))}
           >
             <FaTrashAlt size="15px" />
           </button>
         </div>
       ) : (
-        <div className="survey">
-          <Checkbox className="checkbox" borderColor="#707070" />
+        <div
+          className="survey"
+          onClick={editDraftSurvey}
+          title="Edit Draft Survey"
+        >
+          {/*<Checkbox className="checkbox" borderColor="#707070" /> */}
           <div className="favourite">
-            <FaStar />
+            <FaStar
+              fill={String(favourite) === "true" ? "Orange" : "LightGray"}
+              onClick={handleFavourite}
+            />
           </div>
-          <div
-            className="survey-info"
-            onClick={editDraftSurvey}
-            title="Edit Draft Survey"
-          >
+          <div className="survey-info">
             <div className="title">
               {survey.title === "" ? "Form" : survey.title}
             </div>
@@ -78,7 +90,7 @@ function SurveyItem({ survey }) {
           </div>
 
           <div className="publishTag">
-            <FaEdit />
+            <FaChartLine />
           </div>
 
           <button

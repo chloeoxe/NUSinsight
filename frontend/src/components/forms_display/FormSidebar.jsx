@@ -46,7 +46,10 @@ function FormSidebar({ changeFolder, currentFolder }) {
 
       <div className="bottom-content">
         <ul>
-          <li>
+          <li
+            onClick={() => changeFolder("MyFavourites")}
+            className={currentFolderClass("MyFavourites")}
+          >
             <FaStar id="icon" color="#FFB208" />
             <div className="text item-text">Favourites</div>
           </li>

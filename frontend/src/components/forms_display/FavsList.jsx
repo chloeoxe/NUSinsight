@@ -2,16 +2,15 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getSurveys,
+  getFavSurveys,
   updateFavSurvey,
   reset,
 } from "../../features/surveys/surveySlice";
 import Spinner from "../Spinner";
 import SurveyItem from "./SurveyItem";
-import survey from "../../images/survey.png";
-import { Button } from "@chakra-ui/react";
+import { FaStar } from "react-icons/fa";
 
-function FormsList() {
+function FavsList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,7 +32,7 @@ function FormsList() {
     if (!user) {
       navigate("/login");
     } else {
-      dispatch(getSurveys());
+      dispatch(getFavSurveys());
     }
 
     return () => {
@@ -43,7 +42,7 @@ function FormsList() {
 
   useEffect(() => {
     if (postFavSuccess) {
-      dispatch(getSurveys());
+      dispatch(getFavSurveys());
     }
 
     return () => {
@@ -54,8 +53,6 @@ function FormsList() {
   if (isLoading) {
     return <Spinner />;
   }
-
-  const onClick = () => navigate("/createSurveyStart");
 
   return (
     <div class="view-forms">
@@ -75,24 +72,13 @@ function FormsList() {
         </div>
       ) : (
         <div className="no-surveys">
-          <img src={survey} alt="Survey Logo" width="180px" height="180px" />
-          <div className="text">YOU DON'T HAVE ANY FORMS YET!</div>
-          <div className="subtext">Your forms will appear here.</div>
-          <Button
-            mt="25px"
-            colorScheme="orange"
-            variant="outline"
-            cursor="pointer"
-            px="40px"
-            py="22px"
-            onClick={onClick}
-          >
-            CREATE FORM
-          </Button>
+          <FaStar size={100} fill="Orange" />
+          <div className="text">YOU DON'T HAVE ANY FAVOURITES YET!</div>
+          <div className="subtext">Your favourited forms will appear here.</div>
         </div>
       )}
     </div>
   );
 }
 
-export default FormsList;
+export default FavsList;
