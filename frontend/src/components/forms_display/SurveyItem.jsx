@@ -28,7 +28,8 @@ function SurveyItem(props) {
 
   const [favourite, setFavourite] = useState(survey.isFavourite);
 
-  const handleFavourite = () => {
+  const handleFavourite = (e) => {
+    e.stopPropagation();
     setFavourite(!favourite);
     updateFavourite(survey._id, !favourite);
   };
