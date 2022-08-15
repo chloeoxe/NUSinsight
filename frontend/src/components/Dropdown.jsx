@@ -6,6 +6,9 @@ function Dropdown() {
     <div className="dropdown-menu">
       <ul>
         <li>
+          <Link to="/">Dashboard</Link>
+        </li>
+        <li>
           <Link to="/myforms">My Forms</Link>
         </li>
         <li>

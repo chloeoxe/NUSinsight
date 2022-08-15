@@ -46,25 +46,27 @@ function SearchBar(props) {
         </InputGroup>
         <div className="user-search">
           {userInput !== "" ? (
-            <Accordion allowToggle>
+            <Accordion allowToggle className="accordion">
               <div className="matched-surveys">
                 {matchedSurveys.length > 0 ? (
                   <>
                     {matchedSurveys.map((survey) => (
                       <AccordionItem margin="0px">
-                        <AccordionButton>
+                        <AccordionButton bg="#eeeeee">
                           <Box flex="1" textAlign="left">
                             <Text fontWeight="bold">{survey.title}</Text>
                           </Box>
                           <AccordionIcon />
                         </AccordionButton>
-                        <AccordionPanel pb={4}>{survey.desc}</AccordionPanel>
                         <AccordionPanel pb={4}>
-                          {survey.username}
+                          <i>Description:</i> {survey.desc}
+                        </AccordionPanel>
+                        <AccordionPanel pb={4}>
+                          <i>User:</i> {survey.username}
                         </AccordionPanel>
                         <AccordionPanel pb={4}>
                           <Link to={`/completeSurvey/${survey._id}`}>
-                            <strong>Complete Survey</strong>
+                            <strong>Click Here To Complete Survey</strong>
                           </Link>
                         </AccordionPanel>
                       </AccordionItem>

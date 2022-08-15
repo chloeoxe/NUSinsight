@@ -673,6 +673,18 @@ h3 {
   }
 }
 
+.search-bar .user-search {
+  z-index: 100;
+  position: absolute;
+  margin-top: 48px;
+  width: 1000px;
+  max-width: calc(100% - 350px);
+}
+
+.accordion {
+  background-color: #ffffff;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

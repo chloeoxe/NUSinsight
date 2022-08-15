@@ -46,6 +46,7 @@ function SurveyCreationStart() {
     }
 
     if (postSuccess || postDraftSuccess) {
+      clearForm();
       navigate("/myforms");
     }
 
@@ -155,7 +156,6 @@ function SurveyCreationStart() {
       );
     } else {
       dispatch(createSurvey(surveyData));
-      clearForm();
     }
   };
 
@@ -176,13 +176,9 @@ function SurveyCreationStart() {
 
     if (!title) {
       toast.error("Please add a title to your form");
+    } else {
+      dispatch(createDraftSurvey(surveyData));
     }
-
-    console.log("New draft created");
-
-    dispatch(createDraftSurvey(surveyData));
-
-    clearForm();
   };
 
   const updateExisting = (e) => {
@@ -194,9 +190,11 @@ function SurveyCreationStart() {
 
     if (!title) {
       toast.error("Please add a title to your form");
+    } else {
+      dispatch(
+        updateDraftSurvey({ surveyId: surveyId, surveyData: surveyData })
+      );
     }
-
-    dispatch(updateDraftSurvey({ surveyId: surveyId, surveyData: surveyData }));
   };
 
   // if surveyId is defined, updateDraftSurvey instead of createDraftSurvey
