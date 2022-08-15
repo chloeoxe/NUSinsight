@@ -36,8 +36,6 @@ function Register() {
     password2: "",
   });
 
-  const [state, setState] = useState("1");
-
   const { name, position, faculty, email, username, password, password2 } =
     formData;
 

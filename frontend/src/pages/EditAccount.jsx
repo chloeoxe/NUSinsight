@@ -7,11 +7,21 @@ import { FaUser } from "react-icons/fa";
 import { updateUser, reset } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
 import Sidebar from "../components/Sidebar";
+import {
+  FormLabel,
+  HStack,
+  Input,
+  Radio,
+  RadioGroup,
+  Select,
+  SimpleGrid,
+  VStack,
+} from "@chakra-ui/react";
 
 function EditAccount() {
   const [formData, setFormData] = useState({
     name: "",
-    position: "",
+    position: "Student",
     faculty: "",
     email: "",
     username: "",
@@ -73,8 +83,9 @@ function EditAccount() {
 
         <section className="form">
           <form onSubmit={onSubmit}>
-            <div className="form-group">
-              <input
+            <VStack spacing={6} align={["flex-start"]} w="full" mb={3}>
+              <Input
+                isRequired
                 type="text"
                 className="form-control"
                 id="name"
@@ -82,32 +93,57 @@ function EditAccount() {
                 value={name}
                 placeholder="Name"
                 onChange={onChange}
+                bg="white"
               />
-            </div>
-            <div className="form-group">
-              <input
-                type="position"
-                className="form-control"
-                id="position"
-                name="position"
-                value={position}
-                placeholder="Student/Staff"
-                onChange={onChange}
-              />
-            </div>
-            <div className="form-group">
-              <input
+              <SimpleGrid columns={2} width="100%">
+                <FormLabel pl={3}>I am a...</FormLabel>
+                <RadioGroup
+                  type="position"
+                  value={position}
+                  className="form-control"
+                  id="position"
+                  name="position"
+                  rounded="true"
+                  onChange={(newPosition) => {
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      position: newPosition,
+                    }));
+                  }}
+                >
+                  <HStack spacing="24px">
+                    <Radio value="Student">Student</Radio>
+                    <Radio value="Staff">Staff</Radio>
+                  </HStack>
+                </RadioGroup>
+              </SimpleGrid>
+              <Select
+                isRequired
                 type="faculty"
                 className="form-control"
                 id="faculty"
                 name="faculty"
                 value={faculty}
-                placeholder="Course of Study"
+                placeholder="-- Select your faculty --"
+                rounded="false"
                 onChange={onChange}
-              />
-            </div>
-            <div className="form-group">
-              <input
+                bg="white"
+              >
+                <option value="College of Humanities and Sciences (CHS)">
+                  College of Humanities and Sciences (CHS)
+                </option>
+                <option value="Business School">Business</option>
+                <option value="Computing">Computing</option>
+                <option value="Dentistry">Dentistry</option>
+                <option value="College of Design and Engineering (CDE)">
+                  College of Design and Engineering (CDE)
+                </option>
+                <option value="Law">Law</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Pharmacy">Pharmacy</option>
+              </Select>
+              <Input
+                isRequired
                 type="email"
                 className="form-control"
                 id="email"
@@ -115,10 +151,10 @@ function EditAccount() {
                 value={email}
                 placeholder="Email"
                 onChange={onChange}
+                bg="white"
               />
-            </div>
-            <div className="form-group">
-              <input
+              <Input
+                isRequired
                 type="username"
                 className="form-control"
                 id="username"
@@ -126,13 +162,12 @@ function EditAccount() {
                 value={username}
                 placeholder="Username"
                 onChange={onChange}
+                bg="white"
               />
-            </div>
-            <div className="form-group">
               <button type="submit" className="btn btn-block">
                 Confirm Changes
               </button>
-            </div>
+            </VStack>
           </form>
         </section>
       </div>

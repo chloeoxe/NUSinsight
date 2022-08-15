@@ -120,6 +120,7 @@ const updateMe = asyncHandler(async (req, res) => {
     throw new Error("User not authorised");
   }
   */
+
   const updatedMe = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
