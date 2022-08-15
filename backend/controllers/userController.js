@@ -15,6 +15,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   let userExists = "";
+
   // Check if user email exists
   const userEmailExists = await User.findOne({ email });
 
@@ -120,6 +121,30 @@ const updateMe = asyncHandler(async (req, res) => {
     throw new Error("User not authorised");
   }
   */
+
+  const { email, username } = req.body;
+
+  let userExists = "";
+
+  // Check if user email exists
+  const userEmailExists = await User.findOne({ email });
+
+  if (userEmailExists && req.user !== userEmailExists) {
+    userExists += "This email is already registered as a user.";
+  }
+
+  // Check if username exists
+  const usernameExists = await User.findOne({ username });
+
+  if (usernameExists) {
+    userExists += " This username is already being used.";
+  }
+
+  // Handle userExists error
+  if (userExists) {
+    res.status(400);
+    throw new Error(userExists);
+  }
 
   const updatedMe = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,

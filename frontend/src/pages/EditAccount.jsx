@@ -32,7 +32,7 @@ function EditAccount() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, message } = useSelector(
+  const { user, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.auth
   );
 
@@ -48,6 +48,12 @@ function EditAccount() {
     dispatch(reset());
   }, [user, isError, message, navigate, dispatch]);
 
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/account");
+    }
+  });
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -61,7 +67,6 @@ function EditAccount() {
     const userData = { name, position, faculty, email, username };
 
     dispatch(updateUser(userData));
-    navigate("/account");
   };
 
   if (isLoading) {
