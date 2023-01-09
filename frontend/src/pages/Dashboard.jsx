@@ -225,7 +225,6 @@ function Dashboard() {
       <HStack justify="space-evenly" p={5} align="stretch">
         <VStack spacing={10} align="stretch">
           <Box
-            width="600px"
             shadow="md"
             borderRadius="10px"
             p={5}
@@ -290,7 +289,7 @@ function Dashboard() {
               Recent responses (Past 5 days)
             </Text>
             <Box className="table-container">
-              <TableContainer>
+              <TableContainer overflowX="auto">
                 <Table variant="simple">
                   {mostRecentResponses.length === 0 ? (
                     <TableCaption>
