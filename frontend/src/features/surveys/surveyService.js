@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "/api/surveys/";
+const API_URL = "https://nusinsight-api.onrender.com/api/surveys/";
 
 // Create new survey
 const createSurvey = async (surveyData, token) => {
