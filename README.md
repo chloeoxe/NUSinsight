@@ -77,7 +77,7 @@ A common survey feed can be accessed by all users to explore published surveys r
 ## Contact
 Tan Li Hui, Faith - faithtanlihui@u.nus.edu
 
-Chloe Ong Xi En - e0773170@u.nus.edu
+Chloe Ong Xi En - chloe_ong@u.nus.edu
 
 Project Main Repo Link: [https://github.com/chloeoxe/NUSinsight](https://github.com/chloeoxe/NUSinsight)
 
